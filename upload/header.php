@@ -67,7 +67,6 @@ $tpl_main = file_get_contents($tpl_path);
 
 ($hook = get_hook('hd_template_loaded')) ? eval($hook) : null;
 
-
 // START SUBST - <!-- forum_include "*" -->
 while (preg_match('#<!-- ?forum_include "([^/\\\\]*?)" ?-->#', $tpl_main, $cur_include))
 {
@@ -94,7 +93,7 @@ $tpl_main = str_replace('<!-- forum_local -->', 'xml:lang="'.$lang_common['lang_
 if (!defined('FORUM_ALLOW_INDEX'))
 	$forum_head['robots'] = '<meta name="ROBOTS" content="NOINDEX, FOLLOW" />';
 else
-	$forum_head['descriptions'] =  '<meta name="description" content="'.generate_crumbs(true).' '.$lang_common['Title separator'].' '.forum_htmlencode($forum_config['o_board_desc']).'" />';
+	$forum_head['descriptions'] = '<meta name="description" content="'.generate_crumbs(true).' '.$lang_common['Title separator'].' '.forum_htmlencode($forum_config['o_board_desc']).'" />';
 
 // Should we output a MicroID? http://microid.org/
 if (strpos(FORUM_PAGE, 'profile') === 0)
@@ -103,16 +102,22 @@ if (strpos(FORUM_PAGE, 'profile') === 0)
 $forum_head['title'] = '<title>'.generate_crumbs(true).'</title>';
 
 // Should we output feed links?
-if (FORUM_PAGE == 'viewtopic')
+if (FORUM_PAGE == 'index')
 {
-	$forum_head['rss'] = '<link rel="alternate" type="application/rss+xml" href="'.forum_link($forum_url['topic_rss'], $id).'" title="'.$lang_common['RSS Feed'].'" />';
-	$forum_head['atom'] =  '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['topic_atom'], $id).'" title="'.$lang_common['ATOM Feed'].'" />';
+	$forum_head['rss'] = '<link rel="alternate" type="application/rss+xml" href="'.forum_link($forum_url['index_rss']).'" title="RSS" />';
+	$forum_head['atom'] = '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['index_atom']).'" title="ATOM" />';
 }
 else if (FORUM_PAGE == 'viewforum')
 {
-	$forum_head['rss'] = '<link rel="alternate" type="application/rss+xml" href="'.forum_link($forum_url['forum_rss'], $id).'" title="RSS" />';
-	$forum_head['atom'] = '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['forum_atom'], $id).'" title="ATOM" />';
+	$forum_head['rss'] = '<link rel="alternate" type="application/rss+xml" href="'.forum_link($forum_url['forum_rss'], array($id, $cur_forum['sort_by'] == '1' ? 'posted' : 'last_post')).'" title="RSS" />';
+	$forum_head['atom'] = '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['forum_atom'], array($id, $cur_forum['sort_by'] == '1' ? 'posted' : 'last_post')).'" title="ATOM" />';
 }
+else if (FORUM_PAGE == 'viewtopic')
+{
+	$forum_head['rss'] = '<link rel="alternate" type="application/rss+xml" href="'.forum_link($forum_url['topic_rss'], $id).'" title="RSS" />';
+	$forum_head['atom'] =  '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['topic_atom'], $id).'" title="ATOM" />';
+}
+
 
 $forum_head['top'] = '<link rel="top" href="'.$base_url.'" title="'.$lang_common['Forum index'].'" />';
 
@@ -142,182 +147,193 @@ ob_end_clean();
 
 $forum_head['commonjs'] = '<script type="text/javascript" src="'.$base_url.'/include/js/common.js"></script>';
 
-($hook = get_hook('hd_'.FORUM_PAGE.'_head')) ? eval($hook) : null;
-
 ($hook = get_hook('hd_head')) ? eval($hook) : null;
 
-$tpl_main = str_replace('<!-- forum_head -->', implode("\n",$forum_head), $tpl_main);
+$tpl_main = str_replace('<!-- forum_head -->', implode("\n", $forum_head), $tpl_main);
 unset($forum_head);
 
 // END SUBST - <!-- forum_head -->
 
 
-// START SUBST - <!-- forum_page -->
-$tpl_main = str_replace('<!-- forum_page -->', 'id="brd-'.FORUM_PAGE.'"', $tpl_main);
-// END SUBST - <!-- forum_page -->
+// START SUBST OF COMMON ELEMENTS
+// Setup array of general elements
+$gen_elements = array();
 
-
-// START SUBST - <!-- forum_skip -->
-$tpl_main = str_replace('<!-- forum_skip -->', '<div id="brd-access"><a href="#brd-main">'.$lang_common['Skip to content'].'</a></div>'."\n", $tpl_main);
-// END SUBST - <!-- forum_skip -->
-
-// START SUBST - <!-- forum_title -->
-$tpl_main = str_replace('<!-- forum_title -->', '<div id="brd-title">'."\n\t".'<p><a href="'.forum_link($forum_url['index']).'">'.forum_htmlencode($forum_config['o_board_title']).'</a></p>'."\n".'</div>'."\n", $tpl_main);
-// END SUBST - <!-- forum_title -->
-
-
-// START SUBST - <!-- forum_desc -->
-if ($forum_config['o_board_desc'] != '')
-	$tpl_main = str_replace('<!-- forum_desc -->', '<div id="brd-desc">'."\n\t".'<p>'.forum_htmlencode($forum_config['o_board_desc']).'</p>'."\n".'</div>'."\n", $tpl_main);
-// END SUBST - <!-- forum_desc -->
-
-
-// START SUBST - <!-- forum_navlinks -->
-$tpl_main = str_replace('<!-- forum_navlinks -->', '<div id="brd-navlinks">'."\n\t".'<ul>'."\n\t\t".generate_navlinks()."\n\t".'</ul>'."\n".'</div>'."\n", $tpl_main);
-// END SUBST - <!-- forum_navlinks -->
-
-
-// START SUBST - <!-- forum_crumbs -->
-if (FORUM_PAGE != 'index')
-	$tpl_main = str_replace('<!-- forum_crumbs -->', '<div class="brd-crumbs">'."\n\t".'<p class="crumbs">'.generate_crumbs(false).'</p>'."\n".'</div>'."\n", $tpl_main);
-// END SUBST - <!-- forum_crumbs -->
-
-
-// START SUBST - <!-- forum_visit -->
-ob_start();
-
-if ($forum_user['is_guest'])
+// Forum page id and classes
+if (!defined('FORUM_PAGE_TYPE'))
 {
-	$visit_msg = array(
-		'<span id="vs-logged">'.$lang_common['Not logged in'].'</span>',
-		'<span id="vs-message">'.$lang_common['Login nag'].'</span>'
-	);
-}
-else
-{
-	$visit_msg = array(
-		'<span id="vs-logged">'.sprintf($lang_common['Logged in as'], '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span>',
-		'<span id="vs-message">'.sprintf($lang_common['Last visit'], '<strong>'.format_time($forum_user['last_visit']).'</strong>').'</span>'
-	);
-
-	$visit_links = array();
-	if ($forum_user['g_search'] == '1')
-		$visit_links['searchnew'] = '<li id="vs-searchnew"><a href="'.forum_link($forum_url['search_new']).'" title="'.$lang_common['New posts info'].'">'.$lang_common['New posts'].'</a></li>';
-
-	$visit_links['markread'] = '<li id="vs-markread"><a href="'.forum_link($forum_url['mark_read'], generate_form_token('markread'.$forum_user['id'])).'">'.$lang_common['Mark all as read'].'</a></li>';
-
-	// We only need to run this query for mods/admins if there will actually be reports to look at
-	if ($forum_user['is_admmod'] && $forum_config['o_report_method'] != 1)
+	if (substr(FORUM_PAGE, 0, 5) == 'admin')
+		define('FORUM_PAGE_TYPE', 'admin-page');
+	else
 	{
-		$query = array(
-			'SELECT'	=> 'COUNT(r.id)',
-			'FROM'		=> 'reports AS r',
-			'WHERE'		=> 'r.zapped IS NULL',
-		);
-
-		($hook = get_hook('hd_qr_get_unread_reports_count')) ? eval($hook) : null;
-		$result_header = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-
-		if ($forum_db->result($result_header))
-			$visit_links['reports'] = '<li id="vs-reports"><a href="'.forum_link($forum_url['admin_reports']).'"><strong>'.$lang_common['New reports'].'</strong></a></li>';
+		if (!empty($forum_page['page_post']))
+			define('FORUM_PAGE_TYPE', 'paged-page');
+		else if (!empty($forum_page['main_menu']))
+			define('FORUM_PAGE_TYPE', 'menu-page');
+		else
+			define('FORUM_PAGE_TYPE', 'basic-page');
 	}
 }
 
-($hook = get_hook('hd_visit')) ? eval($hook) : null;
+$gen_elements['<!-- forum_page -->'] = 'id="brd-'.FORUM_PAGE.'" class="brd-page '.FORUM_PAGE_TYPE.'"';
 
-?>
-<div id="brd-visit">
-<?php if (!$forum_user['is_guest']): ?>	<ul>
-		<?php echo implode("\n\t\t", $visit_links)."\n" ?>
-	</ul>
-<?php endif; ?>	<p>
-		<?php echo implode("\n\t\t", $visit_msg)."\n" ?>
-	</p>
-<?php ($hook = get_hook('hd_visit_pre_ending')) ? eval($hook) : null; ?></div>
-<?php
+// Skip link
+$gen_elements['<!-- forum_skip -->'] = '<p id="brd-access"><a href="#brd-main">'.$lang_common['Skip to content'].'</a></p>';
 
-$tpl_temp = ob_get_contents();
-$tpl_main = str_replace('<!-- forum_visit -->', $tpl_temp, $tpl_main);
-ob_end_clean();
-// END SUBST - <!-- forum_visit -->
+// Forum Title
+$gen_elements['<!-- forum_title -->'] = '<p id="brd-title"><a href="'.forum_link($forum_url['index']).'">'.forum_htmlencode($forum_config['o_board_title']).'</a></p>';
+
+// Forum Description
+$gen_elements['<!-- forum_desc -->'] = ($forum_config['o_board_desc'] != '') ? '<p id="brd-desc">'.forum_htmlencode($forum_config['o_board_desc']).'</p>' : '';
+
+// Main Navigation
+$gen_elements['<!-- forum_navlinks -->'] = '<ul>'."\n\t\t".generate_navlinks()."\n\t".'</ul>';
+
+// Announcement
+$gen_elements['<!-- forum_announcement -->'] = ($forum_config['o_announcement'] == '1' && $forum_user['g_read_board'] == '1') ? '<div id="brd-announcement" class="gen-content">'."\n\t".'<div class="userbox">'.($forum_config['o_announcement_heading'] != '' ? "\n\t\t".'<h1 class="msg-head">'.$forum_config['o_announcement_heading'].'</h1>' : '')."\n\t\t".$forum_config['o_announcement_message']."\n\t".'</div>'."\n".'</div>'."\n" : '';
+
+// Maintenance Warning
+$gen_elements['<!-- forum_maint -->'] = ($forum_user['g_id'] == FORUM_ADMIN && $forum_config['o_maintenance'] == '1') ? '<p id="maint-alert" class="warn">'.sprintf($lang_common['Maintenance warning'], '<a href="'.forum_link($forum_url['admin_settings_maintenance']).'">'.$lang_common['Maintenance mode'].'</a>').'</p>' : '';
+
+($hook = get_hook('hd_gen_elements')) ? eval($hook) : null;
+
+$tpl_main = str_replace(array_keys($gen_elements), array_values($gen_elements), $tpl_main);
+unset($gen_elements);
+
+// END SUBST OF COMMON ELEMENTS
 
 
-// START SUBST - <!-- forum_alert -->
-$alert_items = array();
+// START SUBST VISIT ELEMENTS
+$visit_elements = array();
+
+if ($forum_user['is_guest'])
+	$visit_elements['<!-- forum_welcome -->'] = '<p id="welcome"><span>'.$lang_common['Not logged in'].'</span> <span>'.$lang_common['Login nag'].'</span></p>';
+else
+	$visit_elements['<!-- forum_welcome -->'] = '<p id="welcome"><span>'.sprintf($lang_common['Logged in as'], '<strong>'.forum_htmlencode($forum_user['username']).'</strong>').'</span> <span>'.sprintf($lang_common['Last visit'], format_time($forum_user['last_visit'])).'</span></p>';
+
+if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
+{
+	$visit_links = array();
+
+	if (!$forum_user['is_guest'])
+		$visit_links['newposts'] = '<span id="visit-new"'.(empty($visit_links) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['search_new']).'" title="'.$lang_common['New posts title'].'">'.$lang_common['New posts'].'</a></span>';
+
+	$visit_links['recent'] = '<span id="visit-recent"'.(empty($visit_links) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['search_recent']).'" title="'.$lang_common['Active topics title'].'">'.$lang_common['Active topics'].'</a></span>';
+	$visit_links['unanswered'] = '<span id="visit-unanswered"'.(empty($visit_links) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['search_unanswered']).'" title="'.$lang_common['Unanswered topics title'].'">'.$lang_common['Unanswered topics'].'</a></span>';
+}
+
+$visit_elements['<!-- forum_visit -->'] = (!empty($visit_links)) ? '<p id="visit-links" class="options">'.implode(' ', $visit_links).'</p>' : '';
+
+($hook = get_hook('hd_visit_elements')) ? eval($hook) : null;
+
+$tpl_main = str_replace(array_keys($visit_elements), array_values($visit_elements), $tpl_main);
+unset($visit_elements);
+
+// END SUBST VISIT ELEMENTS
+
+
+// START SUBST - <!-- forum_admod -->
+$admod_links = array();
+
+// We only need to run this query for mods/admins if there will actually be reports to look at
+if ($forum_user['is_admmod'] && $forum_config['o_report_method'] != 1)
+{
+	$query = array(
+		'SELECT'	=> 'COUNT(r.id)',
+		'FROM'		=> 'reports AS r',
+		'WHERE'		=> 'r.zapped IS NULL',
+	);
+
+	($hook = get_hook('hd_qr_get_unread_reports_count')) ? eval($hook) : null;
+	$result_header = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+
+	if ($forum_db->result($result_header))
+		$admod_links['reports'] = '<span id="reports"><a href="'.forum_link($forum_url['admin_reports']).'">'.$lang_common['New reports'].'</a></span>';
+}
 
 if ($forum_user['g_id'] == FORUM_ADMIN)
 {
-		if ($forum_config['o_check_for_updates'] == '1')
-		{
-			if (isset($forum_updates['hotfix']))
-			{
-				$hotfixes_id = array();
-				for ($hot_num = 0; $hot_num < count($forum_updates['hotfix']); $hot_num++)
-					$hotfixes_id[] = $forum_updates['hotfix'][$hot_num]['attributes']['id'];
-				
-				$hotfix_available = array_diff($hotfixes_id, explode('|', substr($forum_config['o_rejected_updates'], 1, -1))) != array();
-			}
-			else
-				$hotfix_available = false;
-
-			if ($forum_updates['fail'])
-			$alert_items['update_fail'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates failed'].'</span></p>';
-			else if (isset($forum_updates['version']) && isset($forum_updates['hotfix']) && $hotfix_available)
-			$alert_items['update_version_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.sprintf($lang_common['Updates version n hf'], $forum_updates['version']).'</span></p>';
-			else if (isset($forum_updates['version']))
-			$alert_items['update_version'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.sprintf($lang_common['Updates version'], $forum_updates['version']).'</span></p>';
-			else if (isset($forum_updates['hotfix']) && $hotfix_available)
-			$alert_items['update_hotfix'] = '<p id="updates-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Updates'].'</strong> <span>'.$lang_common['Updates hf'].'</span></p>';
-		}
+	$alert_items = array();
 
 	// Warn the admin that maintenance mode is enabled
 	if ($forum_config['o_maintenance'] == '1')
-		$alert_items['maintenance'] = '<p id="maint-alert" class="warn"><strong>'.$lang_common['Maintenance mode'].'</strong> <span>'.$lang_common['Maintenance alert'].'</span></p>';
+		$alert_items['maintenance'] = '<p id="maint-alert" class="warn">'.$lang_common['Maintenance alert'].'</p>';
 
-		// Warn the admin that the install script is accessible
-		if (file_exists(FORUM_ROOT.'install.php'))
-		$alert_items['install'] = '<p id="install-script-exists-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Install script'].'</strong> <span>'.$lang_common['Install script alert'].'</span></p>';
-
-		// Warn the admin that the database update script is accessible
-		if (file_exists(FORUM_ROOT.'db_update.php'))
-		$alert_items['db_update'] = '<p id="update-script-exists-alert"'.(empty($alert_items) ? ' class="first-alert"' : '').'><strong>'.$lang_common['Update script'].'</strong> <span>'.$lang_common['Update script alert'].'</span></p>';
-}
-
-($hook = get_hook('hd_alert')) ? eval($hook) : null;
-
-		if (!empty($alert_items))
-{
-	ob_start();
-
-?>
-<div id="brd-alert">
-	<p class="warn"><?php printf($lang_common['Alert notice'], '<a href="'.forum_link($forum_url['admin_index']).'">'.$lang_common['Admin alerts'].'</a>') ?></p>
-</div>
-<?php
-
-	if ($forum_config['o_maintenance'] == '1')
-{
-
-?>
-<div id="brd-maintenance">
-	<p class="warn"><?php echo $lang_common['Maintenance alert'] ?></p>
-</div>
-<?php
-
+	if ($forum_config['o_check_for_updates'] == '1')
+	{
+		if ($forum_updates['fail'])
+			$alert_items['update_fail'] = '<p><strong>'.$lang_common['Updates'].'</strong> '.$lang_common['Updates failed'].'</p>';
+		else if (isset($forum_updates['version']) && isset($forum_updates['hotfix']))
+			$alert_items['update_version_hotfix'] = '<p><strong>'.$lang_common['Updates'].'</strong> '.sprintf($lang_common['Updates version n hf'], $forum_updates['version']).'</p>';
+		else if (isset($forum_updates['version']))
+			$alert_items['update_version'] = '<p><strong>'.$lang_common['Updates'].'</strong> '.sprintf($lang_common['Updates version'], $forum_updates['version']).'</p>';
+		else if (isset($forum_updates['hotfix']))
+			$alert_items['update_hotfix'] = '<p><strong>'.$lang_common['Updates'].'</strong> '.$lang_common['Updates hf'].'</p>';
 	}
 
-	$tpl_temp = ob_get_contents();
-	$tpl_main = str_replace('<!-- forum_alert -->', $tpl_temp, $tpl_main);
-	ob_end_clean();
+	// Warn the admin that their version of the database is newer than the version supported by the code
+	if ($forum_config['o_database_revision'] > FORUM_DB_REVISION)
+		$alert_items['newer_database'] = '<p><strong>'.$lang_common['Database mismatch'].'</strong> '.$lang_common['Database mismatch alert'].'</p>';
+
+	// Warn the admin that the engines used in the database don't correspond with the chosen DB layer
+	if (($db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb') && $forum_config['o_database_engine'] != 'InnoDB')
+			$alert_items['update_fail'] = '<p><strong>'.$lang_common['Database engine mismatch'].'</strong> '.sprintf($lang_common['Database engine mismatch alert'], 'MyISAM', 'InnoDB', forum_link('misc.php?admin_action=change_engine')).'</p>';
+	else if (($db_type == 'mysql' || $db_type == 'mysqli') && $forum_config['o_database_engine'] != 'MyISAM')
+			$alert_items['update_fail'] = '<p><strong>'.$lang_common['Database engine mismatch'].'</strong> '.sprintf($lang_common['Database engine mismatch alert'], 'InnoDB', 'MyISAM', forum_link('misc.php?admin_action=change_engine')).'</p>';
+
+	if (!empty($alert_items))
+		$admod_links['alert'] = '<span id="alert"><a href="'.forum_link($forum_url['admin_index']).'"><strong>'.$lang_common['New alerts'].'</strong></a></span>';
+
+	($hook = get_hook('hd_alert')) ? eval($hook) : null;
 }
-// END SUBST - <!-- forum_alert -->
+
+$tpl_main = str_replace('<!-- forum_admod -->', (!empty($admod_links)) ? '<p id="brd-admod">'.implode(' ', $admod_links).'</p>' : '', $tpl_main);
+
+// END SUBST - <!-- forum_admod -->
 
 
-// START SUBST - <!-- forum_announcement -->
-if ($forum_config['o_announcement'] == '1')
-	$tpl_main = str_replace('<!-- forum_announcement -->', '<div id="brd-announcement">'."\n\t".'<div class="userbox">'.($forum_config['o_announcement_heading'] != '' ? "\n\t\t".'<h1 class="msg-head">'.$forum_config['o_announcement_heading'].'</h1>' : '')."\n\t\t".$forum_config['o_announcement_message']."\n\t".'</div>'."\n".'</div>'."\n", $tpl_main);
-// END SUBST - <!-- forum_announcement -->
+// MAIN SECTION INTERFACE ELEMENT SUBSTITUTION
+$main_elements = array();
+
+// Top breadcrumbs
+$main_elements['<!-- forum_crumbs_top -->'] = (FORUM_PAGE != 'index') ? '<div id="brd-crumbs-top" class="crumbs gen-content">'."\n\t".'<p>'.generate_crumbs(false).'</p>'."\n".'</div>' : '';
+
+// Bottom breadcrumbs
+$main_elements['<!-- forum_crumbs_end -->'] = (FORUM_PAGE != 'index') ? '<div id="brd-crumbs-end" class="crumbs gen-content">'."\n\t".'<p>'.generate_crumbs(false).'</p>'."\n".'</div>' : '';
+
+// Main section heading
+$main_elements['<!-- forum_main_head -->'] =  '<div class="main-head">'."\n\t".'<h1 class="hn"><span>'.((isset($forum_page['main_head'])) ? $forum_page['main_head'] : end($forum_page['crumbs'])).(isset($forum_page['main_head_pages']) ? ' <small>'.$forum_page['main_head_pages'].'</small>' : '').'</span></h1>'."\n".'</div>';
+
+// Top pagination and post links
+$main_elements['<!-- forum_main_pagepost_top -->'] = (!empty($forum_page['page_post'])) ? '<div id="brd-pagepost-top" class="main-pagepost gen-content">'."\n\t".implode("\n\t", $forum_page['page_post'])."\n".'</div>' : '';
+
+// Bottom pagination and postlink
+$main_elements['<!-- forum_main_pagepost_end -->'] = (!empty($forum_page['page_post'])) ? '<div id="brd-pagepost-end" class="main-pagepost gen-content">'."\n\t".implode("\n\t", $forum_page['page_post'])."\n".'</div>' : '';
+
+// Main section menu e.g. profile menu
+$main_elements['<!-- forum_main_menu -->'] = (!empty($forum_page['main_menu'])) ? '<div class="main-menu gen-content">'."\n\t".'<ul>'."\n\t\t".implode("\n\t\t", $forum_page['main_menu'])."\n\t".'</ul>'."\n".'</div>' : '';
+
+// Main section menu e.g. profile menu
+if (substr(FORUM_PAGE, 0, 5) == 'admin' && FORUM_PAGE_TYPE != 'paged')
+{
+	$main_elements['<!-- forum_admin_menu -->'] = '<div class="admin-menu gen-content">'."\n\t".'<ul>'."\n\t\t".generate_admin_menu(false)."\n\t".'</ul>'."\n".'</div>';
+
+	$forum_page['admin_sub'] = generate_admin_menu(true);
+		$main_elements['<!-- forum_admin_submenu -->'] = ($forum_page['admin_sub'] != '') ? '<div class="admin-submenu gen-content">'."\n\t".'<ul>'."\n\t\t".$forum_page['admin_sub']."\n\t".'</ul>'."\n".'</div>' : '';
+}
+
+// Main section options bar
+$main_elements['<!-- forum_main_options -->'] = (!empty($forum_page['main_options'])) ? '<div class="main-options gen-content">'."\n\t\t".'<h2 class="hn"><span>'.$forum_page['main_options_head'].'</span></h2>'."\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_options']).'</p>'."\n\t".'</div>' : '';
+
+($hook = get_hook('hd_main_elements')) ? eval($hook) : null;
+
+$tpl_main = str_replace(array_keys($main_elements),  array_values($main_elements), $tpl_main);
+unset($main_elements);
+
+// END MAIN SECTION INTERFACE ELEMENT SUBSTITUTION
+
 
 ($hook = get_hook('hd_end')) ? eval($hook) : null;
 
-define('FORUM_HEADER', 1);
+if (!defined('FORUM_HEADER'))
+	define('FORUM_HEADER', 1);
