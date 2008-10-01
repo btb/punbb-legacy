@@ -29,31 +29,29 @@ define('FORUM_ROOT', './');
 require FORUM_ROOT.'include/essentials.php';
 
 // Bring in all the rewrite rules
-if (file_exists(FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/rewrite_rules.php'))
-	require FORUM_ROOT.'include/url/'.$forum_config['o_sef'].'/rewrite_rules.php';
-else
-	require FORUM_ROOT.'include/url/Default/rewrite_rules.php';
+require FORUM_ROOT.'include/rewrite_rules.php';
 
 // Allow extensions to create their own rewrite rules/modify existing rules
 ($hook = get_hook('re_rewrite_rules')) ? eval($hook) : null;
-
-// Lighttpd's 404 handler does not pass query string, so we need to create one and set it properly in $_GET
-if ((!isset($_SERVER['QUERY_STRING']) || empty($_SERVER['QUERY_STRING'])) && strpos($_SERVER['REQUEST_URI'], '?') !== false)
-{
-	$_SERVER['QUERY_STRING'] = parse_url($_SERVER['REQUEST_URI']);
-	$_SERVER['QUERY_STRING'] = isset($_SERVER['QUERY_STRING']['query']) ? $_SERVER['QUERY_STRING']['query'] : '';
-	parse_str($_SERVER['QUERY_STRING'], $_GET);
-}
 
 // We determine the path to the script, since we need to separate the path from the data to be rewritten
 $path_to_script = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
 if (substr($path_to_script, -1) != '/')
 	$path_to_script  = $path_to_script.'/';
 
+// Deal with IIS rewriting oddness
+if (isset($_SERVER['HTTP_X_ORIGINAL_URL']))
+	$_SERVER['REQUEST_URI'] = $_SERVER['HTTP_X_ORIGINAL_URL'];
+
 // We create our own request URI with the path removed and only the parts to rewrite included
 $request_uri = substr($_SERVER['REQUEST_URI'], strlen($path_to_script));
 if (strpos($request_uri, '?') !== false)
 	$request_uri = substr($request_uri, 0, strpos($request_uri, '?'));
+
+// Lighttpd's 404 handler does not pass query string, so we need to create one and set it properly in $_GET
+$_SERVER['QUERY_STRING'] = parse_url($_SERVER['REQUEST_URI']);
+$_SERVER['QUERY_STRING'] = isset($_SERVER['QUERY_STRING']['query']) ? $_SERVER['QUERY_STRING']['query'] : '';
+parse_str($_SERVER['QUERY_STRING'], $_GET);
 
 $rewritten_url = '';
 $url_parts = array();
@@ -99,7 +97,7 @@ if (empty($rewritten_url))
 	// Allow an extension to override the "Bad request" message with a custom 404 page
 	($hook = get_hook('re_page_not_found')) ? eval($hook) : null;
 
-	error('Page Not found (Error 404): The requested page <em>'.forum_htmlencode($request_uri).'</em> could not be found.');
+	exit('Bad request');
 }
 
 // We change $_SERVER['PHP_SELF'] so that it reflects the file we're actually loading

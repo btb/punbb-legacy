@@ -46,7 +46,80 @@ if ($forum_config['o_regs_allow'] == '0')
 
 $errors = array();
 
-if (isset($_POST['form_sent']))
+
+// User pressed the cancel button
+if (isset($_GET['cancel']))
+	redirect(forum_link($forum_url['index']), $lang_profile['Reg cancel redirect']);
+
+// User pressed agree but failed to tick checkbox
+else if (isset($_GET['agree']) && !isset($_GET['req_agreement']))
+	redirect(forum_link($forum_url['index']), $lang_profile['Reg cancel redirect']);
+
+// Show the rules
+else if ($forum_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_POST['form_sent']))
+{
+	// Setup form
+	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
+
+	// Setup breadcrumbs
+	$forum_page['crumbs'] = array(
+		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
+		array($lang_common['Register'], forum_link($forum_url['register'])),
+		$lang_common['Rules']
+	);
+
+	($hook = get_hook('rg_rules_pre_header_load')) ? eval($hook) : null;
+
+	define('FORUM_PAGE', 'rules');
+	require FORUM_ROOT.'header.php';
+
+	// START SUBST - <!-- forum_main -->
+	ob_start();
+
+	($hook = get_hook('rg_rules_output_start')) ? eval($hook) : null;
+
+	$forum_page['set_count'] = $forum_page['fld_count'] = 0;
+
+?>
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo $lang_profile['Reg rules head'] ?></span></h2>
+	</div>
+	<div class="main-content main-frm">
+		<div class="ct-box user-box">
+			<?php echo $forum_config['o_rules_message'] ?>
+		</div>
+		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo $base_url ?>/register.php">
+<?php ($hook = get_hook('rg_rules_pre_group')) ? eval($hook) : null; ?>
+			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
+<?php ($hook = get_hook('rg_rules_pre_agree_checkbox')) ? eval($hook) : null; ?>
+				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
+					<div class="sf-box checkbox">
+						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_agreement" value="1" /></span>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Agreement'] ?></span> <?php echo $lang_profile['Agreement label'] ?></label>
+					</div>
+				</div>
+<?php ($hook = get_hook('rg_rules_pre_group_end')) ? eval($hook) : null; ?>
+			</div>
+<?php ($hook = get_hook('rg_rules_group_end')) ? eval($hook) : null; ?>
+			<div class="frm-buttons">
+				<span class="submit"><input type="submit" name="agree" value="<?php echo $lang_profile['Agree'] ?>" /></span>
+				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" /></span>
+			</div>
+		</form>
+	</div>
+<?php
+
+	($hook = get_hook('rg_rules_end')) ? eval($hook) : null;
+
+	$tpl_temp = trim(ob_get_contents());
+	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
+	ob_end_clean();
+	// END SUBST - <!-- forum_main -->
+
+	require FORUM_ROOT.'footer.php';
+}
+
+else if (isset($_POST['form_sent']))
 {
 	($hook = get_hook('rg_register_form_submitted')) ? eval($hook) : null;
 
@@ -202,99 +275,6 @@ if (isset($_POST['form_sent']))
 		}
 	}
 }
-else if ($forum_config['o_rules'] == '1' && (!isset($_GET['agree']) || !isset($_GET['req_agreement'])))
-{
-	// User pressed the cancel button
-	if (isset($_GET['cancel']))
-		redirect(forum_link($forum_url['index']), $lang_profile['Reg cancel redirect']);
-
-	// User pressed agree but failed to tick checkbox
-	if (isset($_GET['agree']) && !isset($_GET['req_agreement']))
-		$errors[] = $lang_profile['Reg agree fail'];
-
-	// Setup form
-	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-
-	// Setup breadcrumbs
-	$forum_page['crumbs'] = array(
-		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-		array($lang_common['Register'], forum_link($forum_url['register'])),
-		$lang_common['Rules']
-	);
-
-	($hook = get_hook('rg_rules_pre_header_load')) ? eval($hook) : null;
-
-	define('FORUM_PAGE', 'rules');
-	require FORUM_ROOT.'header.php';
-
-	// START SUBST - <!-- forum_main -->
-	ob_start();
-
-	($hook = get_hook('rg_rules_output_start')) ? eval($hook) : null;
-
-	$forum_page['set_count'] = $forum_page['fld_count'] = 0;
-
-?>
-	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_profile['Reg rules head'] ?></span></h2>
-	</div>
-	<div class="main-content main-frm">
-<?php
-
-	// If there were any errors, show them
-	if (!empty($errors))
-	{
-		$forum_page['errors'] = array();
-		foreach ($errors as $cur_error)
-			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
-
-		($hook = get_hook('rg_pre_register_errors')) ? eval($hook) : null;
-
-?>
-		<div class="ct-box error-box">
-			<h2 class="hn"><span><?php echo $lang_profile['Register errors'] ?></span></h2>
-			<ul>
-				<?php echo implode("\n\t\t\t\t", $forum_page['errors'])."\n" ?>
-			</ul>
-		</div>
-<?php
-
-	}
-
-?>
-		<div class="ct-box user-box">
-			<?php echo $forum_config['o_rules_message']."\n" ?>
-		</div>
-		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo $base_url ?>/register.php">
-<?php ($hook = get_hook('rg_rules_pre_group')) ? eval($hook) : null; ?>
-			<div class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-<?php ($hook = get_hook('rg_rules_pre_agree_checkbox')) ? eval($hook) : null; ?>
-				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
-					<div class="sf-box checkbox">
-						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_agreement" value="1" /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Agreement'] ?></span> <?php echo $lang_profile['Agreement label'] ?></label>
-					</div>
-				</div>
-<?php ($hook = get_hook('rg_rules_pre_group_end')) ? eval($hook) : null; ?>
-			</div>
-<?php ($hook = get_hook('rg_rules_group_end')) ? eval($hook) : null; ?>
-			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="agree" value="<?php echo $lang_profile['Agree'] ?>" /></span>
-				<span class="cancel"><input type="submit" name="cancel" value="<?php echo $lang_common['Cancel'] ?>" /></span>
-			</div>
-		</form>
-	</div>
-<?php
-
-	($hook = get_hook('rg_rules_end')) ? eval($hook) : null;
-
-	$tpl_temp = trim(ob_get_contents());
-	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
-	ob_end_clean();
-	// END SUBST - <!-- forum_main -->
-
-	require FORUM_ROOT.'footer.php';
-}
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -395,13 +375,21 @@ ob_start();
 				</div>
 <?php endif;
 
-		$languages = get_language_packs();
+		$languages = array();
+		$d = dir(FORUM_ROOT.'lang');
+		while (($entry = $d->read()) !== false)
+		{
+			if ($entry != '.' && $entry != '..' && is_dir(FORUM_ROOT.'lang/'.$entry) && file_exists(FORUM_ROOT.'lang/'.$entry.'/common.php'))
+				$languages[] = $entry;
+		}
+		$d->close();
 
 		($hook = get_hook('rg_register_pre_language')) ? eval($hook) : null;
 
 		// Only display the language selection box if there's more than one language available
 		if (count($languages) > 1)
 		{
+			natcasesort($languages);
 
 ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
@@ -428,7 +416,6 @@ ob_start();
 		}
 
 		$select_timezone = isset($_POST['timezone']) ? $_POST['timezone'] : $forum_config['o_default_timezone'];
-		$select_dst = isset($_POST['form_sent']) ? isset($_POST['dst']) : $forum_config['o_default_dst'];
 
 		($hook = get_hook('rg_register_pre_timezone')) ? eval($hook) : null;
 
@@ -482,7 +469,7 @@ ob_start();
 <?php ($hook = get_hook('rg_register_pre_dst_checkbox')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
-						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="dst"<?php if ($select_dst) echo ' checked="checked"' ?> /></span>
+						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="dst" <?php echo(isset($_POST['dst']) ? 'checked="checked" ' : '') ?>/></span>
 						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_profile['Adjust for DST'] ?></span> <?php echo $lang_profile['DST label'] ?></label>
 					</div>
 				</div>

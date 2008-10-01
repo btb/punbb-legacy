@@ -74,13 +74,6 @@ if ($cur_forum['redirect_url'] != '')
 	exit;
 }
 
-// Determine the topic offset (based on $_GET['p'])
-$forum_page['num_pages'] = ceil($cur_forum['num_topics'] / $forum_user['disp_topics']);
-$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
-$forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
-$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($cur_forum['num_topics']));
-$forum_page['items_info'] = generate_items_info($lang_forum['Topics'], ($forum_page['start_from'] + 1), $cur_forum['num_topics']);
-
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_forum['moderators'] != '') ? unserialize($cur_forum['moderators']) : array();
 $forum_page['is_admmod'] = ($forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && array_key_exists($forum_user['username'], $mods_array))) ? true : false;
@@ -91,6 +84,13 @@ $forum_user['may_post'] = (($cur_forum['post_topics'] == '' && $forum_user['g_po
 // Get topic/forum tracking data
 if (!$forum_user['is_guest'])
 	$tracked_topics = get_tracked_topics();
+
+// Determine the topic offset (based on $_GET['p'])
+$forum_page['num_pages'] = ceil($cur_forum['num_topics'] / $forum_user['disp_topics']);
+$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
+$forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
+$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($cur_forum['num_topics']));
+$forum_page['items_info'] = generate_items_info($lang_forum['Topics'], ($forum_page['start_from'] + 1), $cur_forum['num_topics']);
 
 ($hook = get_hook('vf_modify_page_details')) ? eval($hook) : null;
 
@@ -145,7 +145,7 @@ else
 // Setup main options
 $forum_page['main_options_head'] = $lang_forum['Forum options'];
 $forum_page['main_options'] = array(
-	'feed'	=> '<span class="feed'.(empty($forum_page['main_options']) ? ' item1' : '').'"><a class="feed" href="'.forum_link($forum_url['forum_rss'], array($id, $cur_forum['sort_by'] == '1' ? 'posted' : 'last_post')).'">'.$lang_forum['RSS forum feed'].'</a></span>'
+	'feed'	=> '<span class="feed'.(empty($forum_page['main_options']) ? ' item1' : '').'"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>'
 );
 
 if (!$forum_user['is_guest'] && $forum_db->num_rows($result))
@@ -170,7 +170,9 @@ if ($forum_page['num_pages'] > 1)
 
 ($hook = get_hook('vf_pre_header_load')) ? eval($hook) : null;
 
-define('FORUM_ALLOW_INDEX', 1);
+// Allow indexing if this isn't a link with p=1
+if (!isset($_GET['p']) || $forum_page['page'] != 1)
+	define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'viewforum');
 require FORUM_ROOT.'header.php';

@@ -1,13 +1,28 @@
 <?php
-/**
- * Forum settings management page
- *
- * Allows administrators to control many of the settings used in the site.
- *
- * @copyright Copyright (C) 2008 PunBB.org, based on code copyright (C) 2002-2008 PunBB.org
- * @license http://www.gnu.org/licenses/gpl.html GPL version 2 or higher
- * @package PunBB
- */
+/***********************************************************************
+
+  Copyright (C) 2002-2008  PunBB
+
+  Partially based on code copyright (C) 2008  FluxBB.org
+
+  This file is part of PunBB.
+
+  PunBB is free software; you can redistribute it and/or modify it
+  under the terms of the GNU General Public License as published
+  by the Free Software Foundation; either version 2 of the License,
+  or (at your option) any later version.
+
+  PunBB is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+  MA  02111-1307  USA
+
+************************************************************************/
 
 
 if (!defined('FORUM_ROOT'))
@@ -53,11 +68,8 @@ if (isset($_POST['form_sent']))
 				message($lang_common['Bad request']);
 			if (!file_exists(FORUM_ROOT.'lang/'.$form['default_lang'].'/common.php'))
 				message($lang_common['Bad request']);
-			if (!file_exists(FORUM_ROOT.'include/url/'.$form['sef'].'/forum_urls.php'))
+			if (!file_exists(FORUM_ROOT.'include/url/'.$form['sef'].'.php'))
 				message($lang_common['Bad request']);
-
-			if (!isset($form['default_dst']) || $form['default_dst'] != '1')
-				$form['default_dst'] = '0';
 
 			$form['timeout_visit'] = intval($form['timeout_visit']);
 			$form['timeout_online'] = intval($form['timeout_online']);
@@ -318,8 +330,18 @@ if (!$section || $section == 'setup')
 							<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[default_style]">
 <?php
 
-	$styles = get_style_packs();
-	foreach ($styles as $temp)
+	$styles = array();
+	$d = dir(FORUM_ROOT.'style');
+	while (($entry = $d->read()) !== false)
+	{
+		if ($entry != '.' && $entry != '..' && is_dir(FORUM_ROOT.'style/'.$entry) && file_exists(FORUM_ROOT.'style/'.$entry.'/'.$entry.'.php'))
+			$styles[] = $entry;
+	}
+	$d->close();
+
+	@natcasesort($styles);
+
+	while (list(, $temp) = @each($styles))
 	{
 		if ($forum_config['o_default_style'] == $temp)
 			echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
@@ -354,8 +376,18 @@ if (!$section || $section == 'setup')
 							<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[default_lang]">
 <?php
 
-		$languages = get_language_packs();
-		foreach ($languages as $temp)
+		$languages = array();
+		$d = dir(FORUM_ROOT.'lang');
+		while (($entry = $d->read()) !== false)
+		{
+			if ($entry != '.' && $entry != '..' && is_dir(FORUM_ROOT.'lang/'.$entry) && file_exists(FORUM_ROOT.'lang/'.$entry.'/common.php'))
+				$languages[] = $entry;
+		}
+		$d->close();
+
+		@natcasesort($languages);
+
+		while (list(, $temp) = @each($languages))
 		{
 			if ($forum_config['o_default_lang'] == $temp)
 				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.$temp.'</option>'."\n";
@@ -415,13 +447,6 @@ if (!$section || $section == 'setup')
 								<option value="13"<?php if ($forum_config['o_default_timezone'] == 13) echo ' selected="selected"' ?>><?php echo $lang_profile['UTC+13:00'] ?></option>
 								<option value="14"<?php if ($forum_config['o_default_timezone'] == 14) echo ' selected="selected"' ?>><?php echo $lang_profile['UTC+14:00'] ?></option>
 							</select></span>
-						</div>
-					</div>
-<?php ($hook = get_hook('aop_setup_pre_default_dst')) ? eval($hook) : null; ?>
-					<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
-						<div class="sf-box checkbox">
-							<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="form[default_dst]" value="1" <?php if ($forum_config['o_default_dst'] == 1) echo 'checked="checked" ' ?>/></span>
-							<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_admin_settings['Adjust for DST'] ?></span> <?php echo $lang_admin_settings['DST label'] ?></label>
 						</div>
 					</div>
 <?php ($hook = get_hook('aop_setup_pre_time_format')) ? eval($hook) : null; ?>
@@ -572,9 +597,20 @@ if (!$section || $section == 'setup')
 							<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="form[sef]">
 <?php
 
-		$url_schemes = get_scheme_packs();
-		foreach ($url_schemes as $temp)
+		$url_schemes = array();
+		$d = dir(FORUM_ROOT.'include/url');
+		while (($entry = $d->read()) !== false)
 		{
+			if ($entry != '.' && $entry != '..' && substr($entry, strlen($entry)-4) == '.php')
+				$url_schemes[] = $entry;
+		}
+		$d->close();
+
+		@natcasesort($url_schemes);
+
+		while (list(, $temp) = @each($url_schemes))
+		{
+			$temp = substr($temp, 0, -4);
 			if ($forum_config['o_sef'] == $temp)
 				echo "\t\t\t\t\t\t\t\t".'<option value="'.$temp.'" selected="selected">'.str_replace('_', ' ', $temp).'</option>'."\n";
 			else

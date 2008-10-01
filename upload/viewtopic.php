@@ -76,34 +76,29 @@ if ($pid)
 }
 
 // If action=new, we redirect to the first new post (if any)
-else if ($action == 'new')
+else if ($action == 'new' && !$forum_user['is_guest'])
 {
-	if (!$forum_user['is_guest'])
-	{
-		// We need to check if this topic has been viewed recently by the user
-		$tracked_topics = get_tracked_topics();
-		$last_viewed = isset($tracked_topics['topics'][$id]) ? $tracked_topics['topics'][$id] : $forum_user['last_visit'];
+	// We need to check if this topic has been viewed recently by the user
+	$tracked_topics = get_tracked_topics();
+	$last_viewed = isset($tracked_topics['topics'][$id]) ? $tracked_topics['topics'][$id] : $forum_user['last_visit'];
 
-		($hook = get_hook('vt_find_new_post')) ? eval($hook) : null;
+	($hook = get_hook('vt_find_new_post')) ? eval($hook) : null;
 
-		$query = array(
-			'SELECT'	=> 'MIN(p.id)',
-			'FROM'		=> 'posts AS p',
-			'WHERE'		=> 'p.topic_id='.$id.' AND p.posted>'.$last_viewed
-		);
+	$query = array(
+		'SELECT'	=> 'MIN(p.id)',
+		'FROM'		=> 'posts AS p',
+		'WHERE'		=> 'p.topic_id='.$id.' AND p.posted>'.$last_viewed
+	);
 
-		($hook = get_hook('vt_qr_get_first_new_post')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		$first_new_post_id = $forum_db->result($result);
+	($hook = get_hook('vt_qr_get_first_new_post')) ? eval($hook) : null;
+	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$first_new_post_id = $forum_db->result($result);
 
-		if ($first_new_post_id)
-		{
-			header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['post'], $first_new_post_id)));
-			exit;
-		}
-	}
+	if ($first_new_post_id)
+		header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['post'], $first_new_post_id)));
+	else	// If there is no new post, we go to the last post
+		header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['topic_last_post'], $id)));
 
-	header('Location: '.str_replace('&amp;', '&', forum_link($forum_url['topic_last_post'], $id)));
 	exit;
 }
 
@@ -163,13 +158,6 @@ $cur_topic = $forum_db->fetch_assoc($result);
 
 ($hook = get_hook('vt_modify_topic_info')) ? eval($hook) : null;
 
-// Determine the post offset (based on $_GET['p'])
-$forum_page['num_pages'] = ceil(($cur_topic['num_replies'] + 1) / $forum_user['disp_posts']);
-$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
-$forum_page['start_from'] = $forum_user['disp_posts'] * ($forum_page['page'] - 1);
-$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_posts']), ($cur_topic['num_replies'] + 1));
-$forum_page['items_info'] =  generate_items_info($lang_topic['Posts'], ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
-
 // Sort out who the moderators are and if we are currently a moderator (or an admin)
 $mods_array = ($cur_topic['moderators'] != '') ? unserialize($cur_topic['moderators']) : array();
 $forum_page['is_admmod'] = ($forum_user['g_id'] == FORUM_ADMIN || ($forum_user['g_moderator'] == '1' && array_key_exists($forum_user['username'], $mods_array))) ? true : false;
@@ -187,6 +175,13 @@ if (!$forum_user['is_guest'])
 	$tracked_topics['topics'][$id] = time();
 	set_tracked_topics($tracked_topics);
 }
+
+// Determine the post offset (based on $_GET['p'])
+$forum_page['num_pages'] = ceil(($cur_topic['num_replies'] + 1) / $forum_user['disp_posts']);
+$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
+$forum_page['start_from'] = $forum_user['disp_posts'] * ($forum_page['page'] - 1);
+$forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_posts']), ($cur_topic['num_replies'] + 1));
+$forum_page['items_info'] =  generate_items_info($lang_topic['Posts'], ($forum_page['start_from'] + 1), ($cur_topic['num_replies'] + 1));
 
 ($hook = get_hook('vt_modify_page_details')) ? eval($hook) : null;
 
@@ -254,8 +249,8 @@ if ($forum_page['num_pages'] > 1)
 
 ($hook = get_hook('vt_pre_header_load')) ? eval($hook) : null;
 
-// Allow indexing if this is a permalink
-if (!$pid)
+// Allow indexing if this isn't a permalink and it isn't a link with p=1
+if (!$pid && (!isset($_GET['p']) || $forum_page['page'] != 1))
 	define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'viewtopic');
@@ -601,9 +596,9 @@ $forum_page['main_head_options'] = array();
 if ($forum_config['p_message_bbcode'] == '1')
 	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="item1"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf($lang_common['Help page'], $lang_common['BBCode']).'">'.$lang_common['BBCode'].'</a></span>';
 if ($forum_config['p_message_img_tag'] == '1')
-	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="item1"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'">'.$lang_common['Images'].'</a></span>';
+	$forum_page['text_options']['img'] = '<span><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'">'.$lang_common['Images'].'</a></span>';
 if ($forum_config['o_smilies'] == '1')
-	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="item1"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
+	$forum_page['text_options']['smilies'] = '<span><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
 
 ($hook = get_hook('vt_quickpost_pre_display')) ? eval($hook) : null;
 

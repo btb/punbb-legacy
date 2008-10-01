@@ -54,7 +54,6 @@ $lang_misc = array(
 'Move topic'				=>	'Move topic',
 'Move topics'				=>	'Move topics',
 'Merge topics'				=>	'Merge topics',
-'Delete topic'				=>	'Delete topic',
 'Delete topics'				=>	'Delete topics',
 'To new forum'				=>	'to a new forum',
 'Move to'					=>	'Destination forum:',
@@ -66,9 +65,7 @@ $lang_misc = array(
 'Move topic redirect'		=>	'Topic moved. Redirecting …',
 'Move topics redirect'		=>	'Topics moved. Redirecting …',
 'Merge topics redirect'		=>	'Topics merged. Redirecting …',
-'Delete topic comply'		=>	'Are you sure you want to delete the selected topic?',
 'Delete topics comply'		=>	'Are you sure you want to delete all the selected topics?',
-'Delete topic redirect'		=>	'Topic deleted. Redirecting …',
 'Delete topics redirect'	=>	'Topics deleted. Redirecting …',
 'Open topic redirect'		=>	'Topic opened. Redirecting …',
 'Open topics redirect'		=>	'Topics opened. Redirecting …',
@@ -90,13 +87,6 @@ $lang_misc = array(
 'Confirm topic split'		=>	'Confirm splitting of all selected posts into a new topic',
 'Delete posts redirect'		=>	'Posts deleted. Redirecting …',
 'Split posts redirect'		=>	'Posts split into a new topic. Redirecting …',
-'No posts selected'			=>	'You must select at least one post.',
+'No posts selected'			=>	'You must select at least one post.'
 
-// Change database engine
-'Change database engine'				=>	'Change database engine',
-'Perform engine conversion'				=>	'Perform database engine conversion:',
-'Perform engine conversion label'		=>	'Perform database engine conversion from %1$s to %2$s.',
-'Database engine conversion successful'	=>	'The database engine has been converted from %1$s to %2$s.',
-'Engine conversion not supported'		=>	'The database layer you selected does not support converting the engine.',
-'Engine already converted'				=>	'The database is already using the recommended engine.'
 );

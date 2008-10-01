@@ -127,9 +127,9 @@ if (isset($_POST['form_sent']))
 	// Make sure form_user is correct
 	if (($forum_user['is_guest'] && $_POST['form_user'] != 'Guest') || (!$forum_user['is_guest'] && $_POST['form_user'] != $forum_user['username']))
 		message($lang_common['Bad request']);
-	
+
 	// Flood protection
-	if (!isset($_POST['preview']) && $forum_user['last_post'] != '' && (time() - $forum_user['last_post']) < $forum_user['g_post_flood'] && (time() - $forum_user['last_post']) >= 0)
+	if (!$forum_user['is_guest'] && !isset($_POST['preview']) && $forum_user['last_post'] != '' && (time() - $forum_user['last_post']) < $forum_user['g_post_flood'] && (time() - $forum_user['last_post']) >= 0)
 		$errors[] = sprintf($lang_post['Flood'], $forum_user['g_post_flood']);
 
 	// If it's a new topic
@@ -142,7 +142,7 @@ if (isset($_POST['form_sent']))
 		else if (utf8_strlen($subject) > 70)
 			$errors[] = $lang_post['Too long subject'];
 		else if ($forum_config['p_subject_all_caps'] == '0' && utf8_strtoupper($subject) == $subject && !$forum_page['is_admmod'])
-			$errors[] = $lang_post['All caps subject'];
+			$subject = utf8_ucwords(utf8_strtolower($subject));
 	}
 
 	// If the user is logged in we get the username and e-mail from $forum_user
@@ -183,7 +183,7 @@ if (isset($_POST['form_sent']))
 	if (utf8_strlen($message) > FORUM_MAX_POSTSIZE)
 		$errors[] = $lang_post['Too long message'];
 	else if ($forum_config['p_message_all_caps'] == '0' && utf8_strtoupper($message) == $message && !$forum_page['is_admmod'])
-		$errors[] = $lang_post['All caps message'];
+		$message = utf8_ucwords(utf8_strtolower($message));
 
 	// Validate BBCode syntax
 	if ($forum_config['p_message_bbcode'] == '1' || $forum_config['o_make_links'] == '1')
@@ -264,7 +264,7 @@ if ($tid && isset($_GET['qid']))
 	$qid = intval($_GET['qid']);
 	if ($qid < 1)
 		message($lang_common['Bad request']);
-	
+
 	// Get the quote and quote poster
 	$query = array(
 		'SELECT'	=> 'p.poster, p.message',
@@ -306,7 +306,6 @@ if ($tid && isset($_GET['qid']))
 	else
 		$forum_page['quote'] = '> '.$q_poster.' '.$lang_common['wrote'].':'."\n\n".'> '.$q_message."\n";
 }
-
 
 
 // Setup form

@@ -161,8 +161,6 @@ if (isset($_GET['ip_stats']))
 	($hook = get_hook('aus_ip_stats_end')) ? eval($hook) : null;
 
 	$tpl_temp = trim(ob_get_contents());
-
-
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -364,8 +362,6 @@ else if (isset($_GET['show_users']))
 	($hook = get_hook('aus_show_users_end')) ? eval($hook) : null;
 
 	$tpl_temp = trim(ob_get_contents());
-
-
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -468,7 +464,7 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 				</div>
 			</fieldset>
 			<div class="frm-buttons">
-				<span class="submit"><input type="submit" name="delete_users_comply" value="<?php echo $lang_admin_users['Confirm delete'] ?>" /></span>
+				<span class="submit"><input type="submit" name="delete_users_comply" value="<?php echo $lang_admin_users['Delete'] ?>" /></span>
 				<span class="cancel"><input type="submit" name="delete_users_cancel" value="<?php echo $lang_admin_common['Cancel'] ?>" /></span>
 			</div>
 		</form>
@@ -478,8 +474,6 @@ else if (isset($_POST['delete_users']) || isset($_POST['delete_users_comply']) |
 	($hook = get_hook('aus_delete_users_end')) ? eval($hook) : null;
 
 	$tpl_temp = trim(ob_get_contents());
-
-
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -644,8 +638,6 @@ else if (isset($_POST['ban_users']) || isset($_POST['ban_users_comply']))
 	($hook = get_hook('aus_ban_users_end')) ? eval($hook) : null;
 
 	$tpl_temp = trim(ob_get_contents());
-
-
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -786,8 +778,6 @@ else if (isset($_POST['change_group']) || isset($_POST['change_group_comply']) |
 	($hook = get_hook('aus_change_group_end')) ? eval($hook) : null;
 
 	$tpl_temp = trim(ob_get_contents());
-
-
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -937,7 +927,7 @@ else if (isset($_POST['find_user']))
 			++$forum_page['item_count'];
 
 			// This script is a special case in that we want to display "Not verified" for non-verified users
-			if (($user_data['g_id'] == '' || $user_data['g_id'] == FORUM_UNVERIFIED) && $user_data['title'] != $lang_common['Banned'])
+			if (($user_data['g_id'] == '' || $user_data['g_id'] == FORUM_UNVERIFIED) && $user_title != $lang_common['Banned'])
 				$user_title = '<strong>'.$lang_admin_users['Not verified'].'</strong>';
 			else
 				$user_title = get_title($user_data);

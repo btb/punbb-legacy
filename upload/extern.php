@@ -140,6 +140,8 @@ function output_rss($feed)
 	else
 		echo "\t\t".'<generator>PunBB</generator>'."\r\n";
 
+	($hook = get_hook('ex_add_new_rss_info')) ? eval($hook) : null;
+
 	$num_items = count($feed['items']);
 	for ($i = 0; $i < $num_items; ++$i)
 	{
@@ -150,6 +152,9 @@ function output_rss($feed)
 		echo "\t\t\t".'<author><![CDATA[dummy@example.com ('.escape_cdata($feed['items'][$i]['author']).')]]></author>'."\r\n";
 		echo "\t\t\t".'<pubDate>'.gmdate('r', $feed['items'][$i]['pubdate']).'</pubDate>'."\r\n";
 		echo "\t\t\t".'<guid>'.$feed['items'][$i]['link'].'</guid>'."\r\n";
+
+		($hook = get_hook('ex_add_new_rss_item_info')) ? eval($hook) : null;
+
 		echo "\t\t".'</item>'."\r\n";
 	}
 
@@ -175,13 +180,15 @@ function output_atom($feed)
 	echo '<feed xmlns="http://www.w3.org/2005/Atom">'."\r\n";
 
 	echo "\t".'<title type="html"><![CDATA['.escape_cdata($feed['title']).']]></title>'."\r\n";
-	echo "\t".'<link rel="self" href="'.get_current_url().'"/>'."\r\n";
+	echo "\t".'<link rel="self" href="'.forum_htmlencode(get_current_url()).'"/>'."\r\n";
 	echo "\t".'<updated>'.gmdate('Y-m-d\TH:i:s\Z', count($feed['items']) ? $feed['items'][0]['pubdate'] : time()).'</updated>'."\r\n";
 
 	if ($forum_config['o_show_version'] == '1')
 		echo "\t".'<generator version="'.$forum_config['o_cur_version'].'">PunBB</generator>'."\r\n";
 	else
 		echo "\t".'<generator>PunBB</generator>'."\r\n";
+
+	($hook = get_hook('ex_add_new_atom_info')) ? eval($hook) : null;
 
 	echo "\t".'<id>'.$feed['link'].'</id>'."\r\n";
 
@@ -198,6 +205,9 @@ function output_atom($feed)
 		echo "\t\t\t\t".'<name><![CDATA['.escape_cdata($feed['items'][$i]['author']).']]></name>'."\r\n";
 		echo "\t\t\t".'</author>'."\r\n";
 		echo "\t\t\t".'<updated>'.gmdate('Y-m-d\TH:i:s\Z', $feed['items'][$i]['pubdate']).'</updated>'."\r\n";
+
+		($hook = get_hook('ex_add_new_atom_item_info')) ? eval($hook) : null;
+
 		echo "\t\t\t".'<id>'.$feed['items'][$i]['link'].'</id>'."\r\n";
 		echo "\t\t".'</entry>'."\r\n";
 	}
@@ -223,6 +233,8 @@ function output_xml($feed)
 	echo '<source>'."\r\n";
 	echo "\t".'<url>'.$feed['link'].'</url>'."\r\n";
 
+	($hook = get_hook('ex_add_new_xml_info')) ? eval($hook) : null;
+
 	$forum_tag = ($feed['type'] == 'posts') ? 'post' : 'topic';
 
 	$num_items = count($feed['items']);
@@ -235,6 +247,8 @@ function output_xml($feed)
 		echo "\t\t".'<content><![CDATA['.escape_cdata($feed['items'][$i]['description']).']]></content>'."\r\n";
 		echo "\t\t".'<author><![CDATA['.escape_cdata($feed['items'][$i]['author']).']]></author>'."\r\n";
 		echo "\t\t".'<posted>'.gmdate('r', $feed['items'][$i]['pubdate']).'</posted>'."\r\n";
+
+		($hook = get_hook('ex_add_new_xml_item_info')) ? eval($hook) : null;
 
 		echo "\t".'</'.$forum_tag.'>'."\r\n";
 	}
@@ -272,16 +286,20 @@ function output_html($feed)
 if (!isset($_GET['action']) || $_GET['action'] == 'feed')
 {
 	// Determine what type of feed to output
-    $feed_types = array('rss', 'atom', 'xml', 'html');
-    
-    ($hook = get_hook('ex_new_feed_type')) ? eval($hook) : null;    
-    
-    if (isset($_GET['type']) && is_scalar($_GET['type']) && in_array($_GET['type'], $feed_types))
-        $type = $_GET['type'];    
-    else
-        $type = 'html';
-	
-    $forum_sql = '';
+	$type = 'html';
+	if (isset($_GET['type']) && is_scalar($_GET['type']))
+	{
+		if (strtolower($_GET['type']) == 'rss')
+			$type = 'rss';
+		else if (strtolower($_GET['type']) == 'atom')
+			$type = 'atom';
+		else if (strtolower($_GET['type']) == 'xml')
+			$type = 'xml';
+	}
+
+	($hook = get_hook('ex_set_syndication_type')) ? eval($hook) : null;
+
+	$forum_sql = '';
 
 	// Was a topic ID supplied?
 	if (isset($_GET['tid']))
@@ -358,7 +376,7 @@ if (!isset($_GET['action']) || $_GET['action'] == 'feed')
 	}
 	else
 	{
-		// Was any specific forum ID's supplied?
+		// Were any forum ID's supplied?
 		if (isset($_GET['fid']) && is_scalar($_GET['fid']) && $_GET['fid'] != '')
 		{
 			$fids = explode(',', trim($_GET['fid']));
@@ -386,7 +404,6 @@ if (!isset($_GET['action']) || $_GET['action'] == 'feed')
 			'items'			=>	array(),
 			'type'			=>	'topics'
 		);
-
 
 		if (isset($_GET['type']) && is_scalar($_GET['type']) && strtoupper($_GET['type']) == 'RSS')
 			$show = 15;

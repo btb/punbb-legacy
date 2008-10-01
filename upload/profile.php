@@ -225,7 +225,7 @@ if ($action == 'change_pass')
 			require FORUM_ROOT.'footer.php';
 		}
 	}
-	
+
 	// Make sure we are allowed to change this user's password
 	if ($forum_user['id'] != $id &&
 		$forum_user['g_id'] != FORUM_ADMIN &&
@@ -431,8 +431,7 @@ else if ($action == 'change_email')
 			message($lang_profile['E-mail updated']);
 		}
 	}
-	
-	if (isset($_POST['form_sent']))
+	else if (isset($_POST['form_sent']))
 	{
 		($hook = get_hook('pf_change_email_normal_form_submitted')) ? eval($hook) : null;
 
@@ -1481,9 +1480,6 @@ else
 
 	if ($section == 'about')
 	{
-		// Check for use of incorrect URLs
-		confirm_current_url(isset($_GET['section']) ? forum_link($forum_url['profile_about'], $id) : forum_link($forum_url['user'], $id));
-		
 		// Setup user identification
 		$forum_page['user_ident'] = array();
 
@@ -1552,15 +1548,15 @@ else
 			$forum_page['user_private']['ip']= '<li><span>'.$lang_profile['IP'].' <a href="'.forum_link($forum_url['get_host'], forum_htmlencode($user['registration_ip'])).'">'.forum_htmlencode($user['registration_ip']).'</a></span></li>';
 
 		// Setup user messaging
-		if ($user['jabber'] != '')
+		if ($user['jabber'] !='')
 			$forum_page['user_contact']['jabber'] = '<li><span><strong>'.$lang_profile['Jabber'].'</strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['jabber']) : $user['jabber']).'</span></li>';
-		if ($user['icq'] != '')
+		if ($user['icq'] !='')
 			$forum_page['user_contact']['icq'] = '<li><span><strong>'.$lang_profile['ICQ'].'</strong> '.forum_htmlencode($user['icq']).'</span></li>';
-		if ($user['msn'] != '')
+		if ($user['msn'] !='')
 			$forum_page['user_contact']['msn'] = '<li><span><strong>'.$lang_profile['MSN'].'</strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['msn']) : $user['msn']).'</span></li>';
-		if ($user['aim'] != '')
+		if ($user['aim'] !='')
 			$forum_page['user_contact']['aim'] = '<li><span><strong>'.$lang_profile['AOL IM'].'</strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['aim']) : $user['aim']).'</span></li>';
-		if ($user['yahoo'] != '')
+		if ($user['yahoo'] !='')
 			$forum_page['user_contact']['yahoo'] = '<li><span><strong>'.$lang_profile['Yahoo'].'</strong> '.forum_htmlencode(($forum_config['o_censoring'] == '1') ? censor_words($user['yahoo']) : $user['yahoo']).'</span></li>';
 
 		// Setup signature demo
@@ -1575,7 +1571,7 @@ else
 			$forum_page['user_activity']['search_topics'] = '<span'.(empty($forum_page['user_activity']) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your topics'] : sprintf($lang_profile['View user topics'], forum_htmlencode($user['username']))).'</a></span>';
 		}
 
-		if (($forum_page['own_profile'] || $forum_user['g_id'] == FORUM_ADMIN) && $forum_config['o_subscriptions'] == '1')
+		if (($forum_page['own_profile'] || $forum_user['is_admmod']) && $forum_config['o_subscriptions'] == '1')
 			 $forum_page['user_activity']['search_subs'] = '<span'.(empty($forum_page['user_activity']) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['search_subscriptions'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your subscriptions'] : sprintf($lang_profile['View user subscriptions'], forum_htmlencode($user['username']))).'</a></span>';
 
 		// Setup user options
@@ -1672,9 +1668,6 @@ else
 
 	else if ($section == 'identity')
 	{
-		// Check for use of incorrect URLs
-		confirm_current_url(forum_link($forum_url['profile_identity'], $id));
-		
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
 		$forum_page['form_action'] = forum_link($forum_url['profile_identity'], $id);
@@ -1710,14 +1703,14 @@ else
 	<div class="main-content main-frm">
 <?php
 
-		// If there were any errors, show them
-		if (!empty($errors))
-		{
-			$forum_page['errors'] = array();
+	// If there were any errors, show them
+	if (!empty($errors))
+	{
+		$forum_page['errors'] = array();
 			foreach ($errors as $cur_error)
-				$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
+			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
-			($hook = get_hook('pf_change_details_identity_pre_errors')) ? eval($hook) : null;
+		($hook = get_hook('pf_change_details_identity_pre_errors')) ? eval($hook) : null;
 
 ?>
 		<div class="ct-box error-box">
@@ -1728,7 +1721,7 @@ else
 		</div>
 <?php
 
-		}
+	}
 
 if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box error-box">
 			<p class="important"><?php printf($lang_common['Required warn'], '<em>'.$lang_common['Required'].'</em>') ?></p>
@@ -1861,9 +1854,23 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 
 	else if ($section == 'settings')
 	{
-		
-		$forum_page['styles'] = get_style_packs();
-		$forum_page['languages'] = get_language_packs();
+		$forum_page['styles'] = array();
+		$forum_page['d'] = dir(FORUM_ROOT.'style');
+		while (($forum_page['entry'] = $forum_page['d']->read()) !== false)
+		{
+			if ($forum_page['entry'] != '.' && $forum_page['entry'] != '..' && is_dir(FORUM_ROOT.'style/'.$forum_page['entry']) && file_exists(FORUM_ROOT.'style/'.$forum_page['entry'].'/'.$forum_page['entry'].'.php'))
+				$forum_page['styles'][] = $forum_page['entry'];
+		}
+		$forum_page['d']->close();
+
+		$forum_page['languages'] = array();
+		$forum_page['d'] = dir(FORUM_ROOT.'lang');
+		while (($forum_page['entry'] = $forum_page['d']->read()) !== false)
+		{
+			if ($forum_page['entry'] != '.' && $forum_page['entry'] != '..' && is_dir(FORUM_ROOT.'lang/'.$forum_page['entry']) && file_exists(FORUM_ROOT.'lang/'.$forum_page['entry'].'/common.php'))
+				$forum_page['languages'][] = $forum_page['entry'];
+		}
+		$forum_page['d']->close();
 
 		// Setup the form
 		$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -1906,6 +1913,7 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 		// Only display the language selection box if there's more than one language available
 		if (count($forum_page['languages']) > 1)
 		{
+			natcasesort($forum_page['languages']);
 
 ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
@@ -2046,6 +2054,8 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 			echo "\t\t\t\t".'<input type="hidden" name="form[style]" value="'.$forum_page['styles'][0].'" />'."\n";
 		else if (count($forum_page['styles']) > 1)
 		{
+			natcasesort($forum_page['styles']);
+
 ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box select">
@@ -2300,9 +2310,6 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 
 	else if ($section == 'avatar' && $forum_config['o_avatars'] == '1')
 	{
-		// Check for use of incorrect URLs
-		confirm_current_url(forum_link($forum_url['profile_avatar'], $id));
-		
 		$forum_page['avatar_markup'] = generate_avatar_markup($id);
 
 		// Setup the form
@@ -2426,9 +2433,6 @@ if ($forum_page['has_required']): ?>		<div id="req-msg" class="req-warn ct-box e
 
 	else if ($section == 'admin')
 	{
-		// Check for use of incorrect URLs
-		confirm_current_url(forum_link($forum_url['profile_admin'], $id));
-		
 		if ($forum_user['g_id'] != FORUM_ADMIN && ($forum_user['g_moderator'] != '1' || $forum_user['g_mod_ban_users'] == '0' || $forum_user['id'] == $id))
 			message($lang_common['Bad request']);
 

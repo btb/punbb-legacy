@@ -45,7 +45,6 @@ $forum_page['username'] = (isset($_GET['username']) && $_GET['username'] != '-' 
 $forum_page['show_group'] = (!isset($_GET['show_group']) || intval($_GET['show_group']) < -1 && intval($_GET['show_group']) > 2) ? -1 : intval($_GET['show_group']);
 $forum_page['sort_by'] = (!isset($_GET['sort_by']) || $_GET['sort_by'] != 'username' && $_GET['sort_by'] != 'registered' && ($_GET['sort_by'] != 'num_posts' || !$forum_page['show_post_count'])) ? 'username' : $_GET['sort_by'];
 $forum_page['sort_dir'] = (!isset($_GET['sort_dir']) || $_GET['sort_dir'] != 'ASC' && $_GET['sort_dir'] != 'DESC') ? 'ASC' : strtoupper($_GET['sort_dir']);
-$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1) ? 1 : intval($_GET['p']);
 
 
 // Create any SQL for the WHERE clause
@@ -121,7 +120,9 @@ if ($forum_page['num_pages'] > 1)
 
 ($hook = get_hook('ul_pre_header_load')) ? eval($hook) : null;
 
-define('FORUM_ALLOW_INDEX', 1);
+// Allow indexing if this isn't a link with p=1
+if (!isset($_GET['p']) || $forum_page['page'] != 1)
+	define('FORUM_ALLOW_INDEX', 1);
 
 define('FORUM_PAGE', 'userlist');
 require FORUM_ROOT.'header.php';

@@ -259,6 +259,10 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 		// Reset counter
 		$forum_page['group_count'] = $forum_page['item_count'] = 0;
 
+		// The rest of the form is for non-guest groups only
+		if ($group['g_id'] != FORUM_GUEST)
+		{
+
 ?>
 			<div class="content-head">
 				<h3 class="hn"><span><?php echo $lang_admin_groups['Group flood head'] ?></span></h3>
@@ -280,33 +284,20 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="search_flood" size="5" maxlength="4" value="<?php echo $group['g_search_flood'] ?>" /></span>
 					</div>
 				</div>
-<?php
-
-		($hook = get_hook('agr_add_edit_group_pre_email_interval')) ? eval($hook) : null;
-		
-		// The rest of the form is for non-guest groups only
-		if ($group['g_id'] != FORUM_GUEST)
-		{
-
-?>
+<?php ($hook = get_hook('agr_add_edit_group_pre_email_interval')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_groups['Email flood interval label'] ?></span> <small><?php echo $lang_admin_groups['Email flood interval help'] ?></small></label><br />
 						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="email_flood" size="5" maxlength="4" value="<?php echo $group['g_email_flood'] ?>" /></span>
 					</div>
 				</div>
-<?php
-
-		}
-		
-		($hook = get_hook('agr_add_edit_group_pre_flood_fieldset_end')) ? eval($hook) : null;
-
-?>
+<?php ($hook = get_hook('agr_add_edit_group_pre_flood_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 <?php
 
-		($hook = get_hook('agr_add_edit_group_flood_fieldset_end')) ? eval($hook) : null;
+			($hook = get_hook('agr_add_edit_group_flood_fieldset_end')) ? eval($hook) : null;
 
+		}
 	}
 
 ?>
@@ -320,8 +311,6 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 	($hook = get_hook('agr_add_edit_group_end')) ? eval($hook) : null;
 
 	$tpl_temp = trim(ob_get_contents());
-
-
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -668,8 +657,6 @@ else if (isset($_GET['del_group']))
 	($hook = get_hook('agr_del_group_end')) ? eval($hook) : null;
 
 	$tpl_temp = trim(ob_get_contents());
-
-
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -862,8 +849,6 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 ($hook = get_hook('agr_end')) ? eval($hook) : null;
 
 $tpl_temp = trim(ob_get_contents());
-
-
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_main -->

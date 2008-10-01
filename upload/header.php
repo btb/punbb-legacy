@@ -109,8 +109,8 @@ if (FORUM_PAGE == 'index')
 }
 else if (FORUM_PAGE == 'viewforum')
 {
-	$forum_head['rss'] = '<link rel="alternate" type="application/rss+xml" href="'.forum_link($forum_url['forum_rss'], array($id, $cur_forum['sort_by'] == '1' ? 'posted' : 'last_post')).'" title="RSS" />';
-	$forum_head['atom'] = '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['forum_atom'], array($id, $cur_forum['sort_by'] == '1' ? 'posted' : 'last_post')).'" title="ATOM" />';
+	$forum_head['rss'] = '<link rel="alternate" type="application/rss+xml" href="'.forum_link($forum_url['forum_rss'], $id).'" title="RSS" />';
+	$forum_head['atom'] = '<link rel="alternate" type="application/atom+xml" href="'.forum_link($forum_url['forum_atom'], $id).'" title="ATOM" />';
 }
 else if (FORUM_PAGE == 'viewtopic')
 {
@@ -160,19 +160,16 @@ unset($forum_head);
 $gen_elements = array();
 
 // Forum page id and classes
-if (!defined('FORUM_PAGE_TYPE'))
+if (substr(FORUM_PAGE, 0, 5) == 'admin')
+	define('FORUM_PAGE_TYPE', 'admin-page');
+else
 {
-	if (substr(FORUM_PAGE, 0, 5) == 'admin')
-		define('FORUM_PAGE_TYPE', 'admin-page');
+	if (!empty($forum_page['page_post']))
+		define('FORUM_PAGE_TYPE', 'paged-page');
+	else if (!empty($forum_page['main_menu']))
+		define('FORUM_PAGE_TYPE', 'menu-page');
 	else
-	{
-		if (!empty($forum_page['page_post']))
-			define('FORUM_PAGE_TYPE', 'paged-page');
-		else if (!empty($forum_page['main_menu']))
-			define('FORUM_PAGE_TYPE', 'menu-page');
-		else
-			define('FORUM_PAGE_TYPE', 'basic-page');
-	}
+		define('FORUM_PAGE_TYPE', 'basic-page');
 }
 
 $gen_elements['<!-- forum_page -->'] = 'id="brd-'.FORUM_PAGE.'" class="brd-page '.FORUM_PAGE_TYPE.'"';
@@ -274,12 +271,6 @@ if ($forum_user['g_id'] == FORUM_ADMIN)
 	// Warn the admin that their version of the database is newer than the version supported by the code
 	if ($forum_config['o_database_revision'] > FORUM_DB_REVISION)
 		$alert_items['newer_database'] = '<p><strong>'.$lang_common['Database mismatch'].'</strong> '.$lang_common['Database mismatch alert'].'</p>';
-
-	// Warn the admin that the engines used in the database don't correspond with the chosen DB layer
-	if (($db_type == 'mysql_innodb' || $db_type == 'mysqli_innodb') && $forum_config['o_database_engine'] != 'InnoDB')
-			$alert_items['update_fail'] = '<p><strong>'.$lang_common['Database engine mismatch'].'</strong> '.sprintf($lang_common['Database engine mismatch alert'], 'MyISAM', 'InnoDB', forum_link('misc.php?admin_action=change_engine')).'</p>';
-	else if (($db_type == 'mysql' || $db_type == 'mysqli') && $forum_config['o_database_engine'] != 'MyISAM')
-			$alert_items['update_fail'] = '<p><strong>'.$lang_common['Database engine mismatch'].'</strong> '.sprintf($lang_common['Database engine mismatch alert'], 'InnoDB', 'MyISAM', forum_link('misc.php?admin_action=change_engine')).'</p>';
 
 	if (!empty($alert_items))
 		$admod_links['alert'] = '<span id="alert"><a href="'.forum_link($forum_url['admin_index']).'"><strong>'.$lang_common['New alerts'].'</strong></a></span>';

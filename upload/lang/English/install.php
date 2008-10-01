@@ -53,12 +53,6 @@ $lang_install = array(
 'Start install'				=>	'Start install', // Label for submit button
 'Required'					=>	'(Required)',
 'Required warn'				=>	'All fields labelled %s must be completed before this form is submitted.',
-'Default language'			=>	'Default Language:',
-'Default language help'			=>	'The default language for your PunBB installation. This can be changed later.',
-'Choose language'			=>	'Change installer language',
-'Choose language help'			=>	'You can change the language of this install script if you find it easier to follow the instructions in your own language. Just choose your language from the list of installed ones below.',
-'Installer language'			=>	'Installer language:',
-'Choose language legend'		=>	'Installer language',
 
 // Install errors
 'No database support'		=>	'This PHP environment does not have support for any of the databases that PunBB supports. PHP needs to have support for either MySQL, PostgreSQL or SQLite in order for PunBB to be installed.',
@@ -79,7 +73,6 @@ $lang_install = array(
 'SQLite prefix collision'	=>	'The table prefix \'sqlite_\' is reserved for use by the SQLite engine. Please choose a different prefix.',
 'PunBB already installed'	=>	'A table called "%1$susers" is already present in the database "%2$s". This could mean that PunBB is already installed or that another piece of software is installed and is occupying one or more of the table names PunBB requires. If you want to install multiple copies of PunBB in the same database, you must choose a different table prefix.',
 'InnoDB not enabled'		=>	'InnoDB does not seem to be enabled. Please choose a database layer that does not have InnoDB support, or enable InnoDB on your MySQL server.',
-'Invalid language'		=>	'The language pack you have chosen doesn\'t seem to exist or is corrupt. Please recheck and try again.',
 
 // Used in the install
 'Default announce heading'	=>	'Sample announcement',

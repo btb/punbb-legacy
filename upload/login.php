@@ -42,7 +42,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : null;
 $errors = array();
 
 // Login
-if (!$action && isset($_POST['form_sent']))
+if (isset($_POST['form_sent']) && $action == 'in')
 {
 	$form_username = trim($_POST['req_username']);
 	$form_password = trim($_POST['req_password']);
@@ -141,7 +141,7 @@ else if ($action == 'out')
 		header('Location: '.forum_link($forum_url['index']));
 		exit;
 	}
-	
+
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
 	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('logout'.$forum_user['id'])))
@@ -184,19 +184,15 @@ else if ($action == 'out')
 
 
 // New password
-else if ($action == 'forget')
+else if ($action == 'forget' || $action == 'forget_2')
 {
 	if (!$forum_user['is_guest'])
 		header('Location: '.forum_link($forum_url['index']));
-	
+
 	($hook = get_hook('li_forgot_pass_selected')) ? eval($hook) : null;
 
 	if (isset($_POST['form_sent']))
 	{
-		// User pressed the cancel button
-		if (isset($_POST['cancel']))
-			redirect(forum_link($forum_url['index']), $lang_login['Reset cancel redirect']);
-		
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/email.php';
 
@@ -277,7 +273,7 @@ else if ($action == 'forget')
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-	$forum_page['form_action'] = forum_link($forum_url['request_password']);
+	$forum_page['form_action'] = $base_url.'/login.php?action=forget_2';
 
 	// Setup breadcrumbs
 	$forum_page['crumbs'] = array(
@@ -366,7 +362,7 @@ if (!$forum_user['is_guest'])
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
-$forum_page['form_action'] = forum_link($forum_url['login']);
+$forum_page['form_action'] = $base_url.'/login.php?action=in';
 
 $forum_page['hidden_fields'] = array(
 	'form_sent'		=> '<input type="hidden" name="form_sent" value="1" />',
@@ -397,14 +393,14 @@ ob_start();
 		</div>
 <?php
 
-// If there were any errors, show them
-if (!empty($errors))
-{
-	$forum_page['errors'] = array();
+	// If there were any errors, show them
+	if (!empty($errors))
+	{
+		$forum_page['errors'] = array();
 	foreach ($errors as $cur_error)
-		$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
+			$forum_page['errors'][] = '<li class="warn"><span>'.$cur_error.'</span></li>';
 
-	($hook = get_hook('li_pre_login_errors')) ? eval($hook) : null;
+		($hook = get_hook('li_pre_login_errors')) ? eval($hook) : null;
 
 ?>
 		<div class="ct-box error-box">
@@ -415,7 +411,7 @@ if (!empty($errors))
 		</div>
 <?php
 
-}
+	}
 
 ?>
 		<div id="req-msg" class="req-warn ct-box error-box">

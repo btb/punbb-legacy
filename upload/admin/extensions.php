@@ -54,7 +54,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	// User pressed the cancel button
 	if (isset($_POST['install_cancel']))
-		redirect(forum_link(isset($_GET['install']) ? $forum_url['admin_extensions_manage'] : $forum_url['admin_extensions_hotfixes']), $lang_admin_common['Cancel redirect']);
+		redirect(forum_link($forum_url['admin_extensions_install']), $lang_admin_common['Cancel redirect']);
 
 	$id = preg_replace('/[^0-9a-z_]/', '', isset($_GET['install']) ? $_GET['install'] : $_GET['install_hotfix']);
 
@@ -195,22 +195,19 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		}
 
 		// Now insert the hooks
-		if (isset($ext_data['extension']['hooks']))
+		foreach ($ext_data['extension']['hooks']['hook'] as $ext_hook)
 		{
-			foreach ($ext_data['extension']['hooks']['hook'] as $ext_hook)
+			$cur_hooks = explode(',', $ext_hook['attributes']['id']);
+			foreach ($cur_hooks as $cur_hook)
 			{
-				$cur_hooks = explode(',', $ext_hook['attributes']['id']);
-				foreach ($cur_hooks as $cur_hook)
-				{
-					$query = array(
-						'INSERT'	=> 'id, extension_id, code, installed, priority',
-						'INTO'		=> 'extension_hooks',
-						'VALUES'	=> '\''.$forum_db->escape(trim($cur_hook)).'\', \''.$forum_db->escape($id).'\', \''.$forum_db->escape(trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
-					);
+				$query = array(
+					'INSERT'	=> 'id, extension_id, code, installed, priority',
+					'INTO'		=> 'extension_hooks',
+					'VALUES'	=> '\''.$forum_db->escape(trim($cur_hook)).'\', \''.$forum_db->escape($id).'\', \''.$forum_db->escape(trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
+				);
 
-					($hook = get_hook('aex_install_comply_qr_add_hook')) ? eval($hook) : null;
-					$forum_db->query_build($query) or error(__FILE__, __LINE__);
-				}
+				($hook = get_hook('aex_install_comply_qr_add_hook')) ? eval($hook) : null;
+				$forum_db->query_build($query) or error(__FILE__, __LINE__);
 			}
 		}
 
@@ -475,7 +472,6 @@ else if (isset($_GET['uninstall']))
 			($hook = get_hook('aex_uninstall_notices_end')) ? eval($hook) : null;
 
 			$tpl_temp = trim(ob_get_contents());
-
 			$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 			ob_end_clean();
 			// END SUBST - <!-- forum_main -->

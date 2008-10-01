@@ -265,10 +265,10 @@ $query = array(
 
 ($hook = get_hook('acg_qr_get_categories')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$num_cats = $forum_db->num_rows($result);
 
-$cat_list = array();
-while ($cur_category = $forum_db->fetch_assoc($result))
-	$cat_list[] = $cur_category;
+for ($i = 0; $i < $num_cats; ++$i)
+	$cat_list[] = $forum_db->fetch_row($result);
 
 // Setup the form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -340,7 +340,7 @@ ob_start();
 // Reset counter
 $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
-if (!empty($cat_list))
+if ($num_cats)
 {
 
 ?>
@@ -362,8 +362,8 @@ if (!empty($cat_list))
 						<span class="fld-input"><select id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_to_delete">
 <?php
 
-	foreach ($cat_list as $cur_category)
-		echo "\t\t\t\t\t\t\t".'<option value="'.$cur_category['id'].'">'.forum_htmlencode($cur_category['cat_name']).'</option>'."\n";
+	while (list(, list($cat_id, $cat_name, ,)) = @each($cat_list))
+		echo "\t\t\t\t\t\t\t".'<option value="'.$cat_id.'">'.forum_htmlencode($cat_name).'</option>'."\n";
 
 ?>
 						</select></span>
@@ -397,25 +397,28 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 	($hook = get_hook('acg_edit_cat_fieldsets_start')) ? eval($hook) : null;
 
-	foreach ($cat_list as $cur_category)
+	@reset($cat_list);
+	for ($i = 0; $i < $num_cats; ++$i)
 	{
+		list(, list($cat_id, $cat_name, $position)) = @each($cat_list);
+
 		$forum_page['item_count'] = 0;
 
 		($hook = get_hook('acg_pre_edit_cur_cat_fieldset')) ? eval($hook) : null;
 
 ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><span><?php printf($lang_admin_categories['Edit category legend'],  '<span class="hideme"> ('.forum_htmlencode($cur_category['cat_name']).')</span>') ?></span></legend>
+				<legend class="group-legend"><span><?php printf($lang_admin_categories['Edit category legend'],  '<span class="hideme"> ('.forum_htmlencode($cat_name).')</span>') ?></span></legend>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 <?php ($hook = get_hook('acg_pre_edit_cat_name')) ? eval($hook) : null; ?>
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_categories['Category name label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_name[<?php echo $cur_category['id'] ?>]" value="<?php echo forum_htmlencode($cur_category['cat_name']) ?>" size="35" maxlength="80" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_name[<?php echo $cat_id ?>]" value="<?php echo forum_htmlencode($cat_name) ?>" size="35" maxlength="80" /></span>
 					</div>
 <?php ($hook = get_hook('acg_pre_edit_cat_position')) ? eval($hook) : null; ?>
 					<div class="sf-box text">
 						<label for="fld<?php echo ++$forum_page['fld_count'] ?>"><span><?php echo $lang_admin_categories['Position label'] ?></span></label><br />
-						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_order[<?php echo $cur_category['id'] ?>]" value="<?php echo $cur_category['disp_position'] ?>" size="3" maxlength="3" /></span>
+						<span class="fld-input"><input type="text" id="fld<?php echo $forum_page['fld_count'] ?>" name="cat_order[<?php echo $cat_id ?>]" value="<?php echo $position ?>" size="3" maxlength="3" /></span>
 					</div>
 				</div>
 <?php ($hook = get_hook('acg_pre_edit_cur_cat_fieldset_end')) ? eval($hook) : null; ?>

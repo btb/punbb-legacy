@@ -128,9 +128,7 @@ if (isset($_GET['tid']))
 	$tid = intval($_GET['tid']);
 	if ($tid < 1)
 		message($lang_common['Bad request']);
-	
-	$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1) ? 1 : intval($_GET['p']);
-	
+
 	// Fetch some info about the topic
 	$query = array(
 		'SELECT'	=> 't.subject, t.poster, t.first_post_id, t.posted, t.num_replies',
@@ -191,7 +189,7 @@ if (isset($_GET['tid']))
 			if (!defined('FORUM_SEARCH_IDX_FUNCTIONS_LOADED'))
 				require FORUM_ROOT.'include/search_idx.php';
 
-			strip_search_index($posts);
+			strip_search_index(implode(',', $posts));
 
 			sync_topic($tid);
 			sync_forum($fid);
@@ -419,6 +417,7 @@ if (isset($_GET['tid']))
 
 		require FORUM_ROOT.'footer.php';
 	}
+
 
 	// Show the moderate topic view
 
@@ -744,31 +743,21 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 	if (isset($_POST['move_topics']))
 	{
-		
 		$topics = isset($_POST['topics']) && is_array($_POST['topics']) ? $_POST['topics'] : array();
 		$topics = array_map('intval', $topics);
 
 		if (empty($topics))
 			message($lang_misc['No topics selected']);
 
-		if (count($topics) == 1)
-			$topics = $topics[0];
+		$topics = implode(',', $topics);
+		$action = 'multi';
 	}
 	else
 	{
 		$topics = intval($_GET['move_topics']);
 		if ($topics < 1)
 			message($lang_common['Bad request']);
-		
-	}
-	
-	if (is_array($topics))
-	{
-		$action = 'multi';
-		$topics = implode(',', $topics);
-	}
-	else
-	{
+
 		$action = 'single';
 
 		// Fetch the topic subject
@@ -807,13 +796,14 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 	($hook = get_hook('mr_move_topics_qr_get_target_forums')) ? eval($hook) : null;
 	$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+	$num_forums = $forum_db->num_rows($result);
 
-	if (!$forum_db->num_rows($result))
+	if (!$num_forums)
 		message($lang_misc['Nowhere to move']);
 
 	$forum_list = array();
-	while ($temp = $forum_db->fetch_assoc($result))
-		$forum_list[] = $temp;
+	for ($i = 0; $i < $num_forums; ++$i)
+		$forum_list[] = $forum_db->fetch_assoc($result);
 
 	// Setup form
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -917,9 +907,6 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 // Merge topics
 else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 {
-	// Check for use of incorrect URLs
-	confirm_current_url(forum_link($forum_url['moderate_forum'], $fid));
-
 	$topics = isset($_POST['topics']) && !empty($_POST['topics']) ? $_POST['topics'] : array();
 	$topics = array_map('intval', (is_array($topics) ? $topics : explode(',', $topics)));
 
@@ -1085,8 +1072,6 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	if (empty($topics))
 		message($lang_misc['No topics selected']);
 
-	$multi = count($topics) > 1;
-
 	if (isset($_POST['delete_topics_comply']))
 	{
 		if (!isset($_POST['req_confirm']))
@@ -1147,12 +1132,12 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		($hook = get_hook('mr_confirm_delete_topics_qr_get_deleted_posts')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		$post_ids = array();
+		$post_ids = '';
 		while ($row = $forum_db->fetch_row($result))
-			$post_ids[] = $row[0];
+			$post_ids .= ($post_ids != '') ? ','.$row[0] : $row[0];
 
 		// Strip the search index provided we're not just deleting redirect topics
-		if (!empty($post_ids))
+		if ($post_ids != '')
 		{
 			if (!defined('FORUM_SEARCH_IDX_FUNCTIONS_LOADED'))
 				require FORUM_ROOT.'include/search_idx.php';
@@ -1174,7 +1159,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 		($hook = get_hook('mr_confirm_delete_topics_pre_redirect')) ? eval($hook) : null;
 
-		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $multi ? $lang_misc['Delete topics redirect'] : $lang_misc['Delete topic redirect']);
+		redirect(forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name']))), $lang_misc['Delete topics redirect']);
 	}
 
 
@@ -1192,7 +1177,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 		array($forum_config['o_board_title'], forum_link($forum_url['index'])),
 		array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($fid, sef_friendly($cur_forum['forum_name'])))),
 		array($lang_misc['Moderate forum'], forum_link($forum_url['moderate_forum'], $fid)),
-		$multi ? $lang_misc['Delete topics'] : $lang_misc['Delete topic']
+		$lang_misc['Delete topics']
 	);
 
 	($hook = get_hook('mr_delete_topics_pre_header_load')) ? eval($hook) : null;
@@ -1213,12 +1198,12 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 			</div>
 <?php ($hook = get_hook('mr_delete_topics_pre_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
-				<legend class="group-legend"><strong><?php echo $multi ? $lang_misc['Delete topics'] : $lang_misc['Delete topics'] ?></strong></legend>
+				<legend class="group-legend"><strong><?php echo $lang_misc['Delete topics'] ?></strong></legend>
 <?php ($hook = get_hook('mr_delete_topics_pre_confirm_checkbox')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box checkbox">
 						<span class="fld-input"><input type="checkbox" id="fld<?php echo ++$forum_page['fld_count'] ?>" name="req_confirm" value="1" checked="checked" /></span>
-						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_common['Please confirm'] ?></span> <?php echo $multi ? $lang_misc['Delete topics comply'] : $lang_misc['Delete topic comply'] ?></label>
+						<label for="fld<?php echo $forum_page['fld_count'] ?>"><span><?php echo $lang_common['Please confirm'] ?></span> <?php echo $lang_misc['Delete topics comply'] ?></label>
 					</div>
 				</div>
 <?php ($hook = get_hook('mr_delete_topics_pre_fieldset_end')) ? eval($hook) : null; ?>
@@ -1270,10 +1255,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		($hook = get_hook('mr_open_close_multi_topics_qr_open_close_topics')) ? eval($hook) : null;
 		$forum_db->query_build($query) or error(__FILE__, __LINE__);
 
-		if (count($topics) == 1)
-			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topic redirect'] : $lang_misc['Open topic redirect'];
-		else
-			$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
+		$forum_page['redirect_msg'] = ($action) ? $lang_misc['Close topics redirect'] : $lang_misc['Open topics redirect'];
 
 		($hook = get_hook('mr_open_close_multi_topics_pre_redirect')) ? eval($hook) : null;
 
@@ -1285,7 +1267,7 @@ else if (isset($_REQUEST['open']) || isset($_REQUEST['close']))
 		$topic_id = ($action) ? intval($_GET['close']) : intval($_GET['open']);
 		if ($topic_id < 1)
 			message($lang_common['Bad request']);
-		
+
 		// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 		// If it's in GET, we need to make sure it's valid.
 		if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token(($action ? 'close' : 'open').$topic_id)))
@@ -1330,7 +1312,7 @@ else if (isset($_GET['stick']))
 	$stick = intval($_GET['stick']);
 	if ($stick < 1)
 		message($lang_common['Bad request']);
-	
+
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
 	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('stick'.$stick)))
@@ -1374,7 +1356,7 @@ else if (isset($_GET['unstick']))
 	$unstick = intval($_GET['unstick']);
 	if ($unstick < 1)
 		message($lang_common['Bad request']);
-	
+
 	// We validate the CSRF token. If it's set in POST and we're at this point, the token is valid.
 	// If it's in GET, we need to make sure it's valid.
 	if (!isset($_POST['csrf_token']) && (!isset($_GET['csrf_token']) || $_GET['csrf_token'] !== generate_form_token('unstick'.$unstick)))
@@ -1411,6 +1393,7 @@ else if (isset($_GET['unstick']))
 	redirect(forum_link($forum_url['topic'], array($unstick, sef_friendly($subject))), $lang_misc['Unstick topic redirect']);
 }
 
+
 ($hook = get_hook('mr_new_action')) ? eval($hook) : null;
 
 
@@ -1426,7 +1409,7 @@ require FORUM_ROOT.'lang/'.$forum_user['language'].'/forum.php';
 // Determine the topic offset (based on $_GET['p'])
 $forum_page['num_pages'] = ceil($cur_forum['num_topics'] / $forum_user['disp_topics']);
 
-$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : intval($_GET['p']);
+$forum_page['page'] = (!isset($_GET['p']) || $_GET['p'] <= 1 || $_GET['p'] > $forum_page['num_pages']) ? 1 : $_GET['p'];
 $forum_page['start_from'] = $forum_user['disp_topics'] * ($forum_page['page'] - 1);
 $forum_page['finish_at'] = min(($forum_page['start_from'] + $forum_user['disp_topics']), ($cur_forum['num_topics']));
 $forum_page['items_info'] = generate_items_info($lang_misc['Topics'], ($forum_page['start_from'] + 1), $cur_forum['num_topics']);

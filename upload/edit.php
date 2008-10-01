@@ -37,6 +37,7 @@ if ($forum_user['g_read_board'] == '0')
 // Load the post.php language file
 require FORUM_ROOT.'lang/'.$forum_user['language'].'/post.php';
 
+
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id < 1)
 	message($lang_common['Bad request']);
@@ -199,11 +200,11 @@ $forum_page['hidden_fields'] = array(
 // Setup help
 $forum_page['main_head_options'] = array();
 if ($forum_config['p_message_bbcode'] == '1')
-	$forum_page['text_options']['bbcode'] = '<span'.(empty($forum_page['text_options']) ? ' class="item1"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf($lang_common['Help page'], $lang_common['BBCode']).'">'.$lang_common['BBCode'].'</a></span>';
+	$forum_page['text_options']['bbcode'] = '<a class="exthelp" href="'.forum_link($forum_url['help'], 'bbcode').'" title="'.sprintf($lang_common['Help page'], $lang_common['BBCode']).'">'.$lang_common['BBCode'].'</a>';
 if ($forum_config['p_message_img_tag'] == '1')
-	$forum_page['text_options']['img'] = '<span'.(empty($forum_page['text_options']) ? ' class="item1"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'">'.$lang_common['Images'].'</a></span>';
+	$forum_page['text_options']['img'] = '<a class="exthelp" href="'.forum_link($forum_url['help'], 'img').'" title="'.sprintf($lang_common['Help page'], $lang_common['Images']).'">'.$lang_common['Images'].'</a>';
 if ($forum_config['o_smilies'] == '1')
-	$forum_page['text_options']['smilies'] = '<span'.(empty($forum_page['text_options']) ? ' class="item1"' : '').'><a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a></span>';
+	$forum_page['text_options']['smilies'] = '<a class="exthelp" href="'.forum_link($forum_url['help'], 'smilies').'" title="'.sprintf($lang_common['Help page'], $lang_common['Smilies']).'">'.$lang_common['Smilies'].'</a>';
 
 
 // Setup breadcrumbs
