@@ -131,9 +131,9 @@ if ($db_type == 'mysql' || $db_type == 'mysqli' || $db_type == 'mysql_innodb' ||
 	$total_size = $total_size / 1024;
 
 	if ($total_size > 1024)
-		$total_size = round($total_size / 1024, 2).' MB';
+		$total_size = forum_number_format($total_size / 1024, 2).' MB';
 	else
-		$total_size = round($total_size, 2).' KB';
+		$total_size = forum_number_format($total_size, 2).' KB';
 }
 
 
