@@ -31,6 +31,9 @@ define('FORUM_DEBUG', 1);
 if (!defined('FORUM_ROOT'))
 	exit('The constant FORUM_ROOT must be defined and point to a valid PunBB installation root directory.');
 
+// Define the version and database revision that this code was written for
+define('FORUM_VERSION', '1.3 Beta');
+define('FORUM_DB_REVISION', 2);
 
 // Load the functions script
 require FORUM_ROOT.'include/functions.php';
@@ -38,6 +41,7 @@ require FORUM_ROOT.'include/functions.php';
 // Load UTF-8 functions
 require FORUM_ROOT.'include/utf8/utf8.php';
 require FORUM_ROOT.'include/utf8/ucwords.php';
+require FORUM_ROOT.'include/utf8/trim.php';
 
 // Reverse the effect of register_globals
 forum_unregister_globals();
@@ -49,6 +53,11 @@ ignore_user_abort(true);
 if (file_exists(FORUM_ROOT.'config.php'))
 	include FORUM_ROOT.'config.php';
 
+// If we have the 1.2 constant defined, define the proper 1.3 constant so we don't get
+// an incorrect "need to install" message
+if (defined('PUN'))
+	define('FORUM', 1);
+
 if (!defined('FORUM'))
 	error('The file \'config.php\' doesn\'t exist or is corrupt. Please run <a href="'.FORUM_ROOT.'install.php">install.php</a> to install PunBB first.');
 
@@ -57,6 +66,13 @@ if (!defined('FORUM'))
 if (isset($_SERVER['HTTP_X_MOZ']) && $_SERVER['HTTP_X_MOZ'] == 'prefetch')
 {
 	header('HTTP/1.1 403 Prefetching Forbidden');
+
+	// Send no-cache headers
+	header('Expires: Thu, 21 Jul 1977 07:30:00 GMT');	// When yours truly first set eyes on this world! :)
+	header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
+	header('Cache-Control: post-check=0, pre-check=0', false);
+	header('Pragma: no-cache');		// For HTTP/1.0 compability
+
 	exit;
 }
 
@@ -75,9 +91,9 @@ if (!defined('FORUM_CACHE_DIR'))
 	define('FORUM_CACHE_DIR', FORUM_ROOT.'cache/');
 
 
-// Construct REQUEST_URI if it isn't set
-if (!isset($_SERVER['REQUEST_URI']))
-	$_SERVER['REQUEST_URI'] = (isset($_SERVER['PHP_SELF']) ? str_replace(array('%26', '%3D', '%2F'), array('&', '=', '/'), rawurlencode($_SERVER['PHP_SELF'])) : '').(!empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : '');
+// Construct REQUEST_URI if it isn't set (or if it's set improperly)
+if (!isset($_SERVER['REQUEST_URI']) || (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']) && strpos($_SERVER['REQUEST_URI'], '?') === false))
+	$_SERVER['REQUEST_URI'] = (isset($_SERVER['PHP_SELF']) ? str_replace('%26', '&', str_replace('%3D', '=', str_replace('%2F', '/', rawurlencode($_SERVER['PHP_SELF'])))) : '').(isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING']) ? '?'.$_SERVER['QUERY_STRING'] : '');
 
 // Load DB abstraction layer and connect
 require FORUM_ROOT.'include/dblayer/common_db.php';
@@ -96,6 +112,11 @@ if (!defined('FORUM_CONFIG_LOADED'))
 	generate_config_cache();
 	require FORUM_CACHE_DIR.'cache_config.php';
 }
+
+
+// Verify that we are running the proper database schema revision
+//if (defined('PUN') || !isset($forum_config['o_database_revision']) || $forum_config['o_database_revision'] < FORUM_DB_REVISION || version_compare($forum_config['o_cur_version'], FORUM_VERSION, '<'))
+//	error('Your FluxBB database is out-of-date and must be upgraded in order to continue. Please run <a href="'.FORUM_ROOT.'admin/db_update.php">db_update.php</a> in order to complete the upgrade process.');
 
 
 // Load hooks

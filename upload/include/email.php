@@ -35,10 +35,14 @@ if (!defined('FORUM'))
 //
 function is_valid_email($email)
 {
+	$return = ($hook = get_hook('em_fn_is_valid_email_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
+
 	if (strlen($email) > 80)
 		return false;
 
-	return preg_match('/^(([^<>()[\]\\.,;:\s@"\']+(\.[^<>()[\]\\.,;:\s@"\']+)*)|("[^"\']+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/', $email);
+	return preg_match('/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|("[^"]+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\])|(([a-zA-Z\d\-]+\.)+[a-zA-Z]{2,}))$/', $email);
 }
 
 
@@ -48,6 +52,10 @@ function is_valid_email($email)
 function is_banned_email($email)
 {
 	global $forum_db, $forum_bans;
+
+	$return = ($hook = get_hook('em_fn_is_banned_email_start')) ? eval($hook) : null;
+	if ($return != null)
+		return $return;
 
 	foreach ($forum_bans as $cur_ban)
 	{
@@ -64,29 +72,42 @@ function is_banned_email($email)
 //
 // Wrapper for PHP's mail()
 //
-function forum_mail($to, $subject, $message, $reply_to = '')
+function forum_mail($to, $subject, $message, $reply_to_email = '', $reply_to_name = '')
 {
 	global $forum_config, $lang_common;
 
-	($hook = get_hook('em_forum_mail_start')) ? eval($hook) : null;
-
 	// Default sender address
-	$from = '"'.sprintf($lang_common['Forum mailer'], str_replace('"', '', $forum_config['o_board_title'])).'" <'.$forum_config['o_webmaster_email'].'>';
+	$from_name = sprintf($lang_common['Forum mailer'], $forum_config['o_board_title']);
+	$from_email = $forum_config['o_webmaster_email'];
+
+	($hook = get_hook('em_fn_forum_mail_start')) ? eval($hook) : null;
 
 	// Do a little spring cleaning
 	$to = trim(preg_replace('#[\n\r]+#s', '', $to));
 	$subject = trim(preg_replace('#[\n\r]+#s', '', $subject));
-	$from = trim(preg_replace('#[\n\r:]+#s', '', $from));
+	$from_email = trim(preg_replace('#[\n\r:]+#s', '', $from_email));
+	$from_name = trim(preg_replace('#[\n\r:]+#s', '', str_replace('"', '', $from_name)));
+	$reply_to_email = trim(preg_replace('#[\n\r:]+#s', '', $reply_to_email));
+	$reply_to_name = trim(preg_replace('#[\n\r:]+#s', '', str_replace('"', '', $reply_to_name)));
 
-	$headers = 'From: '.$from."\r\n".'Date: '.gmdate('r')."\r\n".'MIME-Version: 1.0'."\r\n".'Content-transfer-encoding: 8bit'."\r\n".'Content-type: text/plain; charset=utf-8'."\r\n".'X-Mailer: PunBB Mailer';
+	// Set up some headers to take advantage of UTF-8
+	$from = "=?UTF-8?B?".base64_encode($from_name)."?=".' <'.$from_email.'>';
+	$subject = "=?UTF-8?B?".base64_encode($subject)."?=";
 
-	if (!empty($reply_to))
-		$headers .= "\r\n".'Reply-To: '.trim(preg_replace('#[\n\r:]+#s', '', $reply_to));
+	$headers = 'From: '.$from."\r\n".'Date: '.gmdate('r')."\r\n".'MIME-Version: 1.0'."\r\n".'Content-transfer-encoding: 8bit'."\r\n".'Content-type: text/plain; charset=utf-8'."\r\n".'X-Mailer: FluxBB Mailer';
+
+	// If we specified a reply-to email, we deal with it here
+	if (!empty($reply_to_email))
+	{
+		$reply_to = "=?UTF-8?B?".base64_encode($reply_to_name)."?=".' <'.$reply_to_email.'>';
+
+		$headers .= "\r\n".'Reply-To: '.$reply_to;
+	}
 
 	// Make sure all linebreaks are CRLF in message (and strip out any NULL bytes)
 	$message = str_replace(array("\n", "\0"), array("\r\n", ''), forum_linebreaks($message));
 
-	($hook = get_hook('em_forum_mail_pre_send')) ? eval($hook) : null;
+	($hook = get_hook('em_fn_forum_mail_pre_send')) ? eval($hook) : null;
 
 	if ($forum_config['o_smtp_host'] != '')
 		smtp_mail($to, $subject, $message, $headers);
