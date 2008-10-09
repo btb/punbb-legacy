@@ -145,15 +145,15 @@ else
 // Setup main options
 $forum_page['main_options_head'] = $lang_forum['Forum options'];
 $forum_page['main_options'] = array(
-	'feed'	=> '<span class="feed'.(empty($forum_page['main_options']) ? ' item1' : '').'"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>'
+	'feed'	=> '<span class="feed'.(empty($forum_page['main_options']) ? ' first-item' : '').'"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>'
 );
 
 if (!$forum_user['is_guest'] && $forum_db->num_rows($result))
 {
-	$forum_page['main_options']['mark_read'] = '<span'.(empty($forum_page['main_options']) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
+	$forum_page['main_options']['mark_read'] = '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
 
 	if ($forum_page['is_admmod'])
-		$forum_page['main_options']['moderate'] = '<span'.(empty($forum_page['main_options']) ? ' class="item1"' : '').'><a href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['page'], $id).'">'.$lang_forum['Moderate forum'].'</a></span>';
+		$forum_page['main_options']['moderate'] = '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['page'], $id).'">'.$lang_forum['Moderate forum'].'</a></span>';
 }
 
 // Setup breadcrumbs
@@ -314,7 +314,7 @@ if ($forum_db->num_rows($result))
 
 		($hook = get_hook('vf_row_pre_item_status_merge')) ? eval($hook) : null;
 
-		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-item1' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
+		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
 
 		($hook = get_hook('vf_row_pre_display')) ? eval($hook) : null;
 
@@ -350,7 +350,7 @@ else
 		<h2 class="hn"><span><?php echo $lang_forum['Empty forum'] ?></span></h2>
 	</div>
 	<div id="forum<?php echo $id ?>" class="main-content main-forum">
-		<div class="main-item empty main-item1">
+		<div class="main-item empty main-first-item">
 			<span class="icon empty"><!-- --></span>
 			<div class="item-subject">
 				<?php echo implode("\n\t\t\t\t", $forum_page['item_body']['subject'])."\n" ?>

@@ -815,17 +815,17 @@ $forum_page['item_num'] = 0;
 while ($cur_group = $forum_db->fetch_assoc($result))
 {
 	$forum_page['group_options'] = array();
-	$forum_page['group_options']['edit'] = '<span'.((empty($forum_page['group_options'])) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['admin_groups']).'?edit_group='.$cur_group['g_id'].'">'.$lang_admin_groups['Edit group'].'</a></span>';
+	$forum_page['group_options']['edit'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['admin_groups']).'?edit_group='.$cur_group['g_id'].'">'.$lang_admin_groups['Edit group'].'</a></span>';
 
 	if ($cur_group['g_id'] > FORUM_GUEST)
 	{
 		if ($cur_group['g_id'] != $forum_config['o_default_user_group'])
-			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['admin_groups']).'?del_group='.$cur_group['g_id'].'">'.$lang_admin_groups['Remove group'].'</a></span>';
+			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['admin_groups']).'?del_group='.$cur_group['g_id'].'">'.$lang_admin_groups['Remove group'].'</a></span>';
 		else
-			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="item1"' : '').'>'.$lang_admin_groups['Cannot remove default'].'</span>';
+			$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'>'.$lang_admin_groups['Cannot remove default'].'</span>';
 	}
 	else
-		$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="item1"' : '').'>'.$lang_admin_groups['Cannot remove group'].'</span>';
+		$forum_page['group_options']['remove'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'>'.$lang_admin_groups['Cannot remove group'].'</span>';
 
 	($hook = get_hook('agr_edit_group_row_pre_output')) ? eval($hook) : null;
 

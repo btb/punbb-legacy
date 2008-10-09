@@ -616,9 +616,9 @@ if (isset($_GET['tid']))
 <?php
 
 $forum_page['mod_options'] = array();
-$forum_page['mod_options']['del_posts'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' item1' : '').'"><input type="submit" name="delete_posts" value="'.$lang_misc['Delete posts'].'" /></span>';
-$forum_page['mod_options']['split_posts'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' item1' : '').'"><input type="submit" name="split_posts" value="'.$lang_misc['Split posts'].'" /></span>';
-$forum_page['mod_options']['del_topic'] = '<span'.(empty($forum_page['mod_options']) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.$lang_misc['Delete whole topic'].'</a></span>';
+$forum_page['mod_options']['del_posts'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' first-item' : '').'"><input type="submit" name="delete_posts" value="'.$lang_misc['Delete posts'].'" /></span>';
+$forum_page['mod_options']['split_posts'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' first-item' : '').'"><input type="submit" name="split_posts" value="'.$lang_misc['Split posts'].'" /></span>';
+$forum_page['mod_options']['del_topic'] = '<span'.(empty($forum_page['mod_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['delete'], $cur_topic['first_post_id']).'">'.$lang_misc['Delete whole topic'].'</a></span>';
 
 ($hook = get_hook('mr_post_actions_pre_mod_options')) ? eval($hook) : null;
 
@@ -1609,7 +1609,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 			($hook = get_hook('mr_topic_actions_normal_row_pre_output')) ? eval($hook) : null;
 		}
 
-		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-item1' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
+		$forum_page['item_style'] = (($forum_page['item_count'] % 2 != 0) ? ' odd' : ' even').(($forum_page['item_count'] == 1) ? ' main-first-item' : '').((!empty($forum_page['item_status'])) ? ' '.implode(' ', $forum_page['item_status']) : '');
 
 		($hook = get_hook('mr_topic_actions_row_pre_display')) ? eval($hook) : null;
 
@@ -1635,11 +1635,11 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 	// Setup moderator control buttons
 	$forum_page['mod_options'] = array();
-	$forum_page['mod_options']['mod_move'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' item1' : '').'"><input type="submit" name="move_topics" value="'.$lang_misc['Move'].'" /></span>';
-	$forum_page['mod_options']['mod_delete'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' item1' : '').'"><input type="submit" name="delete_topics" value="'.$lang_common['Delete'].'" /></span>';
-	$forum_page['mod_options']['mod_merge'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' item1' : '').'"><input type="submit" name="merge_topics" value="'.$lang_misc['Merge'].'" /></span>';
-	$forum_page['mod_options']['mod_open'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' item1' : '').'"><input type="submit" name="open" value="'.$lang_misc['Open'].'" /></span>';
-	$forum_page['mod_options']['mod_close'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' item1' : '').'"><input type="submit" name="close" value="'.$lang_misc['Close'].'" /></span>';
+	$forum_page['mod_options']['mod_move'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' first-item' : '').'"><input type="submit" name="move_topics" value="'.$lang_misc['Move'].'" /></span>';
+	$forum_page['mod_options']['mod_delete'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' first-item' : '').'"><input type="submit" name="delete_topics" value="'.$lang_common['Delete'].'" /></span>';
+	$forum_page['mod_options']['mod_merge'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' first-item' : '').'"><input type="submit" name="merge_topics" value="'.$lang_misc['Merge'].'" /></span>';
+	$forum_page['mod_options']['mod_open'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' first-item' : '').'"><input type="submit" name="open" value="'.$lang_misc['Open'].'" /></span>';
+	$forum_page['mod_options']['mod_close'] = '<span class="submit'.(empty($forum_page['mod_options']) ? ' first-item' : '').'"><input type="submit" name="close" value="'.$lang_misc['Close'].'" /></span>';
 
 	($hook = get_hook('mr_topic_actions_pre_mod_option_output')) ? eval($hook) : null;
 

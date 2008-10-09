@@ -102,7 +102,7 @@ if ($forum_page['page'] > 1)
 // Setup main options
 $forum_page['main_options_head'] = $lang_ul['User list options'];
 $forum_page['main_options'] = array(
-	'new_search'	=> '<span'.(empty($forum_page['main_options']) ? ' class="item1"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_ul['Perform new search'].'</a></span>'
+	'new_search'	=> '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_ul['Perform new search'].'</a></span>'
 );
 
 // Setup form

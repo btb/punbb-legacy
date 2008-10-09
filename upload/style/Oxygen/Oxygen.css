@@ -256,7 +256,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	margin: 0 0 0 0.25em;
 	}
 	
-.brd .options span.item1 {
+.brd .options span.first-item {
 	border-left: 0;
 	padding-left: 0;
 	margin-left: 0;
@@ -407,7 +407,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	padding: 0.2em 0.75em 0.4em 0.75em;
 	}
 
-.brd .main-menu li.item1, .brd .admin-menu li.item1 {
+.brd .main-menu li.first-item, .brd .admin-menu li.first-item {
 	border-left: 0;
 	}
 	
@@ -548,7 +548,7 @@ D - COMMON INTERFACE ELEMENTS
 	float: left;
 	}
 	
-.brd .paging .item1, .brd .paging span.pages {
+.brd .paging .first-item, .brd .paging span.pages {
 	border-left: 0;
 	padding-left: 0;
 	}
@@ -743,7 +743,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	line-height: 1.4em;
 	}
 
-.brd .main-content .main-item1 {
+.brd .main-content .main-first-item {
 	border-top: none;
 	}
 
