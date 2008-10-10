@@ -113,6 +113,9 @@ if (!defined('FORUM_CONFIG_LOADED'))
 	require FORUM_CACHE_DIR.'cache_config.php';
 }
 
+// NOTE: Dirty temporary fix for markup testing
+$forum_config['o_default_email_setting'] = 1;
+
 
 // Verify that we are running the proper database schema revision
 //if (defined('PUN') || !isset($forum_config['o_database_revision']) || $forum_config['o_database_revision'] < FORUM_DB_REVISION || version_compare($forum_config['o_cur_version'], FORUM_VERSION, '<'))
