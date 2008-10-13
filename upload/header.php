@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /***********************************************************************
 
   Copyright (C) 2002-2008  PunBB
@@ -288,10 +288,10 @@ $tpl_main = str_replace('<!-- forum_admod -->', (!empty($admod_links)) ? '<p id=
 $main_elements = array();
 
 // Top breadcrumbs
-$main_elements['<!-- forum_crumbs_top -->'] = (FORUM_PAGE != 'index') ? '<div id="brd-crumbs-top" class="crumbs gen-content">'."\n\t".'<p>'.generate_crumbs(false).'</p>'."\n".'</div>' : '';
+$main_elements['<!-- forum_crumbs_top -->'] = (FORUM_PAGE != 'index') ? '<p>'.generate_crumbs(false).'</p>' : '';
 
 // Bottom breadcrumbs
-$main_elements['<!-- forum_crumbs_end -->'] = (FORUM_PAGE != 'index') ? '<div id="brd-crumbs-end" class="crumbs gen-content">'."\n\t".'<p>'.generate_crumbs(false).'</p>'."\n".'</div>' : '';
+$main_elements['<!-- forum_crumbs_end -->'] = (FORUM_PAGE != 'index') ? '<p>'.generate_crumbs(false).'</p>' : '';
 
 // Main section heading
 $main_elements['<!-- forum_main_head -->'] =  '<div class="main-head">'."\n\t".'<h1 class="hn"><span>'.((isset($forum_page['main_head'])) ? $forum_page['main_head'] : end($forum_page['crumbs'])).(isset($forum_page['main_head_pages']) ? ' <small>'.$forum_page['main_head_pages'].'</small>' : '').'</span></h1>'."\n".'</div>';

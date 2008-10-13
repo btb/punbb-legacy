@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" <!-- forum_local -->>
 <head>
@@ -28,15 +28,21 @@
 
 <div class="hr"><hr /></div>
 
-<!-- forum_crumbs_top -->
-<!-- forum_main_pagepost_top -->
-<!-- forum_admin_menu -->
-<!-- forum_main_head -->
-<!-- forum_admin_submenu -->
-<!-- forum_main -->
-<!-- forum_main_options -->
-<!-- forum_main_pagepost_end -->
-<!-- forum_crumbs_end -->
+<div id="brd-main">
+	<div id="brd-crumbs-top" class="crumbs gen-content">
+	<!-- forum_crumbs_top -->
+	</div>
+	<!-- forum_main_pagepost_top -->
+	<!-- forum_admin_menu -->
+	<!-- forum_main_head -->
+	<!-- forum_admin_submenu -->
+	<!-- forum_main -->
+	<!-- forum_main_options -->
+	<!-- forum_main_pagepost_end -->
+	<div id="brd-crumbs-top" class="crumbs gen-content">
+	<!-- forum_crumbs_end -->
+	</div>
+</div>
 
 <div class="hr"><hr /></div>
 
