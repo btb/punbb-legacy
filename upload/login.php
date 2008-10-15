@@ -193,6 +193,10 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 	if (isset($_POST['form_sent']))
 	{
+		// User pressed the cancel button
+		if (isset($_POST['cancel']))
+			redirect(forum_link($forum_url['index']), $lang_login['New password cancel redirect']);
+
 		if (!defined('FORUM_EMAIL_FUNCTIONS_LOADED'))
 			require FORUM_ROOT.'include/email.php';
 
