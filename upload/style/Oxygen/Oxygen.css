@@ -52,7 +52,9 @@ body {
 	font-style: normal;
 	font-weight: normal;
 	}
-
+#brd-index .main-head {
+display:none;
+}
 /* Float Clearing
 -------------------------------------------------------------*/
 	
@@ -98,7 +100,7 @@ body {
 .brd .main-item .item-info li label,
 .brd .main-item .you-posted,
 .brd .main-item .item-num,
-#brd-index .item-summary .subject-title,
+/*#brd-index .item-summary .subject-title,*/
 .brd .group-legend,
 .brd .group-legend span,
 .brd .sf-set legend,
@@ -203,8 +205,20 @@ B - GLOBAL STYLES
 	font-size: 1.084em;
 	padding: 0.462em 10em 0.426em 0;
 	}
+	
+.brd .main-category {
+	margin: 0 0 1em 0
+}
 
-.brd .main-subhead {
+.brd h2.main-subhead {
+	border-style: solid;
+	border-width: 1px;
+	padding: 0 1.417em;
+	font-size: 1.084em;
+	padding: 0.462em 10em 0.426em 1.417em;
+	}
+	
+.brd .column-title {
 	border-style: solid;
 	border-width: 1px;
 	position: relative;
@@ -722,10 +736,6 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 #brd-wrap .item-summary .info-lastpost {
 	margin-left: 100%;
 	left: 980em;
-	}
-
-#brd-index .item-summary {
-	margin-top: -2.5em;
 	}
 	
 #brd-wrap p.forum-noview .info-replies {

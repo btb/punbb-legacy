@@ -31,18 +31,14 @@
 <div class="hr"><hr /></div>
 
 <div id="brd-main">
-	<div id="brd-crumbs-top" class="crumbs gen-content">
 	<!-- forum_crumbs_top -->
-	</div>
 	<!-- forum_main_menu -->
 	<!-- forum_main_pagepost_top -->
 	<!-- forum_main_head -->
 	<!-- forum_main -->
 	<!-- forum_main_options -->
 	<!-- forum_main_pagepost_end -->
-	<div id="brd-crumbs-top" class="crumbs gen-content">
 	<!-- forum_crumbs_end -->
-	</div>
 </div>
 <!-- forum_qpost -->
 

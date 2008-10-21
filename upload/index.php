@@ -69,14 +69,9 @@ if (!$forum_user['is_guest'])
 }
 
 // Setup main heading
-$forum_page['main_head'] = forum_htmlencode($forum_config['o_board_title']);
+//$forum_page['main_head'] = forum_htmlencode($forum_config['o_board_title']);
 
-// Setup main options
-$forum_page['main_options_head'] = $lang_index['Board options'];
-$forum_page['main_options'] = array();
-$forum_page['main_options']['feed'] = '<span class="feed'.(empty($forum_page['main_options']) ? ' first-item' : '').'"><a class="feed" href="'.forum_link($forum_url['index_rss']).'">'.$lang_index['RSS active feed'].'</a></span>';
-if (!$forum_user['is_guest'])
-	$forum_page['main_options']['markread'] = '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_read'], generate_form_token('markread'.$forum_user['id'])).'">'.$lang_index['Mark all as read'].'</a></span>';
+
 
 ($hook = get_hook('in_pre_header_load')) ? eval($hook) : null;
 
@@ -136,14 +131,19 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 		($hook = get_hook('in_forum_pre_cat_head')) ? eval($hook) : null;
 
 ?>
-	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo forum_htmlencode($cur_forum['cat_name']) ?></span></h2>
-		<p class="item-summary"><span><?php printf($lang_index['Category subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
-	</div>
 	<div id="category<?php echo $forum_page['cat_count'] ?>" class="main-content main-category">
 <?php
 
 		$forum_page['cur_category'] = $cur_forum['cid'];
+		
+?>	
+		<h2 class="main-subhead"><?php echo forum_htmlencode($cur_forum['cat_name']) ?></h2>
+		<div class="column-title">
+			<p class="item-summary"><span><?php printf($lang_index['Category subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
+		</div>
+	
+<?php
+
 	}
 
 	// Reset arrays and globals for each forum
@@ -229,7 +229,7 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 		if ($cur_forum['last_post'] != '')
 			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.$lang_index['Last post'].'</span> <strong><a href="'.forum_link($forum_url['post'], $cur_forum['last_post_id']).'">'.format_time($cur_forum['last_post']).'</a></strong> <cite>'.sprintf($lang_index['Last poster'], forum_htmlencode($cur_forum['last_poster'])).'</cite></li>';
 		else
-			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><strong>'.$lang_index['Forum is empty'].'</strong> <span><a href="'.forum_link($forum_url['new_topic'], $cur_forum['fid']).'">'.$lang_index['First post nag'].'</a></span></li>';
+			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><strong>'.$lang_common['Never'].'</strong></li>';
 
 		($hook = get_hook('in_normal_row_pre_display')) ? eval($hook) : null;
 	}

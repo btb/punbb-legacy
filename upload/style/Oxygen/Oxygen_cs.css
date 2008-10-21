@@ -269,7 +269,18 @@ body {
 	border-color: #DFE6ED #DFE6ED #CBD1D8 #DFE6ED;
 	background: #DFE6ED;
 	}
-
+	
+.brd #brd-index .main-subhead {
+	background: #294F6E;
+	color: #ddd;
+	border-color: #1f537b;
+	}
+	
+.brd .column-title {
+	border-color: #DFE6ED #DFE6ED #CBD1D8 #DFE6ED;
+	background: #DFE6ED;
+	}
+	
 .brd .content-head, .brd th {
 	background: #EDF1F5;
 	border-bottom-color: #fff;
