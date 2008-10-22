@@ -135,13 +135,13 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 <?php
 
 		$forum_page['cur_category'] = $cur_forum['cid'];
-		
-?>	
+
+?>
 		<h2 class="main-subhead"><?php echo forum_htmlencode($cur_forum['cat_name']) ?></h2>
 		<div class="column-title">
 			<p class="item-summary"><span><?php printf($lang_index['Category subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
 		</div>
-	
+
 <?php
 
 	}

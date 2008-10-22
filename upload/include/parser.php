@@ -516,7 +516,7 @@ function preparse_list_tag($content, $type = '*', &$errors)
 
 	if (strlen($type) != 1)
 		$type = '*';
-	
+
 	if (strpos($content,'[list') !== false)
 	{
 		$pattern = array('/\[list(?:=([1a\*]))?\]((?>(?:(?!\[list(?:=(?:[1a\*]))\]|\[\/list\]).+?)|(?R))*)\[\/list\]/ems');

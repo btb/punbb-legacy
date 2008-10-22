@@ -83,7 +83,7 @@ if ($action == 'change_pass')
 	if (isset($_GET['key']))
 	{
 		$key = $_GET['key'];
-		
+
 		// If the user is already logged in we shouldn't be here :)
 		if (!$forum_user['is_guest'])
 			message($lang_profile['Pass logout']);
