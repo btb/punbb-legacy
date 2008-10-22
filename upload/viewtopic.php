@@ -242,7 +242,7 @@ $forum_page['crumbs'] = array(
 );
 
 // Setup main heading
-$forum_page['main_head'] = (($cur_topic['closed'] == '1') ? $lang_topic['Topic closed'].' ' : '').'<a class="permalink" href="'.forum_link($forum_url['topic'], array($id, sef_friendly($cur_topic['subject']))).'" rel="bookmark" title="'.$lang_topic['Permalink topic'].'">'.forum_htmlencode($cur_topic['subject']).'</a>';
+$forum_page['main_h1'] = (($cur_topic['closed'] == '1') ? $lang_topic['Topic closed'].' ' : '').'<a class="permalink" href="'.forum_link($forum_url['topic'], array($id, sef_friendly($cur_topic['subject']))).'" rel="bookmark" title="'.$lang_topic['Permalink topic'].'">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 if ($forum_page['num_pages'] > 1)
 	$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
@@ -262,16 +262,13 @@ ob_start();
 ($hook = get_hook('vt_main_output_start')) ? eval($hook) : null;
 
 ?>
-
 	<div class="main-head">
-	
 <?php
 
 	if (!empty($forum_page['main_foot_options']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
-		
-?>
 
+?>
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div id="forum<?php echo $cur_topic['forum_id'] ?>" class="main-content main-topic">
@@ -564,7 +561,7 @@ while ($cur_post = $forum_db->fetch_assoc($result))
 
 ?>
 	</div>
-	
+
 		<div class="main-foot">
 <?php
 
