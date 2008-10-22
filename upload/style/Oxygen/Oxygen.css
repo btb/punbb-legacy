@@ -722,6 +722,12 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	left: 965em;
 	}
 
+#brd-wrap .item-summary .info-forum {
+	margin-left: 100%;
+	text-align: center;
+	width: 20em;
+	left: 952em;
+	}
 #brd-wrap .item-summary .info-posts,
 #brd-wrap .item-summary .info-views {
 	margin-left: 100%;
@@ -791,12 +797,17 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
   	}
 
  .brd .main-content .main-item li.info-topics,
+ .brd .main-content .main-item li.info-forum,
  .brd .main-content .main-item li.info-posts,
  .brd .main-content .main-item li.info-views,
  .brd .main-content .main-item li.info-replies {
  	width: 7em;
  	text-align:center;
  	padding-top: 1em;
+ 	}
+	
+ .brd .main-content .main-item li.info-forum {
+ 	width: 20em;
  	}
 
 .brd .main-content .main-item li.info-lastpost {
@@ -836,13 +847,13 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	}
 
 .brd .forum-noview .main-item {
-	padding-right: 28em;
+	padding-right: 48em;
 	}
 
 .brd .forum-noview .main-item ul {
-	width: 27em;
-	right: -28em;
-	margin-left: -27em;
+	width: 47em;
+	right: -48em;
+	margin-left: -47em;
 	}
 
  .brd .main-content .main-item .item-subject span.modlist {

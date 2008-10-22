@@ -9,6 +9,7 @@ $lang_forum = array(
 'topics'					=>	'topics',
 'Reply'						=>	'Reply',
 'Replies'					=>	'Replies',
+'Forum'						=>	'Forum',
 'reply'						=>	'reply',
 'replies'					=>	'replies',
 'View'						=>	'View',
