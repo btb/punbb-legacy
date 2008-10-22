@@ -195,7 +195,7 @@ if (isset($query))
 		($hook = get_hook('se_results_topics_pre_item_header_output')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
+	<div class="main-head">
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-subhead">
@@ -211,7 +211,7 @@ if (isset($query))
 		require FORUM_ROOT.'lang/'.$forum_user['language'].'/topic.php';
 
 ?>
-	<div class="main-pagehead">
+	<div class="main-head">
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-topic">
@@ -396,6 +396,16 @@ if (isset($query))
 	}
 
 ?>
+	</div>
+	
+			<div class="main-foot">
+<?php
+
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
+
+?>
+		<p><?php echo $forum_page['items_info'] ?></p>
 	</div>
 <?php
 
