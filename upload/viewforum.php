@@ -372,6 +372,9 @@ else
 			</div>
 		</div>
 	</div>
+	<div class="main-foot">
+		<p><?php echo $lang_forum['Empty forum'] ?></p>
+	</div>
 <?php
 
 }
