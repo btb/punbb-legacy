@@ -52,7 +52,7 @@ body {
 	font-style: normal;
 	font-weight: normal;
 	}
-#brd-index .main-head {
+#brd-index .main-head, #brd-viewforum .main-head{
 display:none;
 }
 /* Float Clearing
@@ -111,7 +111,7 @@ display:none;
 .brd .mf-extra .mf-field .aslabel,
 .brd .item-subject .item-nav span,
 .brd .post-options a span,
-.brd .main-options .hn,
+.brd .pagehead-end .hn,
 .brd .main-head .hn small,
 .brd .entry-title,
 .brd .menu-page .main-head,
@@ -231,12 +231,10 @@ B - GLOBAL STYLES
 	position: relative;
 	}
 
-.brd .main-pagehead {
-	float: right;
+.brd .pagehead-top, .brd .pagehead-end  {
 	padding: 0  1.5em;
 	border-style: none;
 	border-width: 1px;
-	margin-top: -2.5em;
 	}
 	
 .brd .main-pagehead .hn {
@@ -585,6 +583,7 @@ D - COMMON INTERFACE ELEMENTS
 	
 .brd .crumbs {
 	padding: 0.5em 1.5em;
+	font-size: 1.084em;
 	}
 	
 /* Statistics
@@ -656,18 +655,20 @@ D - COMMON INTERFACE ELEMENTS
 /* Main and Content Options
 -------------------------------------------------------------*/
 
-.brd .main-options {
+.brd p.options {
 	border-top: none;
+	float:right;
 	}
 
-.brd .main-options .options, .brd .main-modoptions .options {
+.brd .main-modoptions .options {
 	text-align: center;
 	}
 	
-.brd .main-options span.feed {
+.brd p.feed {
 	padding-left: 20px;
 	background: url(feed-icon.png) center left no-repeat;
 	padding-top: 2px;
+	float: right;
 	}
 	
 .brd .content-options, .brd .ct-options {
@@ -882,13 +883,15 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	font-style: normal;
 	}
 
- .brd .main-content .main-item .item-subject .hn,
+ .brd .main-content .main-item .item-subject .hn {
+	display:inline;
+	margin: 0 0 0 1.5em; 
+ 	}
+	
  .brd .main-content .main-item .item-subject p {
-	margin: 0 1em 0 1.5em;
+	margin: 0 0 0 1.5em;
  	}
 
- .brd .main-content .main-item li.info-lastpost strong,
- .brd .main-content .main-item li.info-lastpost cite,
  .brd .main-content .main-item li.info-lastpost span {
  	display: block;
  	padding: 0 1em;
@@ -896,6 +899,11 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	font-weight: normal;
  	}
  	
+ .brd .main-content .main-item li.info-lastpost strong {
+ 	padding: 0 0 0 1em;
+ 	font-style: normal;
+ 	font-weight: normal;
+ 	}
  .brd .main-content .main-item li.info-select {
  	position: absolute;
  	right: 0;

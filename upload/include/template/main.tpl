@@ -36,7 +36,6 @@
 	<!-- forum_main_pagepost_top -->
 	<!-- forum_main_head -->
 	<!-- forum_main -->
-	<!-- forum_main_options -->
 	<!-- forum_main_pagepost_end -->
 	<!-- forum_crumbs_end -->
 </div>

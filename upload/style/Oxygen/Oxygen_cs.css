@@ -9,8 +9,15 @@ body {
 .brd a:link, .brd a:visited {
 	color: #00579C;
 	}
+
+.brd p.feed a:link, .brd p.feed a:visited,
+.brd .pagehead-end .options a:link, .brd .pagehead-end .options a:visited {
+	color:#DDDDDD;
+	}
 	
-.brd a:hover, .brd a:active, .brd a:focus {
+.brd a:hover, .brd a:active, .brd a:focus,
+.brd p.feed a:hover, .brd p.feed a:active, .brd p.feed a:focus,
+.brd .pagehead-end .options a:hover, .brd .pagehead-end .options a:active, .brd .pagehead-end .options a:focus {
 	color: #b42000;
 	text-decoration: none;
 	}
@@ -40,6 +47,7 @@ body {
 .brd .crumbs {
 	background: #fff;
 	border-color: #fff;
+	color:#00579C;
 	}
 
 
@@ -259,7 +267,7 @@ body {
 	color: #fff;
 	}
 
-.brd .main-head, .brd .main-pagehead {
+.brd .main-head, .brd .pagehead-top, .brd .pagehead-end {
 	background: #294F6E;
 	color: #ddd;
 	border-color: #1f537b;

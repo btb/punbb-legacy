@@ -144,9 +144,6 @@ else
 
 // Setup main options
 $forum_page['main_options_head'] = $lang_forum['Forum options'];
-$forum_page['main_options'] = array(
-	'feed'	=> '<span class="feed'.(empty($forum_page['main_options']) ? ' first-item' : '').'"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>'
-);
 
 if (!$forum_user['is_guest'] && $forum_db->num_rows($result))
 {
@@ -159,7 +156,7 @@ if (!$forum_user['is_guest'] && $forum_db->num_rows($result))
 // Setup breadcrumbs
 $forum_page['crumbs'] = array(
 	array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-	$cur_forum['forum_name']
+	array($cur_forum['forum_name'], forum_link($forum_url['forum'], array($id, sef_friendly($cur_forum['forum_name']))))
 );
 
 // Setup main header
@@ -196,8 +193,13 @@ if ($forum_db->num_rows($result))
 {
 
 ?>
-	<div class="main-pagehead">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+	<div class="pagehead-top">
+<?php
+
+	echo '<p class="feed"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></p>'
+
+?>
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 	<div class="main-subhead">
 		<p class="item-summary<?php echo ($forum_config['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>"><span><?php printf($lang_forum['Forum subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
@@ -228,13 +230,13 @@ if ($forum_db->num_rows($result))
 			$forum_page['item_title']['link'] = '<a href="'.forum_link($forum_url['topic'], array($cur_topic['moved_to'], sef_friendly($cur_topic['subject']))).'"><span>'.$lang_forum['Moved'].'</span> '.forum_htmlencode($cur_topic['subject']).'</a>';
 
 			// Combine everything to produce the Topic heading
-			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span> <strong>'.$forum_page['item_title']['link'].'</strong></h3>';
+			$forum_page['item_body']['subject']['title'] = '<h3 class="hn"><span class="item-num">'.forum_number_format($forum_page['start_from'] + $forum_page['item_count']).'</span>'.$forum_page['item_title']['link'].'</h3>';
 
 			$forum_page['item_subject']['starter'] = '<span class="item-starter">'.sprintf($lang_forum['Topic starter'], format_time($cur_topic['posted'], 1), '<cite>'.sprintf($lang_forum['by poster'], forum_htmlencode($cur_topic['poster'])).'</cite>').'</span>';
 
 			($hook = get_hook('vf_topic_loop_moved_topic_pre_item_subject_merge')) ? eval($hook) : null;
 
-			$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
+			$forum_page['item_body']['subject']['desc'] = implode(' ', $forum_page['item_subject']);
 
 			if ($forum_config['o_topic_views'] == '1')
 				$forum_page['item_body']['info']['views'] = '<li class="info-views"><span class="label">'.$lang_forum['No views info'].'</span></li>';
@@ -270,7 +272,7 @@ if ($forum_db->num_rows($result))
 			if (!empty($forum_page['item_title_status']))
 				$forum_page['item_title']['status'] = '<span class="item-status">'.sprintf($lang_forum['Item status'], implode(', ', $forum_page['item_title_status'])).'</span>';
 
-			$forum_page['item_title']['link'] = '<strong><a href="'.forum_link($forum_url['topic'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a></strong>';
+			$forum_page['item_title']['link'] = '<a href="'.forum_link($forum_url['topic'], array($cur_topic['id'], sef_friendly($cur_topic['subject']))).'">'.forum_htmlencode($cur_topic['subject']).'</a>';
 
 			($hook = get_hook('vf_topic_loop_normal_topic_pre_item_title_merge')) ? eval($hook) : null;
 
@@ -302,7 +304,7 @@ if ($forum_db->num_rows($result))
 
 			($hook = get_hook('vf_topic_loop_normal_topic_pre_item_subject_merge')) ? eval($hook) : null;
 
-			$forum_page['item_body']['subject']['desc'] = '<p>'.implode(' ', $forum_page['item_subject']).'</p>';
+			$forum_page['item_body']['subject']['desc'] = implode(' ', $forum_page['item_subject']);
 
 			$forum_page['item_body']['info']['replies'] = '<li class="info-replies"><strong>'.forum_number_format($cur_topic['num_replies']).'</strong> <span class="label">'.(($cur_topic['num_replies'] == 1) ? $lang_forum['reply'] : $lang_forum['replies']).'</span></li>';
 
@@ -334,6 +336,23 @@ if ($forum_db->num_rows($result))
 
 ?>
 	</div>
+		<div class="pagehead-end">
+		
+<?php
+
+	if (!$forum_user['is_guest'] && $forum_db->num_rows($result))
+{
+	echo '<h2 class="hn">'.$forum_page['main_options_head'].'</h2>'."\n\t\t".'<p class="options">';
+	echo '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
+
+	if ($forum_page['is_admmod'])
+		echo '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['page'], $id).'">'.$lang_forum['Moderate forum'].'</a></span>';
+	echo '</p>'."\n\t\t";
+}
+
+?>
+		<p><?php echo $forum_page['items_info'] ?></h2>
+	</div>
 <?php
 
 }
@@ -346,8 +365,8 @@ else
 	($hook = get_hook('vf_no_results_row_pre_display')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
-		<h2 class="hn"><span><?php echo $lang_forum['Empty forum'] ?></span></h2>
+	<div class="pagehead-top">
+		<h2 class="hn"><?php echo $lang_forum['Empty forum'] ?></h2>
 	</div>
 	<div id="forum<?php echo $id ?>" class="main-content main-forum">
 		<div class="main-item empty main-first-item">
