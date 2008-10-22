@@ -1034,11 +1034,13 @@ F - MAIN CONTENT - FORMS
 .brd .sf-set .checkbox label span {
 	float: left;
 	margin-left: -18em;
-	display: inline;
+	display: block;
 	position: relative;
 	padding: 0 1em;
 	width: 16em;
 	left: -3em;
+	text-align:right;
+	font-weight:bold;
 	}
 
 .brd .sf-set .text label small, .brd .sf-set .select label small {
