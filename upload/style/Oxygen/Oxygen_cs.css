@@ -146,12 +146,6 @@ body {
 	background: #f4f4f4;
 	}
 
-.brd .frm-group, .brd .mf-set, .brd .sf-set, .brd .sf-box, .brd .mf-box, .brd .txt-set, .brd .txt-box {
-	background: #F2F5F8;
-	border-color: #DBE0E4;
-	}
-
-
 .brd .frm-buttons {
 	border-color: #DBE0E4;
 	}
