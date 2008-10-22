@@ -143,14 +143,17 @@ else
 	$forum_page['page_post']['posting'] = '<p class="posting">'.$lang_forum['No permission'].'</p>';
 
 // Setup main options
-$forum_page['main_options_head'] = $lang_forum['Forum options'];
+$forum_page['main_head_options'] = array(
+	'feed'	=> '<span class="feed'.(empty($forum_page['main_options']) ? ' first-item' : '').'"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></span>'
+);
 
+$forum_page['main_foot_options'] = array();
 if (!$forum_user['is_guest'] && $forum_db->num_rows($result))
 {
-	$forum_page['main_options']['mark_read'] = '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
+	$forum_page['main_foot_options']['mark_read'] = '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
 
 	if ($forum_page['is_admmod'])
-		$forum_page['main_options']['moderate'] = '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['page'], $id).'">'.$lang_forum['Moderate forum'].'</a></span>';
+		$forum_page['main_foot_options']['moderate'] = '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['page'], $id).'">'.$lang_forum['Moderate forum'].'</a></span>';
 }
 
 // Setup breadcrumbs
@@ -193,10 +196,11 @@ if ($forum_db->num_rows($result))
 {
 
 ?>
-	<div class="pagehead-top">
+	<div class="main-head">
 <?php
 
-	echo '<p class="feed"><a class="feed" href="'.forum_link($forum_url['forum_rss'], $id).'">'.$lang_forum['RSS forum feed'].'</a></p>'
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
 		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
@@ -336,19 +340,11 @@ if ($forum_db->num_rows($result))
 
 ?>
 	</div>
-		<div class="pagehead-end">
-		
+		<div class="main-foot">
 <?php
 
-	if (!$forum_user['is_guest'] && $forum_db->num_rows($result))
-{
-	echo '<h2 class="hn">'.$forum_page['main_options_head'].'</h2>'."\n\t\t".'<p class="options">';
-	echo '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['mark_forum_read'], array($id, generate_form_token('markforumread'.$id.$forum_user['id']))).'">'.$lang_forum['Mark forum read'].'</a></span>';
-
-	if ($forum_page['is_admmod'])
-		echo '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_sublink($forum_url['moderate_forum'], $forum_url['page'], $forum_page['page'], $id).'">'.$lang_forum['Moderate forum'].'</a></span>';
-	echo '</p>'."\n\t\t";
-}
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
 		<p><?php echo $forum_page['items_info'] ?></h2>
@@ -365,7 +361,7 @@ else
 	($hook = get_hook('vf_no_results_row_pre_display')) ? eval($hook) : null;
 
 ?>
-	<div class="pagehead-top">
+	<div class="main-head">
 		<h2 class="hn"><?php echo $lang_forum['Empty forum'] ?></h2>
 	</div>
 	<div id="forum<?php echo $id ?>" class="main-content main-forum">

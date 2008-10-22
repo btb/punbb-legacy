@@ -31,10 +31,10 @@
 <div class="hr"><hr /></div>
 
 <div id="brd-main">
+	<!-- forum_main_h1 -->
 	<!-- forum_crumbs_top -->
 	<!-- forum_main_menu -->
 	<!-- forum_main_pagepost_top -->
-	<!-- forum_main_head -->
 	<!-- forum_main -->
 	<!-- forum_main_pagepost_end -->
 	<!-- forum_crumbs_end -->
