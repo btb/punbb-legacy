@@ -262,7 +262,16 @@ ob_start();
 ($hook = get_hook('vt_main_output_start')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
+
+	<div class="main-head">
+	
+<?php
+
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+		
+?>
+
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div id="forum<?php echo $cur_topic['forum_id'] ?>" class="main-content main-topic">
@@ -554,6 +563,16 @@ while ($cur_post = $forum_db->fetch_assoc($result))
 }
 
 ?>
+	</div>
+	
+		<div class="main-foot">
+<?php
+
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
+
+?>
+		<p><?php echo $forum_page['items_info'] ?></p>
 	</div>
 <?php
 

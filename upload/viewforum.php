@@ -347,7 +347,7 @@ if ($forum_db->num_rows($result))
 		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<p><?php echo $forum_page['items_info'] ?></h2>
+		<p><?php echo $forum_page['items_info'] ?></p>
 	</div>
 <?php
 
