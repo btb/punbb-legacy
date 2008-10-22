@@ -269,7 +269,7 @@ ob_start();
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<p><?php echo $forum_page['items_info'] ?></p>
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 	<div id="forum<?php echo $cur_topic['forum_id'] ?>" class="main-content main-topic">
 <?php
