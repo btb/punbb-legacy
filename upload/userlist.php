@@ -133,8 +133,8 @@ ob_start();
 ($hook = get_hook('ul_main_output_start')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form id="afocus" method="get" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -297,6 +297,15 @@ if ($forum_db->num_rows($result))
 				</tbody>
 			</table>
 		</div>
+	</div>
+	<div class="main-foot">
+<?php
+
+	if (!empty($forum_page['main_options']))
+		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_options']).'</p>';
+
+?>
+		<p><?php echo $forum_page['items_info'] ?></p>
 	</div>
 <?php
 
