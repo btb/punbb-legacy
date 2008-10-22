@@ -100,8 +100,8 @@ if ($forum_page['page'] > 1)
 }
 
 // Setup main options
-$forum_page['main_options_head'] = $lang_ul['User list options'];
-$forum_page['main_options'] = array(
+$forum_page['main_head_options'] = array();
+$forum_page['main_foot_options'] = array(
 	'new_search'	=> '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_ul['Perform new search'].'</a></span>'
 );
 
@@ -134,6 +134,12 @@ ob_start();
 
 ?>
 	<div class="main-head">
+<?php
+
+	if (!empty($forum_page['main_options']))
+		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+
+?>
 		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 	<div class="main-content main-frm">
@@ -301,8 +307,8 @@ if ($forum_db->num_rows($result))
 	<div class="main-foot">
 <?php
 
-	if (!empty($forum_page['main_options']))
-		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_options']).'</p>';
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
 		<p><?php echo $forum_page['items_info'] ?></p>
