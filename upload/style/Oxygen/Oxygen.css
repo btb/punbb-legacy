@@ -1251,10 +1251,11 @@ F - MAIN CONTENT - FORMS
 .brd .txt-set label span {
 	float: left;
 	margin-left: -18em;
-	display: inline;
+	display: block;
 	position: relative;
 	padding: 2px 1em;
 	width: 16em;
+	text-align:right;
 	}
 
 .brd .txt-set label small {
@@ -1297,7 +1298,7 @@ F - MAIN CONTENT - FORMS
 	float: left;
 	font-size: 0.917em;
 	line-height: 1.2em;
-	width: 16em;
+	width: 100%;
 	position: relative;
 	}
 
