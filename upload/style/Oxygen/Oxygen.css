@@ -305,6 +305,9 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	border-style: dashed none none none;
 	margin: 0;
 	}
+.brd .ct-group .set1, .frm-group .set1 {
+	border-top: none;
+	}
 
 .brd .ct-group .ct-box, .brd .frm-group .ct-box {
 	border-style: none;
@@ -313,7 +316,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .brd .ct-group .ct-set .ct-box, .brd .ct-set .ct-box,
 .brd .frm-group .ct-set .ct-box {
-	border-style: none none none dashed;
+	border-style: none;
 	margin: 0;
 	}
 
@@ -328,15 +331,19 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .brd .ct-set .ct-legend {
 	float: left;
-	margin-left: -18em;
+	margin-left: -20em;
 	width: 18em;
 	display: inline;
 	position: relative;
+	text-align:right;
 	}
 
 .brd .ct-set ul {
 	padding-left: 0;
 	list-style: none;
+	}
+.brd .ct-set ul.user-ident {
+	padding-left: 2em;
 	}
 
 .brd .ct-box div {
