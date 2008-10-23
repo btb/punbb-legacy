@@ -265,7 +265,7 @@ ob_start();
 	<div class="main-head">
 <?php
 
-	if (!empty($forum_page['main_foot_options']))
+	if (!empty($forum_page['main_head_options']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
