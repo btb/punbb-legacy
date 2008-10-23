@@ -301,11 +301,17 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	margin: 1.417em;
 	}
 
-.brd .ct-group .ct-set, .frm-group .ct-set {
+.brd .frm-group .ct-set {
 	border-style: dashed none none none;
 	margin: 0;
 	}
-.brd .ct-group .set1, .frm-group .set1 {
+
+.brd .ct-group .ct-set{
+	border-style: dashed none none none;
+	margin: 0 1em;
+	}
+	
+.brd .ct-group .set1, .brd .frm-group .set1 {
 	border-top: none;
 	}
 
@@ -320,11 +326,6 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	margin: 0;
 	}
 
-
-.brd .ct-group .set1 {
-	border-top: 0;
-	}
-
 .brd .ct-group .set1 {
 	border-top: 0;
 	}
@@ -336,6 +337,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	display: inline;
 	position: relative;
 	text-align:right;
+	font-weight:bold;
 	}
 
 .brd .ct-set ul {
@@ -1263,6 +1265,7 @@ F - MAIN CONTENT - FORMS
 	padding: 2px 1em;
 	width: 16em;
 	text-align:right;
+	font-weight:bold;
 	}
 
 .brd .txt-set label small {
