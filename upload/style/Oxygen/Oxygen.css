@@ -291,7 +291,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	border-style: solid;
 	border-width: 1px;
 	margin: 1.417em;
-	padding: 0 0 0 18em;
+	padding: 0 0 0 17em;
 	position: relative;
 	}
 
@@ -306,9 +306,12 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	margin: 0;
 	}
 
-.brd .ct-group .ct-set{
+.brd .ct-group .ct-set {
 	border-style: dashed none none none;
 	margin: 0 1em;
+	}
+.brd .ct-group .group-item1 {
+	border: none;
 	}
 	
 .brd .ct-group .set1, .brd .frm-group .set1 {
@@ -332,7 +335,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .brd .ct-set .ct-legend {
 	float: left;
-	margin-left: -20em;
+	margin-left: -19em;
 	width: 18em;
 	display: inline;
 	position: relative;
@@ -346,6 +349,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	}
 .brd .ct-set ul.user-ident {
 	padding-left: 2em;
+	width: 16em;
 	}
 
 .brd .ct-box div {
@@ -982,7 +986,7 @@ F - MAIN CONTENT - FORMS
 
 .brd .sf-set, .brd .mf-set, .brd .txt-set {
 	margin: 1.417em;
-	padding: 0 0 0 18em;
+	padding: 0 0 0 17em;
 	position: relative;
 	}
 
@@ -1003,7 +1007,7 @@ F - MAIN CONTENT - FORMS
 	position: relative;
 	border-top-style:double;
     border-top-width:3px;
-    padding:0.8em 0pt 0.3em 19em;
+    padding:0.8em 0pt 0.3em 18em;
 	}
 
 .brd .frm-buttons span.submit {
@@ -1035,10 +1039,10 @@ F - MAIN CONTENT - FORMS
 
 .brd .sf-set .text label span, .brd .sf-set .select label span, .brd .sf-set .aslabel span {
 	float: left;
-	margin-left: -18em;
+	margin-left: -17em;
 	display: block;
 	position: relative;
-	padding: 2px 1em 2px 1em;
+	padding: 2px 0 2px 1em;
 	width: 16em;
 	text-align:right;
 	font-weight:bold;
@@ -1049,7 +1053,7 @@ F - MAIN CONTENT - FORMS
 	margin-left: -18em;
 	display: block;
 	position: relative;
-	padding: 0 1em;
+	padding: 0 0 0 2em;
 	width: 16em;
 	left: -3em;
 	text-align:right;
@@ -1109,9 +1113,9 @@ F - MAIN CONTENT - FORMS
 
 .brd .mf-set legend span {
 	position: absolute;
-	left: -18em;
+	left: -17em;
 	width: 16em;
-	padding: 0.75em 1em;
+	padding: 0.2em 1em;
 	margin: 1px 0 2px 0;
 	overflow: hidden;
 	display:block;
@@ -1177,10 +1181,10 @@ F - MAIN CONTENT - FORMS
 	padding-top: 2em;
 	}
 
-.brd .frm-hdgroup .set1 {
+/*.brd .frm-hdgroup .set1 {
 	border-top-style: solid;
 	border-top-width: 1px;
-	}
+	}*/
 
 .brd .sf-set .sf-box .sf-forum {
 	width: 25em;
@@ -1259,7 +1263,7 @@ F - MAIN CONTENT - FORMS
 
 .brd .txt-set label span {
 	float: left;
-	margin-left: -18em;
+	margin-left: -17em;
 	display: block;
 	position: relative;
 	padding: 2px 1em;
