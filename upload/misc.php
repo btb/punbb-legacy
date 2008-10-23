@@ -64,6 +64,10 @@ if ($action == 'rules')
 	($hook = get_hook('mi_rules_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $lang_common['Rules'] ?></h2>
+	</div>
+
 	<div class="main-content main-frm">
 		<div class="ct-box user-box">
 			<?php echo $forum_config['o_rules_message']."\n" ?>

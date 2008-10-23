@@ -196,6 +196,7 @@ if (isset($query))
 		($hook = get_hook('se_results_topics_pre_item_header_output')) ? eval($hook) : null;
 
 ?>
+
 	<div class="main-head">
 		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>

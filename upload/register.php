@@ -81,6 +81,9 @@ else if ($forum_config['o_rules'] == '1' && !isset($_GET['agree']) && !isset($_P
 	$forum_page['set_count'] = $forum_page['fld_count'] = 0;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php echo sprintf($lang_profile['Register at'], $forum_config['o_board_title']) ?></span></h2>
+	</div>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $lang_profile['Reg rules head'] ?></span></h2>
 	</div>
@@ -302,6 +305,9 @@ ob_start();
 ($hook = get_hook('rg_register_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php echo sprintf($lang_profile['Register at'], $forum_config['o_board_title']) ?></span></h2>
+	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
 			<?php echo implode("\n\t\t\t", $forum_page['frm_info'])."\n" ?>

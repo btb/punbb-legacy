@@ -154,6 +154,9 @@ if ($action == 'change_pass')
 			($hook = get_hook('pf_change_pass_key_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+	</div>
 	<div class="main-content main-frm">
 <?php
 
@@ -318,6 +321,9 @@ if ($action == 'change_pass')
 	($hook = get_hook('pf_change_pass_normal_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+	</div>
 	<div class="main-content main-frm">
 <?php
 
@@ -561,6 +567,9 @@ else if ($action == 'change_email')
 	($hook = get_hook('pf_change_email_normal_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
 			<?php echo $forum_page['frm_info']."\n" ?>
@@ -691,6 +700,9 @@ else if ($action == 'delete_user' || isset($_POST['delete_user_comply']) || isse
 	($hook = get_hook('pf_delete_user_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box warn-box">
 			<ul class="info-list">
@@ -1396,6 +1408,9 @@ if ($forum_user['id'] != $id &&
 	($hook = get_hook('pf_view_details_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><span><?php printf(($forum_user['id'] == $id) ? $lang_profile['Profile welcome'] : $lang_profile['Profile welcome user'], forum_htmlencode($user['username'])) ?></span></h2>
+	</div>
 	<div class="main-content main-frm">
 <?php ($hook = get_hook('pf_view_details_pre_user_info')) ? eval($hook) : null; ?>
 		<div class="profile ct-group data-group vcard">
