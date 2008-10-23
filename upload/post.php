@@ -362,6 +362,9 @@ if (isset($_POST['preview']) && empty($errors))
 	($hook = get_hook('po_preview_pre_display')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></h2>
+	</div>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic']; ?></span></h2>
 	</div>
@@ -386,6 +389,9 @@ if (isset($_POST['preview']) && empty($errors))
 }
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></h2>
+	</div>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo ($tid) ? $lang_post['Compose your reply'] : $lang_post['Compose your topic'] ?></span></h2>
 	</div>

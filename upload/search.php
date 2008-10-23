@@ -198,7 +198,7 @@ if (isset($query))
 ?>
 
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 	<div class="main-subhead">
 		<p class="item-summary forum-noview"><span><?php printf($lang_forum['Search subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
@@ -466,6 +466,9 @@ ob_start();
 ($hook = get_hook('se_main_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $lang_common['Search'] ?></h2>
+	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
 			<ul class="info-list">

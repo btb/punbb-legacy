@@ -296,6 +296,9 @@ else if ($action == 'forget' || $action == 'forget_2')
 	($hook = get_hook('li_forgot_pass_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $lang_login['New password request'] ?></h2>
+	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
 			<p class="important"><?php echo $lang_login['New password info'] ?></p>
@@ -392,7 +395,7 @@ ob_start();
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><span><?php echo sprintf($lang_login['Login info'], $forum_config['o_board_title']) ?></span></h2>
+		<h2 class="hn"><?php echo sprintf($lang_login['Login info'], $forum_config['o_board_title']) ?></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="content-head">
