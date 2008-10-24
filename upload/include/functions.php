@@ -505,38 +505,38 @@ function generate_navlinks()
 		return $return;
 
 	// Index should always be displayed
-	$links['index'] = '<li id="navindex"'.((FORUM_PAGE == 'index') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['index']).'"><span>'.$lang_common['Index'].'</span></a></li>';
+	$links['index'] = '<li id="navindex"'.((FORUM_PAGE == 'index') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['index']).'">'.$lang_common['Index'].'</a></li>';
 
 	if ($forum_user['g_read_board'] == '1' && $forum_user['g_view_users'] == '1')
-		$links['userlist'] = '<li id="navuserlist"'.((FORUM_PAGE == 'userlist') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['users']).'"><span>'.$lang_common['User list'].'</span></a></li>';
+		$links['userlist'] = '<li id="navuserlist"'.((FORUM_PAGE == 'userlist') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_common['User list'].'</a></li>';
 
 	if ($forum_config['o_rules'] == '1' && (!$forum_user['is_guest'] || $forum_user['g_read_board'] == '1' || $forum_config['o_regs_allow'] == '1'))
-		$links['rules'] = '<li id="navrules"'.((FORUM_PAGE == 'rules') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['rules']).'"><span>'.$lang_common['Rules'].'</span></a></li>';
+		$links['rules'] = '<li id="navrules"'.((FORUM_PAGE == 'rules') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['rules']).'">'.$lang_common['Rules'].'</a></li>';
 
 	if ($forum_user['is_guest'])
 	{
 		if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
-			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'"><span>'.$lang_common['Search'].'</span></a></li>';
+			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_common['Search'].'</a></li>';
 
-		$links['register'] = '<li id="navregister"'.((FORUM_PAGE == 'register') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['register']).'"><span>'.$lang_common['Register'].'</span></a></li>';
-		$links['login'] = '<li id="navlogin"'.((FORUM_PAGE == 'login') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['login']).'"><span>'.$lang_common['Login'].'</span></a></li>';
+		$links['register'] = '<li id="navregister"'.((FORUM_PAGE == 'register') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['register']).'">'.$lang_common['Register'].'</a></li>';
+		$links['login'] = '<li id="navlogin"'.((FORUM_PAGE == 'login') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['login']).'">'.$lang_common['Login'].'</a></li>';
 	}
 	else
 	{
 		if (!$forum_user['is_admmod'])
 		{
 			if ($forum_user['g_read_board'] == '1' && $forum_user['g_search'] == '1')
-				$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'"><span>'.$lang_common['Search'].'</span></a></li>';
+				$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_common['Search'].'</a></li>';
 
-			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'"><span>'.$lang_common['Profile'].'</span></a></li>';
-			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'"><span>'.$lang_common['Logout'].'</span></a></li>';
+			$links['profile'] = '<li id="navprofile"'.((substr(FORUM_PAGE, 0, 7) == 'profile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.$lang_common['Profile'].'</a></li>';
+			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.$lang_common['Logout'].'</a></li>';
 		}
 		else
 		{
-			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'"><span>'.$lang_common['Search'].'</span></a></li>';
-			$links['profile'] = '<li id="navprofile"'.((FORUM_PAGE == 'editprofile' || FORUM_PAGE == 'viewprofile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'"><span>'.$lang_common['Profile'].'</span></a></li>';
-			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'"><span>'.$lang_common['Logout'].'</span></a></li>';
-			$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'"><span>'.$lang_common['Admin'].'</span></a></li>';
+			$links['search'] = '<li id="navsearch"'.((FORUM_PAGE == 'search') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['search']).'">'.$lang_common['Search'].'</a></li>';
+			$links['profile'] = '<li id="navprofile"'.((FORUM_PAGE == 'editprofile' || FORUM_PAGE == 'viewprofile') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['user'], $forum_user['id']).'">'.$lang_common['Profile'].'</a></li>';
+			$links['logout'] = '<li id="navlogout"><a href="'.forum_link($forum_url['logout'], array($forum_user['id'], generate_form_token('logout'.$forum_user['id']))).'">'.$lang_common['Logout'].'</a></li>';
+			$links['admin'] = '<li id="navadmin"'.((substr(FORUM_PAGE, 0, 5) == 'admin') ? ' class="isactive"' : '').'><a href="'.forum_link($forum_url['admin_index']).'">'.$lang_common['Admin'].'</a></li>';
 		}
 	}
 
@@ -1906,7 +1906,7 @@ function message($message, $link = '', $heading = '')
 		// Setup breadcrumbs
 		$forum_page['crumbs'] = array(
 			array($forum_config['o_board_title'], forum_link($forum_url['index'])),
-			$heading
+			$lang_common['Forum message']
 		);
 
 		($hook = get_hook('fn_message_pre_header_load')) ? eval($hook) : null;
@@ -1921,6 +1921,10 @@ function message($message, $link = '', $heading = '')
 	}
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $heading ?></h2>
+	</div>
+
 	<div class="main-content main-message">
 		<p><?php echo $message ?><?php if ($link != '') echo ' <span>'.$link.'</span>' ?></p>
 	</div>
@@ -2012,13 +2016,13 @@ function csrf_confirm_form()
 ?>
 <div id="brd-main" class="main">
 
-	<h1><span><?php echo end($forum_page['crumbs']) ?></span></h1>
+	<h1><?php echo end($forum_page['crumbs']) ?></h1>
 
 	<div class="main-head">
-		<h2><span><?php echo $lang_common['Confirm action head'] ?></span></h2>
+		<h2 class="hn"><?php echo $lang_common['Confirm action head'] ?></h2>
 	</div>
 	<div class="main-content main-frm">
-		<div class="frm-info">
+		<div class="ct-box info-box">
 			<p><?php echo $lang_common['CSRF token mismatch'] ?></p>
 		</div>
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -2511,6 +2515,7 @@ function maintenance_message()
 ?>
 <title><?php echo $lang_common['Maintenance'].' - '.forum_htmlencode($forum_config['o_board_title']) ?></title>
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url ?>/style/<?php echo $forum_user['style'] ?>/<?php echo $forum_user['style'].'.css' ?>" />
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base_url ?>/style/<?php echo $forum_user['style'] ?>/<?php echo $forum_user['style'].'_cs.css' ?>" />
 <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/<?php echo $forum_user['style'] ?>/<?php echo $forum_user['style'].'_fix.css' ?>" /><![endif]-->
 <!--[if IE 7]><link rel="stylesheet" type="text/css" href="<?php echo $base_url ?>/style/<?php echo $forum_user['style'] ?>/<?php echo $forum_user['style'].'_fix7.css' ?>" /><![endif]-->
 <?php
@@ -2528,7 +2533,7 @@ function maintenance_message()
 <div id="brd-main" class="main basic">
 
 	<div class="main-head">
-		<h1 class="hn"><span><?php echo $lang_common['Maintenance mode'] ?></span></h1>
+		<h1 class="hn"><?php echo $lang_common['Maintenance mode'] ?></h1>
 	</div>
 	<div class="main-content main-message">
 		<div class="ct-box user-box">
@@ -2651,7 +2656,7 @@ function redirect($destination_url, $message)
 <div id="brd-main" class="main basic">
 
 	<div class="main-head">
-		<h1 class="hn"><span><?php echo $message ?></span></h1>
+		<h1 class="hn"><?php echo $message ?></h1>
 	</div>
 
 	<div class="main-content main-message">
@@ -2703,7 +2708,7 @@ function redirect($destination_url, $message)
 //
 function error()
 {
-	if (!headers_sent()) 
+	if (!headers_sent())
 	{
 		header('Content-type: text/html; charset=utf-8');
 		header('HTTP/1.1 503 Service Temporarily Unavailable');
@@ -2862,7 +2867,7 @@ function get_saved_queries()
 <div id="brd-debug" class="main">
 
 	<div class="main-head">
-		<h2><span>'.$lang_common['Debug table'].'</span></h2>
+		<h2>'.$lang_common['Debug table'].'</h2>
 	</div>
 
 	<div class="main-content debug">

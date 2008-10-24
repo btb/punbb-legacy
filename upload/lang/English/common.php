@@ -85,6 +85,7 @@ $lang_common = array(
 'Item info single'			=>	'%s [ %s ]',
 'Item info plural'			=>	'%s [ %s to %s of %s ]', // e.g. Topics [ 10 to 20 of 30 ]
 'Info separator'			=>	' ', // e.g. 1 Page | 10 Topics
+'Maintenance'				=>	'Maintenance',
 
 // CSRF confirmation form
 'Confirm'					=>	'Confirm',	// Button
