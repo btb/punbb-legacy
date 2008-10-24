@@ -47,7 +47,7 @@ if (isset($_POST['add_forum']))
 	if ($add_to_cat < 1)
 		message($lang_common['Bad request']);
 
-	$forum_name = trim($_POST['forum_name']);
+	$forum_name = forum_trim($_POST['forum_name']);
 	$position = intval($_POST['position']);
 
 	($hook = get_hook('afo_add_forum_form_submitted')) ? eval($hook) : null;
@@ -194,7 +194,7 @@ else if (isset($_GET['del_forum']))
 
 		($hook = get_hook('afo_del_forum_end')) ? eval($hook) : null;
 
-		$tpl_temp = trim(ob_get_contents());
+		$tpl_temp = forum_trim(ob_get_contents());
 		$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 		ob_end_clean();
 		// END SUBST - <!-- forum_main -->
@@ -289,11 +289,11 @@ else if (isset($_GET['edit_forum']))
 		($hook = get_hook('afo_save_forum_form_submitted')) ? eval($hook) : null;
 
 		// Start with the forum details
-		$forum_name = trim($_POST['forum_name']);
-		$forum_desc = forum_linebreaks(trim($_POST['forum_desc']));
+		$forum_name = forum_trim($_POST['forum_name']);
+		$forum_desc = forum_linebreaks(forum_trim($_POST['forum_desc']));
 		$cat_id = intval($_POST['cat_id']);
 		$sort_by = intval($_POST['sort_by']);
-		$redirect_url = isset($_POST['redirect_url']) && $cur_forum['num_topics'] == 0 ? trim($_POST['redirect_url']) : null;
+		$redirect_url = isset($_POST['redirect_url']) && $cur_forum['num_topics'] == 0 ? forum_trim($_POST['redirect_url']) : null;
 
 		if ($forum_name == '')
 			message($lang_admin_forums['Must enter forum message']);
@@ -633,7 +633,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 	($hook = get_hook('afo_edit_forum_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 
 
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
@@ -818,7 +818,7 @@ if ($forum_db->num_rows($result))
 
 ($hook = get_hook('afo_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_main -->

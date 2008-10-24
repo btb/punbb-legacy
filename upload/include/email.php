@@ -83,12 +83,12 @@ function forum_mail($to, $subject, $message, $reply_to_email = '', $reply_to_nam
 	($hook = get_hook('em_fn_forum_mail_start')) ? eval($hook) : null;
 
 	// Do a little spring cleaning
-	$to = trim(preg_replace('#[\n\r]+#s', '', $to));
-	$subject = trim(preg_replace('#[\n\r]+#s', '', $subject));
-	$from_email = trim(preg_replace('#[\n\r:]+#s', '', $from_email));
-	$from_name = trim(preg_replace('#[\n\r:]+#s', '', str_replace('"', '', $from_name)));
-	$reply_to_email = trim(preg_replace('#[\n\r:]+#s', '', $reply_to_email));
-	$reply_to_name = trim(preg_replace('#[\n\r:]+#s', '', str_replace('"', '', $reply_to_name)));
+	$to = forum_trim(preg_replace('#[\n\r]+#s', '', $to));
+	$subject = forum_trim(preg_replace('#[\n\r]+#s', '', $subject));
+	$from_email = forum_trim(preg_replace('#[\n\r:]+#s', '', $from_email));
+	$from_name = forum_trim(preg_replace('#[\n\r:]+#s', '', str_replace('"', '', $from_name)));
+	$reply_to_email = forum_trim(preg_replace('#[\n\r:]+#s', '', $reply_to_email));
+	$reply_to_name = forum_trim(preg_replace('#[\n\r:]+#s', '', str_replace('"', '', $reply_to_name)));
 
 	// Set up some headers to take advantage of UTF-8
 	$from = "=?UTF-8?B?".base64_encode($from_name)."?=".' <'.$from_email.'>';

@@ -310,7 +310,7 @@ if (isset($_POST['add_group']) || isset($_GET['edit_group']))
 
 	($hook = get_hook('agr_add_edit_group_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -325,8 +325,8 @@ else if (isset($_POST['add_edit_group']))
 	// Is this the admin group? (special rules apply)
 	$is_admin_group = (isset($_POST['group_id']) && $_POST['group_id'] == FORUM_ADMIN) ? true : false;
 
-	$title = trim($_POST['req_title']);
-	$user_title = trim($_POST['user_title']);
+	$title = forum_trim($_POST['req_title']);
+	$user_title = forum_trim($_POST['user_title']);
 	$moderator = isset($_POST['moderator']) && $_POST['moderator'] == '1' ? '1' : '0';
 	$mod_edit_users = $moderator == '1' && isset($_POST['mod_edit_users']) && $_POST['mod_edit_users'] == '1' ? '1' : '0';
 	$mod_rename_users = $moderator == '1' && isset($_POST['mod_rename_users']) && $_POST['mod_rename_users'] == '1' ? '1' : '0';
@@ -656,7 +656,7 @@ else if (isset($_GET['del_group']))
 
 	($hook = get_hook('agr_del_group_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -849,7 +849,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 
 ($hook = get_hook('agr_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_main -->

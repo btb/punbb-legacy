@@ -43,7 +43,7 @@ require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_categories.php';
 // Add a new category
 if (isset($_POST['add_cat']))
 {
-	$new_cat_name = trim($_POST['new_cat_name']);
+	$new_cat_name = forum_trim($_POST['new_cat_name']);
 	if ($new_cat_name == '')
 		message($lang_admin_categories['Must name category']);
 
@@ -194,7 +194,7 @@ else if (isset($_POST['del_cat']) || isset($_POST['del_cat_comply']))
 
 		($hook = get_hook('acg_del_cat_end')) ? eval($hook) : null;
 
-		$tpl_temp = trim(ob_get_contents());
+		$tpl_temp = forum_trim(ob_get_contents());
 		$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 		ob_end_clean();
 		// END SUBST - <!-- forum_main -->
@@ -443,7 +443,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ($hook = get_hook('acg_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_main -->

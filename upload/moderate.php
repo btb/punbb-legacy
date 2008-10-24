@@ -257,7 +257,7 @@ if (isset($_GET['tid']))
 
 		($hook = get_hook('mr_confirm_delete_posts_end')) ? eval($hook) : null;
 
-		$tpl_temp = trim(ob_get_contents());
+		$tpl_temp = forum_trim(ob_get_contents());
 		$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 		ob_end_clean();
 		// END SUBST - <!-- forum_main -->
@@ -296,7 +296,7 @@ if (isset($_GET['tid']))
 			if ($forum_db->result($result) != count($posts))
 				message($lang_common['Bad request']);
 
-			$new_subject = isset($_POST['new_subject']) ? trim($_POST['new_subject']) : '';
+			$new_subject = isset($_POST['new_subject']) ? forum_trim($_POST['new_subject']) : '';
 
 			if ($new_subject == '')
 				message($lang_post['No subject']);
@@ -410,7 +410,7 @@ if (isset($_GET['tid']))
 
 		($hook = get_hook('mr_confirm_split_posts_end')) ? eval($hook) : null;
 
-		$tpl_temp = trim(ob_get_contents());
+		$tpl_temp = forum_trim(ob_get_contents());
 		$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 		ob_end_clean();
 		// END SUBST - <!-- forum_main -->
@@ -635,7 +635,7 @@ $forum_page['mod_options'] = array(
 
 	($hook = get_hook('mr_post_actions_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -896,7 +896,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 	($hook = get_hook('mr_move_topics_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -1055,7 +1055,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 	($hook = get_hook('mr_merge_topics_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -1222,7 +1222,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 	($hook = get_hook('mr_delete_topics_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -1657,7 +1657,7 @@ $forum_id = $fid;
 
 ($hook = get_hook('mr_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_main -->

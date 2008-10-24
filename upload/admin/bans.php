@@ -71,7 +71,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 		}
 		else	// Otherwise the username is in POST
 		{
-			$ban_user = trim($_POST['new_ban_user']);
+			$ban_user = forum_trim($_POST['new_ban_user']);
 
 			($hook = get_hook('aba_add_ban_form_submitted')) ? eval($hook) : null;
 
@@ -229,7 +229,7 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 
 	($hook = get_hook('aba_add_edit_ban_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -241,11 +241,11 @@ if (isset($_REQUEST['add_ban']) || isset($_GET['edit_ban']))
 // Add/edit a ban (stage 2)
 else if (isset($_POST['add_edit_ban']))
 {
-	$ban_user = trim($_POST['ban_user']);
-	$ban_ip = trim($_POST['ban_ip']);
-	$ban_email = strtolower(trim($_POST['ban_email']));
-	$ban_message = trim($_POST['ban_message']);
-	$ban_expire = trim($_POST['ban_expire']);
+	$ban_user = forum_trim($_POST['ban_user']);
+	$ban_ip = forum_trim($_POST['ban_ip']);
+	$ban_email = strtolower(forum_trim($_POST['ban_email']));
+	$ban_message = forum_trim($_POST['ban_message']);
+	$ban_expire = forum_trim($_POST['ban_expire']);
 
 	if ($ban_user == '' && $ban_ip == '' && $ban_email == '')
 		message($lang_admin_bans['Must enter message']);
@@ -516,7 +516,7 @@ else
 
 ($hook = get_hook('aba_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_main -->

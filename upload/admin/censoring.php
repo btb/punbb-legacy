@@ -43,8 +43,8 @@ require FORUM_ROOT.'lang/'.$forum_user['language'].'/admin_censoring.php';
 // Add a censor word
 if (isset($_POST['add_word']))
 {
-	$search_for = trim($_POST['new_search_for']);
-	$replace_with = trim($_POST['new_replace_with']);
+	$search_for = forum_trim($_POST['new_search_for']);
+	$replace_with = forum_trim($_POST['new_replace_with']);
 
 	if ($search_for == '' || $replace_with == '')
 		message($lang_admin_censoring['Must enter text message']);
@@ -77,8 +77,8 @@ else if (isset($_POST['update']))
 {
 	$id = intval(key($_POST['update']));
 
-	$search_for = trim($_POST['search_for'][$id]);
-	$replace_with = trim($_POST['replace_with'][$id]);
+	$search_for = forum_trim($_POST['search_for'][$id]);
+	$replace_with = forum_trim($_POST['replace_with'][$id]);
 
 	if ($search_for == '' || $replace_with == '')
 		message($lang_admin_censoring['Must enter text message']);
@@ -275,7 +275,7 @@ else
 
 ($hook = get_hook('acs_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_main -->

@@ -266,7 +266,7 @@ else
 
 ($hook = get_hook('in_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_main -->
@@ -373,7 +373,7 @@ if ($forum_config['o_users_online'] == '1')
 
 ($hook = get_hook('in_info_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 $tpl_main = str_replace('<!-- forum_info -->', $tpl_temp, $tpl_main);
 ob_end_clean();
 // END SUBST - <!-- forum_info -->

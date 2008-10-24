@@ -264,7 +264,7 @@ ob_start();
 
 ($hook = get_hook('ari_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 
 
 $tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);

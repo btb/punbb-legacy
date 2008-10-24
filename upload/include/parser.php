@@ -99,7 +99,7 @@ function preparse_bbcode($text, &$errors, $is_signature = false)
 	if ($return != null)
 		return $return;
 
-	return trim($text);
+	return forum_trim($text);
 }
 
 
@@ -170,10 +170,10 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			if ($current_nest)
 				continue;
 
-			if (in_array($open_tags[$opened_tag], $tags_inline) && strpos(trim($current, "\r\n"), "\n") !== false)
+			if (in_array($open_tags[$opened_tag], $tags_inline) && strpos(forum_trim($current, "\r\n"), "\n") !== false)
 			{
 				// Deal with new lines
-				$split_current = preg_split("/([\n\r]+)/", trim($current, "\r\n"), -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
+				$split_current = preg_split("/([\n\r]+)/", forum_trim($current, "\r\n"), -1, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 				$current = $split_current[0];
 
 				for ($i = 1; $i < count($split_current); $i = $i + 2) {
@@ -217,7 +217,7 @@ function preparse_tags($text, &$errors, $is_signature = false)
 			}
 
 			if (in_array($open_tags[$opened_tag], $tags_trim))
-				$new_text .= trim($current);
+				$new_text .= forum_trim($current);
 			else
 				$new_text .= $current;
 
@@ -529,8 +529,8 @@ function preparse_list_tag($content, $type = '*', &$errors)
 	$content = '';
 	foreach ($items as $item)
 	{
-		if (trim($item) != '')
-			$content .= '[*'."\0".']'.str_replace('[/*]', '', trim($item)).'[/*'."\0".']'."\n";
+		if (forum_trim($item) != '')
+			$content .= '[*'."\0".']'.str_replace('[/*]', '', forum_trim($item)).'[/*'."\0".']'."\n";
 	}
 
 	return '[list='.$type.']'."\n".$content.'[/list]';
@@ -653,7 +653,7 @@ function handle_list_tag($content, $type = '*')
 		$content = preg_replace($pattern, $replace, $content);
 	}
 
-	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li><p>$1</p></li>', trim($content));
+	$content = preg_replace('#\s*\[\*\](.*?)\[/\*\]\s*#s', '<li><p>$1</p></li>', forum_trim($content));
 
 	if ($type == '*')
 		$content = '<ul>'.$content.'</ul>';
@@ -844,7 +844,7 @@ function parse_message($text, $hide_smilies)
 		{
 			$text .= $outside[$i];
 			if (isset($inside[$i]))
-				$text .= '</p><div class="codebox"><pre><code>'.trim($inside[$i], "\n\r").'</code></pre></div><p>';
+				$text .= '</p><div class="codebox"><pre><code>'.forum_trim($inside[$i], "\n\r").'</code></pre></div><p>';
 		}
 	}
 

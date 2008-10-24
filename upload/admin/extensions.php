@@ -62,7 +62,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 	if (isset($_GET['install']))
 		$manifest = @file_get_contents(FORUM_ROOT.'extensions/'.$id.'/manifest.xml');
 	else
-		$manifest = @trim(end(get_remote_file('http://punbb.informer.com/update/manifest/'.$id.'.xml', 16)));
+		$manifest = @forum_trim(end(get_remote_file('http://punbb.informer.com/update/manifest/'.$id.'.xml', 16)));
 
 	// Parse manifest.xml into an array and validate it
 	$ext_data = xml_to_array($manifest);
@@ -128,14 +128,14 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		}
 
 		// Is there some uninstall code to store in the db?
-		$uninstall_code = (isset($ext_data['extension']['uninstall']) && trim($ext_data['extension']['uninstall']) != '') ? '\''.$forum_db->escape(trim($ext_data['extension']['uninstall'])).'\'' : 'NULL';
+		$uninstall_code = (isset($ext_data['extension']['uninstall']) && forum_trim($ext_data['extension']['uninstall']) != '') ? '\''.$forum_db->escape(forum_trim($ext_data['extension']['uninstall'])).'\'' : 'NULL';
 
 		// Is there an uninstall note to store in the db?
 		$uninstall_note = 'NULL';
 		foreach ($ext_data['extension']['note'] as $cur_note)
 		{
-			if ($cur_note['attributes']['type'] == 'uninstall' && trim($cur_note['content']) != '')
-				$uninstall_note = '\''.$forum_db->escape(trim($cur_note['content'])).'\'';
+			if ($cur_note['attributes']['type'] == 'uninstall' && forum_trim($cur_note['content']) != '')
+				$uninstall_note = '\''.$forum_db->escape(forum_trim($cur_note['content'])).'\'';
 		}
 
 		$notices = array();
@@ -155,7 +155,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 			define('EXT_CUR_VERSION', $forum_db->result($result));
 
 			// Run the author supplied install code
-			if (isset($ext_data['extension']['install']) && trim($ext_data['extension']['install']) != '')
+			if (isset($ext_data['extension']['install']) && forum_trim($ext_data['extension']['install']) != '')
 				eval($ext_data['extension']['install']);
 
 			// Update the existing extension
@@ -180,7 +180,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 		else
 		{
 			// Run the author supplied install code
-			if (isset($ext_data['extension']['install']) && trim($ext_data['extension']['install']) != '')
+			if (isset($ext_data['extension']['install']) && forum_trim($ext_data['extension']['install']) != '')
 				eval($ext_data['extension']['install']);
 
 			// Add the new extension
@@ -203,7 +203,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 				$query = array(
 					'INSERT'	=> 'id, extension_id, code, installed, priority',
 					'INTO'		=> 'extension_hooks',
-					'VALUES'	=> '\''.$forum_db->escape(trim($cur_hook)).'\', \''.$forum_db->escape($id).'\', \''.$forum_db->escape(trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
+					'VALUES'	=> '\''.$forum_db->escape(forum_trim($cur_hook)).'\', \''.$forum_db->escape($id).'\', \''.$forum_db->escape(forum_trim($ext_hook['content'])).'\', '.time().', '.(isset($ext_hook['attributes']['priority']) ? $ext_hook['attributes']['priority'] : 5)
 				);
 
 				($hook = get_hook('aex_install_comply_qr_add_hook')) ? eval($hook) : null;
@@ -257,7 +257,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 			($hook = get_hook('aex_install_notices_end')) ? eval($hook) : null;
 
-			$tpl_temp = trim(ob_get_contents());
+			$tpl_temp = forum_trim(ob_get_contents());
 			$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 			ob_end_clean();
 			// END SUBST - <!-- forum_main -->
@@ -343,7 +343,7 @@ if (isset($_GET['install']) || isset($_GET['install_hotfix']))
 
 	($hook = get_hook('aex_install_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -471,7 +471,7 @@ else if (isset($_GET['uninstall']))
 
 			($hook = get_hook('aex_uninstall_notices_end')) ? eval($hook) : null;
 
-			$tpl_temp = trim(ob_get_contents());
+			$tpl_temp = forum_trim(ob_get_contents());
 			$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 			ob_end_clean();
 			// END SUBST - <!-- forum_main -->
@@ -535,7 +535,7 @@ else if (isset($_GET['uninstall']))
 
 		($hook = get_hook('aex_uninstall_end')) ? eval($hook) : null;
 
-		$tpl_temp = trim(ob_get_contents());
+		$tpl_temp = forum_trim(ob_get_contents());
 		$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 		ob_end_clean();
 		// END SUBST - <!-- forum_main -->
@@ -786,7 +786,7 @@ if ($section == 'hotfixes')
 
 	($hook = get_hook('aex_section_hotfixes_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->
@@ -963,7 +963,7 @@ else
 
 	($hook = get_hook('aex_section_manage_end')) ? eval($hook) : null;
 
-	$tpl_temp = trim(ob_get_contents());
+	$tpl_temp = forum_trim(ob_get_contents());
 	$tpl_main = str_replace('<!-- forum_main -->', $tpl_temp, $tpl_main);
 	ob_end_clean();
 	// END SUBST - <!-- forum_main -->

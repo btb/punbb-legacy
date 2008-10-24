@@ -262,7 +262,7 @@ if (!$forum_page['new_reports'] && !$forum_page['old_reports'])
 
 ($hook = get_hook('arp_end')) ? eval($hook) : null;
 
-$tpl_temp = trim(ob_get_contents());
+$tpl_temp = forum_trim(ob_get_contents());
 
 
 
