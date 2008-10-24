@@ -814,8 +814,9 @@ $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 $forum_page['item_num'] = 0;
 while ($cur_group = $forum_db->fetch_assoc($result))
 {
-	$forum_page['group_options'] = array();
-	$forum_page['group_options']['edit'] = '<span'.((empty($forum_page['group_options'])) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['admin_groups']).'?edit_group='.$cur_group['g_id'].'">'.$lang_admin_groups['Edit group'].'</a></span>';
+	$forum_page['group_options'] = array(
+		'edit' => '<span class="first-item"><a href="'.forum_link($forum_url['admin_groups']).'?edit_group='.$cur_group['g_id'].'">'.$lang_admin_groups['Edit group'].'</a></span>'
+	);
 
 	if ($cur_group['g_id'] > FORUM_GUEST)
 	{
