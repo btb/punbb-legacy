@@ -222,7 +222,13 @@ B - GLOBAL STYLES
 	position: relative;
 	margin-bottom: -1px;
 	}
-
+	
+.brd .main-subhead {
+	border-style: solid;
+	border-width: 1px;
+	border-bottom: none;
+	}
+	
 .brd .main-subhead .hn {
 	font-size: 1.084em;
 	padding: 0.462em 1.417em;
@@ -1247,7 +1253,7 @@ F - MAIN CONTENT - FORMS
 	}
 
 #brd-wrap .checklist .checklist-item label:hover {
-	background: aqua;
+	background: #F4F9FD;
 	}
 
 
