@@ -47,7 +47,6 @@ body {
 .brd .crumbs {
 	background: #fff;
 	border-color: #fff;
-	color:#00579C;
 	}
 
 
@@ -114,6 +113,19 @@ body {
 	border-color: #DBE0E4;
 	}
 
+.brd .main-frm .ct-group {
+	background: #F4F9FD;
+	}
+
+
+.brd .main-content .info-set .info-box {
+	background: none;
+	}	
+
+.brd .main-content .info-box {
+	background: #FFFFE1;
+	}	
+
 .brd .warn-group, .brd .warn-set, .brd .warn-box, .brd .error-box {
 	background: #FEFFE6;
 	border-color: #F4EBCE;
@@ -122,7 +134,6 @@ body {
 .brd .warn-group, .brd .warn-set, .brd .warn-box, .brd .error-box {
 	border-color: #E6D190;
 	}
-
 
 .brd ul.info-list li {
 	color: #6A97BF;
@@ -137,6 +148,9 @@ body {
 	color: #333;
 	}
 
+.brd .user-box {
+	background: #F4F9FD;
+	}
 .brd .ct-box .hn, .brd .ct-box .sig-demo {
 	border-color: #DBE0E4;
 	color: #294F6E;
@@ -177,8 +191,8 @@ body {
 ----------------------------------------------------------------*/
 
 #brd-navlinks {
-	background: #313D47;
-	border-color: #313D47;
+	background: #113C5E;
+	border-color: #113C5E;
 	color: #ddd;
 	}
 
@@ -252,9 +266,9 @@ body {
 ----------------------------------------------------------------*/
 
 #brd-head {
-	background: #517CA1;
+	background: #296FA5;
 	color: #ddd;
-	border-color: #517CA1;
+	border-color: #296FA5;
 	}
 
 #brd-head a, #brd-head a:link, #brd-head a:visited {
@@ -262,25 +276,25 @@ body {
 	}
 
 .brd .main-head, .brd .main-foot {
-	background: #294F6E;
+	background: #1F537B;
 	color: #ddd;
 	border-color: #1f537b;
 	}
 
 .brd .main-subhead {
 	border-color: #DFE6ED #DFE6ED #CBD1D8 #DFE6ED;
-	background: #DFE6ED;
+	background: #F4F4F4;
 	}
 
 .brd #brd-index .main-subhead {
-	background: #294F6E;
+	background: #1F537B;
 	color: #ddd;
 	border-color: #1f537b;
 	}
 
 .brd .column-title {
-	border-color: #DFE6ED #DFE6ED #CBD1D8 #DFE6ED;
-	background: #DFE6ED;
+	border-color: #F4F4F4 #F4F4F4 #CBD1D8 #F4F4F4;
+	background: #F4F4F4;
 	}
 
 .brd .content-head, .brd th {
@@ -308,12 +322,13 @@ body {
 	}
 
 .brd th {
-	background: #DDE4EB;
+	background: #F4F4F4;
+	}
+	
+.brd .main-frm .ct-group td{
+	background: #FBFBFB;
 	}
 
-.brd td {
-	background: #f5f5f5;
-	}
 
 /* Status indicators
 ----------------------------------------------------------------*/
