@@ -2311,7 +2311,7 @@ function forum_linebreaks($str)
 //
 function forum_trim($str, $charlist = " \t\n\r\x0b\xc2\xa0")
 {
-	return utf8_forum_trim($str, $charlist);
+	return utf8_trim($str, $charlist);
 }
 
 
