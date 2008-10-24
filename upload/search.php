@@ -140,8 +140,6 @@ if (isset($query))
 	//
 
 	// Setup breadcrumbs and results header and footer
-	$forum_page['main_head_options']['new_search'] = '<a class="user-option" href="'.forum_link($forum_url['search']).'">'.$lang_search['Perform new search'].'</a>';
-	$forum_page['main_foot_options']['new_search'] = '<a class="user-option" href="'.forum_link($forum_url['search']).'">'.$lang_search['Perform new search'].'</a>';
 	$forum_page['crumbs'][] = array($forum_config['o_board_title'], forum_link($forum_url['index']));
 	$action = (isset($action)) ? $action : null;
 	generate_search_crumbs($action);
@@ -170,7 +168,7 @@ if (isset($query))
 		$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
 
 	// Setup main options header
-	$forum_page['main_options_head'] = $lang_search['Search options'];
+	$forum_page['main_h1'] = $lang_search['Search options'];
 
 
 	($hook = get_hook('se_results_pre_header_load')) ? eval($hook) : null;

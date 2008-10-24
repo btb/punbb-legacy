@@ -101,9 +101,9 @@ if ($forum_page['page'] > 1)
 
 // Setup main options
 if (empty($_GET))
-	$forum_page['main_head_options'] = $forum_page['main_foot_options'] = array();
+	$forum_page['main_head_options'] = array();
 else
-	$forum_page['main_head_options'] = $forum_page['main_foot_options'] = array(
+	$forum_page['main_head_options'] = array(
 		'new_search'	=> '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_ul['Perform new search'].'</a></span>'
 	);
 
