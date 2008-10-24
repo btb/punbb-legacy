@@ -109,7 +109,7 @@ body {
 .brd .mf-extra .mf-field .aslabel,
 .brd .item-subject .item-nav span,
 .brd .post-options a span,
-.brd #brd-main h1,
+.brd #brd-main > h1,
 .brd .main-head .hn small,
 .brd .entry-title,
 .brd .menu-page .main-head,
@@ -286,7 +286,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 .brd .ct-box li {
 	padding:0pt 0pt 0.7em 0.5em;
 	}
-	
+
 .brd .ct-set {
 	border-style: solid;
 	border-width: 1px;
@@ -313,7 +313,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 .brd .ct-group .group-item1 {
 	border: none;
 	}
-	
+
 .brd .ct-group .set1, .brd .frm-group .set1 {
 	border-top: none;
 	}
@@ -822,7 +822,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	text-align:center;
  	padding-top: 1em;
  	}
-	
+
  .brd .main-content .main-item li.info-forum {
  	width: 20em;
  	}
