@@ -5,15 +5,15 @@ $lang_search = array(
 
 // The search form
 'No search permission'		=>	'You do not have permission to use the search feature.',
+'Search heading'			=>	'Search forums using your criteria',
 'Search flood'				=>	'At least %s seconds have to pass between searches. Please wait a while and try searching again.',
 'Search legend'				=>	'Search criteria:',
 'Results legend'			=>	'Search results:',
-'Search info'				=>	'You may search forums for posts by keyword, author\'s username or both.',
 'Keywords info'				=>	'You may search for a single keyword or for multiple keywords separated by spaces.',
 'Refine info'				=>	'You may use <strong>AND</strong>, <strong>OR</strong> and <strong>NOT</strong> to refine your searches by keyword.',
 'Wildcard info'				=>	'Use the wildcard character <strong>*</strong> for partial keyword or username matches.',
 'Forum default info'		=>	'By default all forums are searched. You may narrow your search by selecting one or more forums to search.',
-'Forum require info'		=>	'You may choose to search one or more forums. You must select at least one forum to search.',
+'Forum require info'		=>	'You may choose to search one or more forums. You <strong>must</strong> select at least one forum to search.',
 'Keyword search'			=>	'Keyword or words:',
 'Author search'				=>	'Author\'s username:',
 'Forum search'				=>	'Select forums to search:',
