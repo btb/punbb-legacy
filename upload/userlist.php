@@ -100,10 +100,12 @@ if ($forum_page['page'] > 1)
 }
 
 // Setup main options
-$forum_page['main_head_options'] = array();
-$forum_page['main_foot_options'] = array(
-	'new_search'	=> '<span'.(empty($forum_page['main_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_ul['Perform new search'].'</a></span>'
-);
+if (empty($_GET))
+	$forum_page['main_head_options'] = $forum_page['main_foot_options'] = array();
+else
+	$forum_page['main_head_options'] = $forum_page['main_foot_options'] = array(
+		'new_search'	=> '<span'.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['users']).'">'.$lang_ul['Perform new search'].'</a></span>'
+	);
 
 // Setup form
 $forum_page['group_count'] = $forum_page['item_count'] = $forum_page['fld_count'] = 0;
@@ -136,7 +138,7 @@ ob_start();
 	<div class="main-head">
 <?php
 
-	if (!empty($forum_page['main_options']))
+	if (!empty($forum_page['main_head_options']))
 		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
@@ -303,6 +305,21 @@ if ($forum_db->num_rows($result))
 				</tbody>
 			</table>
 		</div>
+<?php
+
+}
+else
+{
+
+?>
+		<div class="ct-box">
+			<p><strong><?php echo $lang_ul['No users found'] ?></strong></p>
+		</div>
+<?php
+
+}
+
+?>
 	</div>
 	<div class="main-foot">
 <?php
@@ -314,8 +331,6 @@ if ($forum_db->num_rows($result))
 		<p><?php echo $forum_page['items_info'] ?></p>
 	</div>
 <?php
-
-}
 
 ($hook = get_hook('ul_end')) ? eval($hook) : null;
 
