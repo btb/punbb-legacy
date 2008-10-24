@@ -227,6 +227,12 @@ if (isset($_GET['tid']))
 		($hook = get_hook('mr_confirm_delete_posts_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+	</div>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
@@ -375,6 +381,9 @@ if (isset($_GET['tid']))
 		($hook = get_hook('mr_confirm_split_posts_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
@@ -481,8 +490,8 @@ if (isset($_GET['tid']))
 	($hook = get_hook('mr_post_actions_output_start')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 	<form id="mr-post-actions-form" class="newform" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 	<div class="main-content main-topic">
@@ -624,11 +633,15 @@ $forum_page['mod_options'] = array(
 ($hook = get_hook('mr_post_actions_pre_mod_options')) ? eval($hook) : null;
 
 ?>
+
 	<div class="main-options mod-options gen-content">
 		<p id="select-all"><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById('mr-post-actions-form'))"><?php echo $lang_misc['Select all'] ?></a></p>
 		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
 	</div>
 	</form>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+	</div>
 <?php
 
 	$forum_id = $fid;
@@ -838,6 +851,9 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	($hook = get_hook('mr_move_topics_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
@@ -1025,6 +1041,9 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	($hook = get_hook('mr_merge_topics_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
@@ -1192,6 +1211,9 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 	($hook = get_hook('mr_delete_topics_output_start')) ? eval($hook) : null;
 
 ?>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 			<div class="hidden">
@@ -1490,8 +1512,8 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 ($hook = get_hook('mr_topic_actions_output_start')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
-		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 	<div class="main-subhead">
 		<p class="item-summary<?php echo ($forum_config['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>"><span><?php printf($lang_forum['Forum subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
@@ -1651,6 +1673,10 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
 	</div>
 	</form>
+	<div class="main-head">
+		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+	</div>
+	
 <?php
 
 $forum_id = $fid;

@@ -88,8 +88,8 @@ if (isset($_GET['ip_stats']))
 	($hook = get_hook('aus_ip_stats_output_start')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
-		<h2 class="hn"><span><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></span></h2>
+	<div class="main-head">
+		<h2 class="hn"><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></h2>
 	</div>
 	<div class="main-content main-forum">
 		<table cellspacing="0">
@@ -221,8 +221,8 @@ else if (isset($_GET['show_users']))
 	($hook = get_hook('aus_show_users_output_start')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
-		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
+	<div class="main-head">
+		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
 	</div>
 	<form id="aus-show-users-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
 	<div class="main-content main-frm">
@@ -901,8 +901,8 @@ else if (isset($_POST['find_user']))
 	($hook = get_hook('aus_find_user_output_start')) ? eval($hook) : null;
 
 ?>
-	<div class="main-pagehead">
-		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
+	<div class="main-head">
+		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
 	</div>
 	<form id="aus-find-user-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
 	<div class="main-content main-forum">
