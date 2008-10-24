@@ -802,13 +802,13 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	float: left;
  	border-left-style: solid;
  	border-left-width: 1px;
- 	padding-bottom: 10em;
  	margin: 0 -2px -9.7em 0;
  	position: relative;
+ 	padding-top: 0.6em;
+ 	padding-bottom: 10.4em;
  	}
 
 .brd .main-content .main-item .item-subject {
-  	padding-top: 0.4em;
  	overflow: hidden;
  	width: 100%;
   	}
@@ -820,7 +820,6 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  .brd .main-content .main-item li.info-replies {
  	width: 7em;
  	text-align:center;
- 	padding-top: 1em;
  	}
 
  .brd .main-content .main-item li.info-forum {
@@ -828,7 +827,6 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	}
 
 .brd .main-content .main-item li.info-lastpost {
-  	padding-top: 0.4em;
   	width: 20em;
   	}
 
@@ -841,9 +839,6 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	font-weight: normal;
 	}
 
-.brd .main-content .redirect li.info-lastpost {
-  	padding-top: 1em;
-  	}
 
 /* Setup for Index and Forums
 -------------------------------------------------------------*/
@@ -916,7 +911,8 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	margin: 0 0 0 1.5em;
  	}
 
- .brd .main-content .main-item li.info-lastpost span {
+.brd .main-content .main-item li.info-lastpost cite,
+.brd .main-content .main-item li.info-lastpost span {
  	display: block;
  	padding: 0 1em;
  	font-style: normal;
@@ -928,6 +924,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	font-style: normal;
  	font-weight: normal;
  	}
+
  .brd .main-content .main-item li.info-select {
  	position: absolute;
  	right: 0;
