@@ -120,11 +120,11 @@ body {
 
 .brd .main-content .info-set .info-box {
 	background: none;
-	}	
+	}
 
 .brd .main-content .info-box {
 	background: #FFFFE1;
-	}	
+	}
 
 .brd .warn-group, .brd .warn-set, .brd .warn-box, .brd .error-box {
 	background: #FEFFE6;
@@ -185,6 +185,10 @@ body {
 #brd-wrap .entry-content .quotebox, #brd-wrap .entry-content .codebox {
 	background: #fff;
 	border-color: #ddd;
+	}
+
+#brd-announcement .userbox {
+	background:#F4F9FD none repeat scroll 0 0;
 	}
 
 /* Menus
@@ -275,7 +279,7 @@ body {
 	color: #fff;
 	}
 
-.brd .main-head, .brd .main-foot {
+.brd .main-head, .brd .main-foot, .brd #brd-announcement .msg-head {
 	background: #1F537B;
 	color: #ddd;
 	border-color: #1f537b;
@@ -324,7 +328,7 @@ body {
 .brd th {
 	background: #F4F4F4;
 	}
-	
+
 .brd .main-frm .ct-group td{
 	background: #FBFBFB;
 	}
@@ -355,4 +359,12 @@ body {
 
  .brd .main-content .new .icon {
 	border-color: #2B75AD #235E8C #1F537B #266799
+	}
+
+
+/* Multi Checkbox Widget
+-------------------------------------------------------------*/
+
+#brd-wrap .checklist .checklist-item label:hover {
+	background: #EDF1F5;
 	}

@@ -199,7 +199,7 @@ B - GLOBAL STYLES
 	padding: 0 1.417em;
 	}
 
-.brd .main-head .hn {
+.brd .main-head .hn, #brd-announcement h1{
 	font-size: 1.084em;
 	padding: 0.462em 10em 0.426em 0;
 	}
@@ -222,23 +222,27 @@ B - GLOBAL STYLES
 	position: relative;
 	margin-bottom: -1px;
 	}
-	
+
 .brd .main-subhead {
 	border-style: solid;
 	border-width: 1px;
 	border-bottom: none;
 	}
-	
+
 .brd .main-subhead .hn {
 	font-size: 1.084em;
 	padding: 0.462em 1.417em;
 	position: relative;
 	}
 
-.brd #brd-main .main-head, .brd #brd-main .main-foot {
+.brd #brd-main .main-head, .brd #brd-main .main-foot, .brd #brd-announcement .msg-head {
 	padding: 0  1.5em;
 	border-style: none;
 	border-width: 1px;
+	}
+
+.brd #brd-announcement .msg-head {
+	margin-top: 1em;
 	}
 
 .brd .main-pagehead .hn {
@@ -1250,10 +1254,6 @@ F - MAIN CONTENT - FORMS
 	margin: 0;
 	height: 1.55em;
 	width: 1.55em;
-	}
-
-#brd-wrap .checklist .checklist-item label:hover {
-	background: #F4F9FD;
 	}
 
 
