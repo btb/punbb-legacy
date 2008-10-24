@@ -1384,8 +1384,8 @@ if ($forum_user['id'] != $id &&
 	if ($forum_user['g_search'] == '1')
 	{
 		$forum_page['user_activity'] = array();
-		$forum_page['user_activity']['search_posts'] = '<span'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.sprintf($lang_profile['View user posts'], forum_htmlencode($user['username'])).'</a></span>';
-		$forum_page['user_activity']['search_topics'] = '<span'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.sprintf($lang_profile['View user topics'], forum_htmlencode($user['username'])).'</a></span>';
+		$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.sprintf($lang_profile['View user posts'], forum_htmlencode($user['username'])).'</a></li>';
+		$forum_page['user_activity']['search_topics'] = '<li><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.sprintf($lang_profile['View user topics'], forum_htmlencode($user['username'])).'</a></li>';
 	}
 
 	// Setup breadcrumbs
@@ -1438,7 +1438,9 @@ if ($forum_user['id'] != $id &&
 <?php endif; if (!empty($forum_page['user_activity'])): ?>			<div class="ct-set data-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box data-box">
 					<h3 class="ct-legend hn"><span><?php echo $lang_profile['Posts and topics'] ?></span></h3>
-					<p class="options"><?php echo implode(' ', $forum_page['user_activity']) ?></p>
+					<ul class="data-box">
+						<?php echo implode("\n\t\t\t\t\t\t", $forum_page['user_activity']) ?>
+					</ul>
 				</div>
 			</div>
 <?php ($hook = get_hook('pf_view_details_pre_user_sig_info')) ? eval($hook) : null; ?>
@@ -1579,15 +1581,15 @@ else
 			$forum_page['sig_demo'] = $parsed_signature;
 
 		// Setup search links
+		$forum_page['user_activity'] = array();
 		if ($forum_user['g_search'] == '1' || $forum_user['is_admmod'])
 		{
-			$forum_page['user_activity'] = array();
-			$forum_page['user_activity']['search_posts'] = '<span'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your posts'] : sprintf($lang_profile['View user posts'], forum_htmlencode($user['username']))).'</a></span>';
-			$forum_page['user_activity']['search_topics'] = '<span'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your topics'] : sprintf($lang_profile['View user topics'], forum_htmlencode($user['username']))).'</a></span>';
+			$forum_page['user_activity']['search_posts'] = '<li class="first-item"><a href="'.forum_link($forum_url['search_user_posts'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your posts'] : sprintf($lang_profile['View user posts'], forum_htmlencode($user['username']))).'</a></li>';
+			$forum_page['user_activity']['search_topics'] = '<li><a href="'.forum_link($forum_url['search_user_topics'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your topics'] : sprintf($lang_profile['View user topics'], forum_htmlencode($user['username']))).'</a></li>';
 		}
 
 		if (($forum_page['own_profile'] || $forum_user['is_admmod']) && $forum_config['o_subscriptions'] == '1')
-			 $forum_page['user_activity']['search_subs'] = '<span'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_subscriptions'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your subscriptions'] : sprintf($lang_profile['View user subscriptions'], forum_htmlencode($user['username']))).'</a></span>';
+			 $forum_page['user_activity']['search_subs'] = '<li'.(empty($forum_page['user_activity']) ? ' class="first-item"' : '').'><a href="'.forum_link($forum_url['search_subscriptions'], $id).'">'.(($forum_page['own_profile']) ? $lang_profile['View your subscriptions'] : sprintf($lang_profile['View user subscriptions'], forum_htmlencode($user['username']))).'</a></li>';
 
 		// Setup user options
 		$forum_page['user_options'] = array();
@@ -1645,7 +1647,9 @@ else
 <?php endif; if (!empty($forum_page['user_activity'])): ?>			<div class="ct-set data-set set<?php echo ++$forum_page['item_count'] ?>">
 				<div class="ct-box data-box">
 					<h4 class="ct-legend hn"><span><?php echo $lang_profile['Posts and topics'] ?></span></h4>
-					<p class="options"><?php echo implode(' ', $forum_page['user_activity']) ?></p>
+					<ul class="data-box">
+						<?php echo implode("\n\t\t\t\t\t\t", $forum_page['user_activity']) ?>
+					</ul>
 				</div>
 			</div>
 <?php ($hook = get_hook('pf_change_details_about_pre_user_sig_info')) ? eval($hook) : null; ?>
