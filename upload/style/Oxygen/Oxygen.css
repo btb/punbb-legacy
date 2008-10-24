@@ -158,7 +158,7 @@ B - GLOBAL STYLES
 	margin-top: 1em;
 	}
 
-#brd-index #brd-visit, #brd-qpost {
+#brd-visit, #brd-qpost, #brd-announcement {
 	margin-bottom: 1em;
 	}
 
@@ -235,8 +235,10 @@ B - GLOBAL STYLES
 	position: relative;
 	}
 
-.brd #brd-main .main-head, .brd #brd-main .main-foot, .brd #brd-announcement .msg-head {
-	padding: 0  1.5em;
+.brd #brd-main .main-head,
+.brd #brd-main .main-foot,
+.brd #brd-announcement .msg-head {
+	padding: 0 1.5em;
 	border-style: none;
 	border-width: 1px;
 	}
@@ -607,7 +609,8 @@ D - COMMON INTERFACE ELEMENTS
 	}
 
 .brd .crumbs {
-	padding: 0.5em 1.5em;
+	padding: 0em 0.5em;
+	margin: -0.5em 0em 0.5em 0em;
 	font-size: 1.084em;
 	}
 
