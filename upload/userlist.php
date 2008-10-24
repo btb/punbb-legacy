@@ -82,7 +82,7 @@ $forum_page['users_searched'] = (($forum_user['g_search_users'] == '1' && $forum
 if ($forum_page['num_users'] != 0)
 	$forum_page['items_info'] = generate_items_info( (($forum_page['users_searched']) ? $lang_ul['Users found'] : $lang_ul['Users']), ($forum_page['start_from'] + 1), $forum_page['num_users']);
 else
-	$forum_page['items_info'] = $lang_ul['No users found'];
+	$forum_page['items_info'] = $lang_ul['Users'];
 
 // Generate paging links
 $forum_page['page_post']['paging'] = '<p class="paging"><span class="pages">'.$lang_common['Pages'].'</span> '.paginate($forum_page['num_pages'], $forum_page['page'], $forum_url['users_browse'], $lang_common['Paging separator'], array($forum_page['show_group'], $forum_page['sort_by'], strtoupper($forum_page['sort_dir']), ($forum_page['username'] != '') ? urlencode($forum_page['username']) : '-')).'</p>';
