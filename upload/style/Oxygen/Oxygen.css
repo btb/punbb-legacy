@@ -171,6 +171,10 @@ B - GLOBAL STYLES
 	/*margin: 0em 0em 1em 0em;*/
 	}
 
+.brd .main-options {
+	margin: -1em 0 1em 0;
+}
+
 /* Content Text (Default spacing for paragraphs and lists)
 -------------------------------------------------------------*/
 
