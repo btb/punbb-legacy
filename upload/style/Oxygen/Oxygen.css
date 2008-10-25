@@ -162,8 +162,9 @@ B - GLOBAL STYLES
 	}
 
 .brd #brd-announcement {
-	padding: 0.5em 1.3em 0.5em 1.3em;
-	margin: 0em 0em 1em 0em;
+	padding: 0.5em 1.5em;
+	margin-top: 1em;
+	/*margin: 0em 0em 1em 0em;*/
 	}
 
 /* Content Text (Default spacing for paragraphs and lists)
@@ -202,7 +203,7 @@ B - GLOBAL STYLES
 	padding: 0 1.417em;
 	}
 
-.brd .main-head .hn{
+.brd .main-head .hn, .brd .main-foot .hn{
 	font-size: 1.084em;
 	padding: 0.462em 10em 0.426em 0;
 	}
