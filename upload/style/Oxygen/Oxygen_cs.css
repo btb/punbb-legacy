@@ -116,15 +116,15 @@ body {
 .brd .admin-page .ct-box {
 	background: #FEFFE6;
 	}
-	
+
 .brd .admin-page .ct-set .ct-box {
 	background: #F4F9FD;
 	}
-	
+
 .brd .admin-page .warn-set .warn-box {
 	background: #FEFFE6;
 	}
-	
+
 .brd .main-frm .ct-group, .brd #brd-announcement {
 	background: #F4F9FD;
 	}
@@ -290,10 +290,14 @@ body {
 	color: #fff;
 	}
 
-.brd .main-head, .brd .main-foot, .brd #brd-announcement .msg-head {
+.brd .main-head, .brd .main-foot {
 	background: #1F537B;
 	color: #ddd;
 	border-color: #1f537b;
+	}
+
+.brd #brd-announcement .msg-head {
+	border-color: #BBBBBB;
 	}
 
 .brd .main-subhead {
