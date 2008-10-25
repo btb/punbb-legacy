@@ -474,7 +474,10 @@ if (isset($_GET['tid']))
 	);
 
 	// Setup main heading
-	$forum_page['main_head'] = sprintf($lang_misc['Moderate topic head'], forum_htmlencode($cur_topic['subject']));
+	$forum_page['main_h1'] = sprintf($lang_misc['Moderate topic head'], forum_htmlencode($cur_topic['subject']));
+
+	$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-post-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
+	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-post-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
 
 	if ($forum_page['num_pages'] > 1)
 		$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
@@ -491,6 +494,12 @@ if (isset($_GET['tid']))
 
 ?>
 	<div class="main-head">
+<?php
+
+	if (!empty($forum_page['main_head_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+
+?>
 		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 	<form id="mr-post-actions-form" class="newform" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -635,11 +644,16 @@ $forum_page['mod_options'] = array(
 ?>
 
 	<div class="main-options mod-options gen-content">
-		<p id="select-all"><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById('mr-post-actions-form'))"><?php echo $lang_misc['Select all'] ?></a></p>
 		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
 	</div>
 	</form>
-	<div class="main-head">
+	<div class="main-foot">
+<?php
+
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
+
+?>
 		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
 <?php
@@ -838,7 +852,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	$forum_page['crumbs'][] =	($action == 'single') ? $lang_misc['Move topic'] : $lang_misc['Move topics'];
 
 	//Setup main heading
-	$forum_page['main_head'] = end($forum_page['crumbs']).' '.$lang_misc['To new forum'];
+	$forum_page['main_h1'] = end($forum_page['crumbs']).' '.$lang_misc['To new forum'];
 
 	($hook = get_hook('mr_move_topics_pre_header_load')) ? eval($hook) : null;
 
@@ -1028,7 +1042,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	);
 
 	// Setup main heading
-	$forum_page['main_head'] = end($forum_page['crumbs']);
+	$forum_page['main_h1'] = end($forum_page['crumbs']);
 
 	($hook = get_hook('mr_merge_topics_pre_header_load')) ? eval($hook) : null;
 
@@ -1492,6 +1506,9 @@ $forum_page['crumbs'] = array(
 if ($forum_page['num_pages'] > 1)
 	$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
 
+$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-topic-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
+$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-topic-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
+
 ($hook = get_hook('mr_topic_actions_pre_header_load')) ? eval($hook) : null;
 
 define('FORUM_PAGE', 'modforum');
@@ -1513,12 +1530,18 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 ?>
 	<div class="main-head">
+<?php
+
+	if (!empty($forum_page['main_head_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+
+?>
 		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
+	<form id="mr-topic-actions-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 	<div class="main-subhead">
 		<p class="item-summary<?php echo ($forum_config['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>"><span><?php printf($lang_forum['Forum subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
 	</div>
-	<form id="mr-topic-actions-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 	<div id="forum<?php echo $fid ?>" class="main-content main-forum<?php echo ($forum_config['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>">
 		<div class="hidden">
 			<input type="hidden" name="csrf_token" value="<?php echo generate_form_token($forum_page['form_action']) ?>" />
@@ -1669,14 +1692,19 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 
 ?>
 	<div class="main-options mod-options gen-content">
-		<p id="select-all"><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById('mr-topic-actions-form'))"><?php echo $lang_misc['Select all'] ?></a></p>
 		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
 	</div>
 	</form>
-	<div class="main-head">
+	<div class="main-foot">
+<?php
+
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
+
+?>
 		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
 	</div>
-	
+
 <?php
 
 $forum_id = $fid;
