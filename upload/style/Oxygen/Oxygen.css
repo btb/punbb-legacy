@@ -214,7 +214,7 @@ B - GLOBAL STYLES
 
 .brd .main-head .hn, .brd .main-foot .hn{
 	font-size: 1.084em;
-	padding: 0.462em 10em 0.426em 0;
+	padding-right: 10em;
 	}
 
 .brd h2.main-subhead {
