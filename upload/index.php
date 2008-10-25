@@ -128,18 +128,16 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 		($hook = get_hook('in_forum_pre_cat_head')) ? eval($hook) : null;
 
-?>
-	<div id="category<?php echo $forum_page['cat_count'] ?>" class="main-content main-category">
-<?php
-
 		$forum_page['cur_category'] = $cur_forum['cid'];
 
 ?>
-		<h2 class="main-subhead"><?php echo forum_htmlencode($cur_forum['cat_name']) ?></h2>
-		<div class="column-title">
+		<div class="main-head">
+			<h2 class="hn"><?php echo forum_htmlencode($cur_forum['cat_name']) ?></h2>
+		</div>
+		<div class="main-subhead">
 			<p class="item-summary"><span><?php printf($lang_index['Category subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
 		</div>
-
+		<div id="category<?php echo $forum_page['cat_count'] ?>" class="main-content main-category">
 <?php
 
 	}
@@ -252,7 +250,13 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 }
 // Did we output any categories and forums?
 if ($forum_page['cur_category'] > 0)
-	echo  "\t".'</div>'."\n";
+{
+
+?>
+	</div>
+<?php
+
+}
 else
 {
 
