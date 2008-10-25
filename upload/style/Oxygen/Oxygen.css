@@ -758,38 +758,38 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	text-transform: capitalize;
 	}
 
-#brd-wrap .item-summary .subject-title {
+.brd .item-summary .subject-title {
 	padding-left: 1.417em;
 	}
 
-#brd-wrap .item-summary .info-topics,
-#brd-wrap .item-summary .info-replies {
+.brd .item-summary .info-topics,
+.brd .item-summary .info-replies {
 	margin-left: 100%;
 	text-align: center;
 	width: 7em;
 	left: 965em;
 	}
 
-#brd-wrap .item-summary .info-forum {
+.brd .item-summary .info-forum {
 	margin-left: 100%;
 	text-align: center;
 	width: 20em;
 	left: 952em;
 	}
-#brd-wrap .item-summary .info-posts,
-#brd-wrap .item-summary .info-views {
+.brd .item-summary .info-posts,
+.brd .item-summary .info-views {
 	margin-left: 100%;
 	text-align: center;
 	width: 7em;
 	left: 972em;
 	}
 
-#brd-wrap .item-summary .info-lastpost {
+.brd .item-summary .info-lastpost {
 	margin-left: 100%;
 	left: 980em;
 	}
 
-#brd-wrap p.forum-noview .info-replies {
+.brd p.forum-noview .info-replies {
 	left: 972em;
 	}
 
@@ -987,10 +987,6 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 F - MAIN CONTENT - FORMS
 **************************************************************/
 
-/*************************************************************
-F - MAIN CONTENT - FORMS
-**************************************************************/
-
 /* Generally
 -------------------------------------------------------------*/
 
@@ -1001,10 +997,10 @@ F - MAIN CONTENT - FORMS
 	padding:1.3em 0pt 0em;
 	}
 
-/*.brd .group1{
+.brd .group1{
 	border-top:none;
 	padding-top:0;
-	}*/
+	}
 
 .brd .sf-box, .brd .mf-box, .brd .txt-box {
 	margin: 1.417em;
@@ -1205,7 +1201,7 @@ F - MAIN CONTENT - FORMS
 	border-left: 1px solid #ccc;
 	}
 
-#brd-wrap .frm-hdgroup {
+.brd .frm-hdgroup {
 	padding-top: 2em;
 	}
 
@@ -1225,7 +1221,7 @@ F - MAIN CONTENT - FORMS
 /* Multi Checkbox Widget
 -------------------------------------------------------------*/
 
-#brd-wrap .checklist {
+.brd .checklist {
 	min-height: 6em;
 	max-height: 9em;
 	max-width: 30em;
@@ -1237,12 +1233,12 @@ F - MAIN CONTENT - FORMS
 	margin: 0 1em;
 	}
 
-#brd-wrap .checklist fieldset {
+.brd .checklist fieldset {
 	height: auto;
 	}
 
-#brd-wrap .checklist legend,
-#brd-wrap .checklist legend span {
+.brd .checklist legend,
+.brd .checklist legend span {
 	font-weight: bold;
 	position: static;
 	padding: 0;
@@ -1250,12 +1246,12 @@ F - MAIN CONTENT - FORMS
 	text-align:left;
 	}
 
-#brd-wrap .checklist .checklist-item {
+.brd .checklist .checklist-item {
 	position: relative;
 	height: auto;
 	}
 
-#brd-wrap .checklist .checklist-item label {
+.brd .checklist .checklist-item label {
 	display: block;
 	padding: 0 0 0 2.25em;
 	float: none;
@@ -1263,7 +1259,7 @@ F - MAIN CONTENT - FORMS
 	background-color: #fff;
 	}
 
-#brd-wrap .checklist .checklist-item .fld-input {
+.brd .checklist .checklist-item .fld-input {
 	position: absolute;
 	left: 0;
 	top: 0;
@@ -1271,7 +1267,7 @@ F - MAIN CONTENT - FORMS
 	margin: 0;
 	}
 
-#brd-wrap .checklist .checklist-item input {
+.brd .checklist .checklist-item input {
 	margin: 0;
 	height: 1.55em;
 	width: 1.55em;
@@ -1560,57 +1556,57 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 /* Content
 -------------------------------------------------------------*/
 
-#brd-wrap .entry-content {
+.brd .entry-content {
 	padding-bottom: 1em;
 	overflow: hidden;
 	width: 100%;
 	font-size: 1.084em;
 	}
 
-#brd-wrap .entry-content ol {
+.brd .entry-content ol {
 	padding-left: 2.5em;
 	list-style-type: decimal;
 	}
 
-#brd-wrap .entry-content ol p,
-#brd-wrap .entry-content ul p {
+.brd .entry-content ol p,
+.brd .entry-content ul p {
 	padding: 0;
 	}
 
-#brd-wrap .entry-content ol.alpha {
+.brd .entry-content ol.alpha {
 	list-style-type: upper-alpha;
 	}
 
-#brd-wrap .entry-content h5, #brd-wrap .entry-content h5 * {
+.brd .entry-content h5, .brd .entry-content h5 * {
 	font-weight: bold;
 	font-size: 1.084em;
 	padding: 0.5em 0;
 	}
 
-#brd-wrap .entry-content img {
+.brd .entry-content img {
 	vertical-align: text-top;
 	}
 
-#brd-wrap .entry-content .quotebox,
-#brd-wrap .entry-content .codebox {
+.brd .entry-content .quotebox,
+.brd .entry-content .codebox {
 	border-style: solid;
 	border-width: 1px;
 	margin: 0.75em 1em;
 	padding: 1em 0.75em;
 	}
 
-#brd-wrap .entry-content blockquote {
+.brd .entry-content blockquote {
 	overflow: hidden;
 	width: 100%;
 	}
 
-#brd-wrap .entry-content .quotebox cite {
+.brd .entry-content .quotebox cite {
 	display: block;
 	font-style: normal;
 	font-weight: bold;
 	}
 
-#brd-wrap .entry-content pre {
+.brd .entry-content pre {
 	margin: 0;
 	max-height: 35em;
 	min-height: 2em;
@@ -1619,15 +1615,15 @@ G - MAIN CONTENT - TOPICS AND PARSED CONTENT
 	width: 98%;
 	}
 
-#brd-wrap .entry-content img {
+.brd .entry-content img {
 	max-width: 100%;
 	}
 
-#brd-wrap .entry-content span.bbu {
+.brd .entry-content span.bbu {
 	text-decoration: underline;
 	}
 
-#brd-wrap .entry-content br, #brd-wrap .sig-demo br, #brd-wrap .user-box br, #brd-wrap .main-message br {
+.brd .entry-content br, .brd .sig-demo br, .brd .user-box br, .brd .main-message br {
 	display: inline;
 	}
 
@@ -1820,7 +1816,7 @@ H - MAIN CONTENT - ODDMENTS
 	position: absolute;
 	top: 0;
 	right: 0.75em;
-	height; 2.5em;
+	height: 2.5em;
 	}
 
 /* Help File
