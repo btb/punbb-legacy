@@ -370,7 +370,7 @@ else if (isset($_GET['show_users']))
 	if (!empty($forum_page['mod_options']))
 	{
 ?>
-	<div class="main-options gen-content mod-options">
+	<div class="main-options gen-content">
 		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
 	</div>
 <?php
@@ -1042,7 +1042,7 @@ else if (isset($_POST['find_user']))
 	if (!empty($forum_page['mod_options']))
 	{
 ?>
-	<div class="main-options gen-content mod-options">
+	<div class="main-options gen-content">
 		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
 	</div>
 <?php
@@ -1336,10 +1336,10 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 
 ?>
 
+	<div class="main-subhead">
+		<h2 class="hn"><?php echo $lang_admin_users['IP search head'] ?></h2>
+	</div>
 	<div class="main-content main-frm">
-		<div class="main-subhead">
-			<h2 class="hn"><span><?php echo $lang_admin_users['IP search head'] ?></span></h2>
-		</div>
 		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>">
 <?php ($hook = get_hook('aus_search_form_pre_ip_search_fieldset')) ? eval($hook) : null; ?>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
