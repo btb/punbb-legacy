@@ -249,7 +249,6 @@ body {
 .brd .admin-submenu {
 	background: #E4E4E4;
 	border-color: #DFE6ED;
-	border-width: 0px 1px;
 	}
 
 .brd .main-menu a:link, .brd .main-menu a:visited, .brd .admin-menu a {
