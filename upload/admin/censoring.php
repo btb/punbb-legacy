@@ -202,6 +202,7 @@ ob_start();
 <?php ($hook = get_hook('acs_add_word_fieldset_end')) ? eval($hook) : null; ?>
 			</fieldset>
 		</form>
+	</div>
 <?php
 
 if (!empty($forum_censors))
