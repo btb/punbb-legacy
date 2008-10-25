@@ -172,6 +172,7 @@ B - GLOBAL STYLES
 	}
 
 .brd .main-options {
+	border-top: none;
 	margin: -1em 0 1em 0;
 }
 
