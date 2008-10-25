@@ -213,8 +213,8 @@ ob_start();
 ($hook = get_hook('ari_main_output_start')) ? eval($hook) : null;
 
 ?>
-	<div class="frm-head">
-		<h2><span><?php echo $lang_admin_reindex['Reindex heading'] ?></span></h2>
+	<div class="main-subhead">
+		<h2 class="hn"><?php echo $lang_admin_reindex['Reindex heading'] ?></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box">
