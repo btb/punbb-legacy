@@ -306,11 +306,11 @@ ob_start();
 				<?php echo implode("\n\t\t\t\t", $forum_page['hidden_fields'])."\n" ?>
 			</div>
 <?php ($hook = get_hook('acg_pre_add_cat_fieldset')) ? eval($hook) : null; ?>
+			<div class="ct-box">
+				<p><?php printf($lang_admin_categories['Add category info'], '<a href="'.forum_link($forum_url['admin_forums']).'">'.$lang_admin_categories['Add category info link text'].'</a>') ?></p>
+			</div>
 			<fieldset class="frm-group group<?php echo ++$forum_page['group_count'] ?>">
 				<legend class="group-legend"><span><?php echo $lang_admin_categories['Add category legend'] ?></span></legend>
-				<div class="ct-box set<?php echo ++$forum_page['item_count'] ?>">
-					<p><?php printf($lang_admin_categories['Add category info'], '<a href="'.forum_link($forum_url['admin_forums']).'">'.$lang_admin_categories['Add category info link text'].'</a>') ?></p>
-				</div>
 <?php ($hook = get_hook('acg_pre_new_category_name')) ? eval($hook) : null; ?>
 				<div class="sf-set set<?php echo ++$forum_page['item_count'] ?>">
 					<div class="sf-box text">
