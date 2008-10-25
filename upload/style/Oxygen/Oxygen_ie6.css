@@ -51,4 +51,19 @@ IE6 - FIXES
 	overflow: auto;
 	}
 
+.brd .sf-set .checkbox label span {
+	padding-right: 0em;
+	padding-left: 5em;
+	}
 
+#brd-admin-censoring #info-censored-intro {
+	margin-bottom: 3em;
+	}
+
+.main-forum .main-item .item-starter {
+	margin-left: 1ex;
+	}
+
+#brd-stats .st-users {
+	margin-bottom: -1ex;
+	}

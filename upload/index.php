@@ -130,14 +130,13 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 		$forum_page['cur_category'] = $cur_forum['cid'];
 
-?>
-		<div class="main-head">
-			<h2 class="hn"><span><?php echo forum_htmlencode($cur_forum['cat_name']) ?></span></h2>
-		</div>
-		<div class="main-subhead">
-			<p class="item-summary"><span><?php printf($lang_index['Category subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
-		</div>
-		<div id="category<?php echo $forum_page['cat_count'] ?>" class="main-content main-category">
+?>	<div class="main-head">
+		<h2 class="hn"><span><?php echo forum_htmlencode($cur_forum['cat_name']) ?></span></h2>
+	</div>
+	<div class="main-subhead">
+		<p class="item-summary"><span><?php printf($lang_index['Category subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
+	</div>
+	<div id="category<?php echo $forum_page['cat_count'] ?>" class="main-content main-category">
 <?php
 
 	}
@@ -235,8 +234,7 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 
 	($hook = get_hook('in_row_pre_display')) ? eval($hook) : null;
 
-?>
-		<div id="forum<?php echo $cur_forum['fid'] ?>" class="main-item<?php echo $forum_page['item_style'] ?>">
+?>		<div id="forum<?php echo $cur_forum['fid'] ?>" class="main-item<?php echo $forum_page['item_style'] ?>">
 			<span class="icon <?php echo implode(' ', $forum_page['item_status']) ?>"><!-- --></span>
 			<div class="item-subject">
 				<?php echo implode("\n\t\t\t\t", $forum_page['item_body']['subject'])."\n" ?>
@@ -252,16 +250,14 @@ while ($cur_forum = $forum_db->fetch_assoc($result))
 if ($forum_page['cur_category'] > 0)
 {
 
-?>
-	</div>
+?>	</div>
 <?php
 
 }
 else
 {
 
-?>
-	<div class="main-content message">
+?>	<div class="main-content message">
 		<p><?php echo $lang_index['Empty board'] ?></p>
 	</div>
 <?php
