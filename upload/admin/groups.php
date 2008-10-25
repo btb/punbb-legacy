@@ -800,7 +800,7 @@ while ($cur_group = $forum_db->fetch_assoc($result))
 		<div class="ct-box">
 			<p><?php echo $lang_admin_groups['Existing groups intro'] ?></p>
 		</div>
-		<div class="ct-group group<?php echo ++$forum_page['group_count'] ?>">
+		<div class="ct-group">
 <?php
 
 $query = array(
