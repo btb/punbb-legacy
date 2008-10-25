@@ -148,6 +148,10 @@ B - GLOBAL STYLES
 	border-width: 1px;
 	}
 
+.brd .main-content {
+	margin-bottom: 1em;
+	}
+
 .brd .gen-content {
 	padding: 0 1.5em;
 	}
@@ -235,11 +239,15 @@ B - GLOBAL STYLES
 	position: relative;
 	}
 
-.brd #brd-main .main-head,
-.brd #brd-main .main-foot {
+.brd .main-head,
+.brd .main-foot {
 	padding: 0 1.5em;
 	border-style: none;
 	border-width: 1px;
+	}
+
+.brd .main-foot {
+	margin-top: -1em;
 	}
 
 .brd #brd-announcement .msg-head {
@@ -266,9 +274,6 @@ B - GLOBAL STYLES
 	padding: 0.462em 1.417em;
 	}
 
-.brd .main-category {
-	margin: 0em 0 1em 0
-}
 
 /*************************************************************
 C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
@@ -627,7 +632,8 @@ D - COMMON INTERFACE ELEMENTS
 	}
 
 .brd .crumbs {
-	padding: 0.5em 1.5em;
+	margin: 0.5em 0em;
+	padding: 0em 1.5em;
 	font-size: 1.084em;
 	}
 
