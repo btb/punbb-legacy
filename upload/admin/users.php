@@ -89,6 +89,12 @@ if (isset($_GET['ip_stats']))
 
 ?>
 	<div class="main-head">
+<?php
+
+	if (!empty($forum_page['main_head_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+
+?>
 		<h2 class="hn"><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></h2>
 	</div>
 	<div class="main-content main-forum">
@@ -156,6 +162,15 @@ if (isset($_GET['ip_stats']))
 			</tbody>
 		</table>
 	</div>
+	<div class="main-foot">
+<?php
+
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
+
+?>
+		<h2 class="hn"><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></h2>
+	</div>
 <?php
 
 	($hook = get_hook('aus_ip_stats_end')) ? eval($hook) : null;
@@ -218,10 +233,19 @@ else if (isset($_GET['show_users']))
 	$forum_page['table_header']['actions'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['Actions'].'</th>';
 	$forum_page['table_header']['select'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_misc['Select'] .'</th>';
 
+	if ($forum_page['num_users'] > 0)
+		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'aus-show-users-results-form\'))">'.$lang_admin_common['Select all'].'</a>';
+
 	($hook = get_hook('aus_show_users_output_start')) ? eval($hook) : null;
 
 ?>
 	<div class="main-head">
+<?php
+
+	if (!empty($forum_page['main_head_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+
+?>
 		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
 	</div>
 	<form id="aus-show-users-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
@@ -238,13 +262,12 @@ else if (isset($_GET['show_users']))
 			<tbody>
 <?php
 
-	$num_posts = $forum_db->num_rows($result);
-	if ($num_posts)
+	if ($forum_page['num_users'] > 0)
 	{
 		$forum_page['item_count'] = 0;
 
 		// Loop through users and print out some info
-		for ($i = 0; $i < $num_posts; ++$i)
+		for ($i = 0; $i < $forum_page['num_users']; ++$i)
 		{
 			list($poster_id, $poster) = $forum_db->fetch_row($result);
 
@@ -348,7 +371,6 @@ else if (isset($_GET['show_users']))
 	{
 ?>
 	<div class="main-options gen-content mod-options">
-		<p id="select-all"><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById('aus-show-users-results-form'))"><?php echo $lang_admin_common['Select all'] ?></a></p>
 		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
 	</div>
 <?php
@@ -357,6 +379,15 @@ else if (isset($_GET['show_users']))
 
 ?>
 	</form>
+	<div class="main-foot">
+<?php
+
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
+
+?>
+		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
+	</div>
 <?php
 
 	($hook = get_hook('aus_show_users_end')) ? eval($hook) : null;
@@ -898,10 +929,19 @@ else if (isset($_POST['find_user']))
 	$forum_page['table_header']['actions'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_admin_users['Actions'].'</th>';
 	$forum_page['table_header']['select'] = '<th class="tc'.count($forum_page['table_header']).'" scope="col">'.$lang_misc['Select'] .'</th>';
 
+	if ($forum_page['num_users'] > 0)
+		$forum_page['main_head_options']['select'] = $forum_page['main_foot_options']['select'] = '<a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'aus-find-user-results-form\'))">'.$lang_admin_common['Select all'].'</a>';
+
 	($hook = get_hook('aus_find_user_output_start')) ? eval($hook) : null;
 
 ?>
 	<div class="main-head">
+<?php
+
+	if (!empty($forum_page['main_head_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
+
+?>
 		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
 	</div>
 	<form id="aus-find-user-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
@@ -918,7 +958,7 @@ else if (isset($_POST['find_user']))
 			<tbody>
 <?php
 
-	if ($forum_page['num_users'])
+	if ($forum_page['num_users'] > 0)
 	{
 		$forum_page['item_count'] = 0;
 
@@ -1003,7 +1043,6 @@ else if (isset($_POST['find_user']))
 	{
 ?>
 	<div class="main-options gen-content mod-options">
-		<p id="select-all"><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById('aus-find-user-results-form'))"><?php echo $lang_admin_common['Select all'] ?></a></p>
 		<p class="options"><?php echo implode(' ', $forum_page['mod_options']) ?></p>
 	</div>
 <?php
@@ -1012,6 +1051,15 @@ else if (isset($_POST['find_user']))
 
 ?>
 	</form>
+	<div class="main-foot">
+<?php
+
+	if (!empty($forum_page['main_foot_options']))
+		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
+
+?>
+		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
+	</div>
 <?php
 
 	($hook = get_hook('aus_find_user_end')) ? eval($hook) : null;
