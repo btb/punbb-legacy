@@ -251,19 +251,32 @@ body {
 	border-color: #DFE6ED;
 	}
 
-.brd .main-menu a:link, .brd .main-menu a:visited, .brd .admin-menu a {
+.brd .main-menu a:link,
+.brd .main-menu a:visited,
+.brd .admin-menu a:link,
+.brd .admin-menu a:visited {
 	color: #ddd;
 	text-decoration: none;
 	}
 
-.brd .main-menu a:hover, .brd .main-menu a:active, .brd .main-menu a:focus,
-.brd .admin-menu a:hover, .brd .admin-menu a:active, .brd .admin-menu a:focus {
+.brd .main-menu a:hover,
+.brd .main-menu a:active,
+.brd .main-menu a:focus,
+.brd .admin-menu a:hover,
+.brd .admin-menu a:active,
+.brd .admin-menu a:focus {
 	text-decoration: underline;
 	color: #fff;
 	}
 
-.brd .main-menu li.active a:hover, .brd .main-menu li.active a:active, .brd .main-menu li.active a:focus,
-.brd .admin-menu li.active a:hover, .brd .admin-menu li.active a:active, .brd .admin-menu li.active a:focus {
+.brd .main-menu li.active a:hover,
+.brd .main-menu li.active a:active,
+.brd .main-menu li.active a:focus,
+.brd .main-menu li.active a:visited,
+.brd .admin-menu li.active a:hover,
+.brd .admin-menu li.active a:active,
+.brd .admin-menu li.active a:focus,
+.brd .admin-menu li.active a:visited {
 	text-decoration: none;
 	}
 
