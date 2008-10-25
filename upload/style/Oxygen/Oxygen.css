@@ -433,7 +433,7 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 
 .brd .main-menu, .brd .admin-menu {
 	border: 0;
-	padding: 0.4em 0 0.4em 0.75em;
+	padding: 0.4em 0 0.2em 0.75em;
 	}
 
 .brd .main-menu ul, .brd .admin-menu ul {
@@ -450,15 +450,16 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	border-width: 0 1px 0 2px;
 	}
 
-#brd-wrap .main-menu a, #brd-wrap .admin-menu a {
+.brd .main-menu a, .brd .admin-menu a {
 	float: left;
 	position: relative;
 	padding: 0.2em 0.75em 0.4em 0.75em;
 	}
 
-#brd-wrap .main-menu li.active a, #brd-wrap .admin-menu li.active a {
+.brd .main-menu li.active a, .brd .admin-menu li.active a {
 	font-weight: bold;
 	}
+
 .brd .main-menu li.first-item, .brd .admin-menu li.first-item {
 	border-left: 0;
 	}
@@ -472,7 +473,6 @@ C - COMMON CONTENT TYPES (RE-USABLE FORMATS)
 	display: inline;
 	margin-right: 0.75em;
 	}
-
 
 /*************************************************************
 D - COMMON INTERFACE ELEMENTS
@@ -810,21 +810,21 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	list-style: none;
 	}
 
- .brd .main-content .main-item p,
- .brd .main-content .main-item .hn {
+.brd .main-content .main-item p,
+.brd .main-content .main-item .hn {
  	padding: 0;
  	}
 
- .brd .main-content .main-item .hn .item-status {
+.brd .main-content .main-item .hn .item-status {
  	font-weight:normal;
  	}
 
- .brd .main-content .main-item .hn .item-status em {
+.brd .main-content .main-item .hn .item-status em {
  	font-style:normal;
  	}
 
- .brd .main-content .main-item .item-subject,
- .brd .main-content .main-item li {
+.brd .main-content .main-item .item-subject,
+.brd .main-content .main-item li {
  	float: left;
  	border-left-style: solid;
  	border-left-width: 1px;
@@ -839,16 +839,16 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	width: 100%;
   	}
 
- .brd .main-content .main-item li.info-topics,
- .brd .main-content .main-item li.info-forum,
- .brd .main-content .main-item li.info-posts,
- .brd .main-content .main-item li.info-views,
- .brd .main-content .main-item li.info-replies {
+.brd .main-content .main-item li.info-topics,
+.brd .main-content .main-item li.info-forum,
+.brd .main-content .main-item li.info-posts,
+.brd .main-content .main-item li.info-views,
+.brd .main-content .main-item li.info-replies {
  	width: 7em;
  	text-align:center;
  	}
 
- .brd .main-content .main-item li.info-forum {
+.brd .main-content .main-item li.info-forum {
  	width: 20em;
  	}
 
@@ -894,7 +894,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	margin-left: -47em;
 	}
 
- .brd .main-content .main-item .item-subject span.modlist {
+.brd .main-content .main-item .item-subject span.modlist {
  	display: block;
  	}
 
@@ -928,12 +928,12 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
 	font-style: normal;
 	}
 
- .brd .main-content .main-item .item-subject .hn {
+.brd .main-content .main-item .item-subject .hn {
 	display:inline;
 	margin: 0 0 0 1.5em;
  	}
 
- .brd .main-content .main-item .item-subject p {
+.brd .main-content .main-item .item-subject p {
 	margin: 0 0 0 1.5em;
  	}
 
@@ -945,13 +945,13 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	font-weight: normal;
  	}
 
- .brd .main-content .main-item li.info-lastpost strong {
+.brd .main-content .main-item li.info-lastpost strong {
  	padding: 0 0 0 1em;
  	font-style: normal;
  	font-weight: normal;
  	}
 
- .brd .main-content .main-item li.info-select {
+.brd .main-content .main-item li.info-select {
  	position: absolute;
  	right: 0;
  	top: 0;
@@ -960,7 +960,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	border-width: 1px;
  	}
 
- .brd .main-content .main-item .icon {
+.brd .main-content .main-item .icon {
  	border-style: solid;
  	border-width: 0.5833em;
  	height: 0;
@@ -970,7 +970,7 @@ E - INDEX, FORUMS, SEARCH RESULTS, MODERATE FORUMS
  	margin-left: -2.417em;
  	}
 
- .brd .main-content .main-item .hn .posted-mark {
+.brd .main-content .main-item .hn .posted-mark {
  	position: absolute;
  	font-size: 2em;
  	width: 1em;

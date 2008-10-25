@@ -164,7 +164,7 @@ body {
 	}
 .brd .ct-box .hn, .brd .ct-box .sig-demo {
 	border-color: #DBE0E4;
-	color: #294F6E;
+	color: #1F537B;
 	}
 
 .brd .help-box {
@@ -181,7 +181,7 @@ body {
 	}
 
 .brd label, .brd .aslabel, .brd .mf-set legend, .brd .ct-legend * {
-	color: #294F6E;
+	color: #1F537B;
 	}
 
 .brd .paging * {
@@ -189,11 +189,11 @@ body {
 	}
 
 
-#brd-wrap .required label em, #brd-wrap #req-msg em {
+.brd .required label em, .brd #req-msg em {
 	color: #b42000;
 	}
 
-#brd-wrap .entry-content .quotebox, #brd-wrap .entry-content .codebox {
+.brd .entry-content .quotebox, .brd .entry-content .codebox {
 	background: #fff;
 	border-color: #ddd;
 	}
@@ -234,7 +234,7 @@ body {
 	}
 
 .brd .main-menu, .brd .admin-menu {
-	background: #294F6E;
+	background: #1F537B;
 	}
 
 .brd .main-menu ul, .brd .admin-menu ul {
@@ -247,30 +247,37 @@ body {
 	}
 
 .brd .admin-submenu {
-	background: #DFE6ED;
-	border-color: #CBD1D8;
+	background: #E4E4E4;
+	border-color: #DFE6ED;
+	border-width: 0px 1px;
 	}
 
-#brd-wrap .main-menu a:link, #brd-wrap .main-menu a:visited, #brd-wrap .admin-menu a {
+.brd .main-menu a:link, .brd .main-menu a:visited, .brd .admin-menu a {
 	color: #ddd;
 	text-decoration: none;
 	}
 
-#brd-wrap .main-menu a:hover, #brd-wrap .main-menu a:active, #brd-wrap .main-menu a:focus,
-#brd-wrap .admin-menu a:hover, #brd-wrap .admin-menu a:active, #brd-wrap .admin-menu a:focus {
+.brd .main-menu a:hover, .brd .main-menu a:active, .brd .main-menu a:focus,
+.brd .admin-menu a:hover, .brd .admin-menu a:active, .brd .admin-menu a:focus {
 	text-decoration: underline;
 	color: #fff;
 	}
 
-#brd-wrap .main-menu li.active a:hover, #brd-wrap .main-menu li.active a:active, #brd-wrap .main-menu li.active a:focus,
-#brd-wrap .admin-menu li.active a:hover, #brd-wrap .admin-menu li.active a:active, #brd-wrap .admin-menu li.active a:focus {
+.brd .main-menu li.active a:hover, .brd .main-menu li.active a:active, .brd .main-menu li.active a:focus,
+.brd .admin-menu li.active a:hover, .brd .admin-menu li.active a:active, .brd .admin-menu li.active a:focus {
 	text-decoration: none;
 	}
 
+.brd .admin-submenu li.active a {
+	text-decoration: none;
+	}
 
-#brd-wrap .main-menu li.active a, #brd-wrap .admin-menu li.active a {
-/*	background: url(tab.png) bottom center no-repeat;*/
+.brd .main-menu li.active a {
 	color: #fff;
+	}
+
+.brd .admin-menu li.active a {
+	color: #eef;
 	}
 
 #brd-admod #alert a {
@@ -356,23 +363,23 @@ body {
 	border-color: #EDF1F5 #DDE0E4 #C6CBD3 #BABFC6
 	}
 
- .brd .main-content .redirect .icon {
+.brd .main-content .redirect .icon {
 	border-color: #f4f4f4 #f4f4f4 #f4f4f4 #f4f4f4
 	}
 
- .brd .main-content .sticky .icon {
+.brd .main-content .sticky .icon {
 	border-color: #D7E5F3 #C3CFDC #9FB3C7 #90A2B4
 	}
 
- .brd .main-content .closed .icon {
+.brd .main-content .closed .icon {
 	border-color: #ACACAC #979797 #898989 #7A7A7A
 	}
 
- .brd .main-content .sticky .closed {
+.brd .main-content .sticky .closed {
 	border-color: #D7E5F3 #C3CFDC #898989 #7A7A7A
 	}
 
- .brd .main-content .new .icon {
+.brd .main-content .new .icon {
 	border-color: #2B75AD #235E8C #1F537B #266799
 	}
 
@@ -380,6 +387,6 @@ body {
 /* Multi Checkbox Widget
 -------------------------------------------------------------*/
 
-#brd-wrap .checklist .checklist-item label:hover {
+.brd .checklist .checklist-item label:hover {
 	background: #EDF1F5;
 	}
