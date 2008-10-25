@@ -168,7 +168,7 @@ if (isset($query))
 		$forum_page['main_head_pages'] = sprintf($lang_common['Page info'], $forum_page['page'], $forum_page['num_pages']);
 
 	// Setup main options header
-	$forum_page['main_h1'] = $lang_search['Search options'];
+	$forum_page['main_title'] = $lang_search['Search options'];
 
 
 	($hook = get_hook('se_results_pre_header_load')) ? eval($hook) : null;

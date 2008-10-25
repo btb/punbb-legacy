@@ -29,7 +29,7 @@
 <div class="hr"><hr /></div>
 
 <div id="brd-main">
-	<!-- forum_main_h1 -->
+	<!-- forum_main_title -->
 	<!-- forum_crumbs_top -->
 	<!-- forum_main_pagepost_top -->
 	<!-- forum_admin_menu -->

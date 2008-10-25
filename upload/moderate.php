@@ -471,7 +471,7 @@ if (isset($_GET['tid']))
 	);
 
 	// Setup main heading
-	$forum_page['main_h1'] = sprintf($lang_misc['Moderate topic head'], forum_htmlencode($cur_topic['subject']));
+	$forum_page['main_title'] = sprintf($lang_misc['Moderate topic head'], forum_htmlencode($cur_topic['subject']));
 
 	$forum_page['main_head_options']['select_all'] = '<span '.(empty($forum_page['main_head_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-post-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
 	$forum_page['main_foot_options']['select_all'] = '<span '.(empty($forum_page['main_foot_options']) ? ' class="first-item"' : '').'><a href="#" onclick="return Forum.toggleCheckboxes(document.getElementById(\'mr-post-actions-form\'))">'.$lang_misc['Select all'].'</a></span>';
@@ -849,7 +849,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 	$forum_page['crumbs'][] =	($action == 'single') ? $lang_misc['Move topic'] : $lang_misc['Move topics'];
 
 	//Setup main heading
-	$forum_page['main_h1'] = end($forum_page['crumbs']).' '.$lang_misc['To new forum'];
+	$forum_page['main_title'] = end($forum_page['crumbs']).' '.$lang_misc['To new forum'];
 
 	($hook = get_hook('mr_move_topics_pre_header_load')) ? eval($hook) : null;
 
@@ -1039,7 +1039,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 	);
 
 	// Setup main heading
-	$forum_page['main_h1'] = end($forum_page['crumbs']);
+	$forum_page['main_title'] = end($forum_page['crumbs']);
 
 	($hook = get_hook('mr_merge_topics_pre_header_load')) ? eval($hook) : null;
 
