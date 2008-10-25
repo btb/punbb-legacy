@@ -166,13 +166,6 @@ if ($forum_db->num_rows($result))
 
 }
 
-?>
-	<div class="main-subhead">
-		<h2 class="hn"><span><?php echo $lang_admin_reports['Read reports heading'] ?><?php echo ($forum_db->num_rows($result)) ? '' : ' '.$lang_admin_reports['No new reports'] ?></span></h2>
-	</div>
-	<div class="main-content main-frm">
-<?php
-
 // Fetch the last 10 reports marked as read
 $query = array(
 	'SELECT'	=> 'r.id, r.topic_id, r.forum_id, r.reported_by, r.created, r.message, r.zapped, r.zapped_by AS zapped_by_id, p.id AS pid, t.subject, f.forum_name, u.username AS reporter, u2.username AS zapped_by',
@@ -213,6 +206,13 @@ if ($forum_db->num_rows($result))
 	$i = 1;
 	$forum_page['group_count'] = $forum_page['item_count'] = $forum_page['item_num'] = 0;
 	$forum_page['old_reports'] = true;
+
+?>
+	<div class="main-subhead">
+		<h2 class="hn"><span><?php echo $lang_admin_reports['Read reports heading'] ?><?php echo ($forum_db->num_rows($result)) ? '' : ' '.$lang_admin_reports['No new reports'] ?></span></h2>
+	</div>
+	<div class="main-content main-frm">
+<?php
 
 	while ($cur_report = $forum_db->fetch_assoc($result))
 	{
