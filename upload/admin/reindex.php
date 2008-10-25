@@ -214,7 +214,7 @@ ob_start();
 
 ?>
 	<div class="main-subhead">
-		<h2 class="hn"><?php echo $lang_admin_reindex['Reindex heading'] ?></h2>
+		<h2 class="hn"><span><?php echo $lang_admin_reindex['Reindex heading'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box">

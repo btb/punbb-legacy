@@ -203,7 +203,7 @@ if (isset($query))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-subhead">
 		<p class="item-summary forum-noview"><span><?php printf($lang_forum['Search subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
@@ -225,7 +225,7 @@ if (isset($query))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-topic">
 <?php
@@ -483,7 +483,7 @@ ob_start();
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $lang_search['Search heading'] ?></h2>
+		<h2 class="hn"><span><?php echo $lang_search['Search heading'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">

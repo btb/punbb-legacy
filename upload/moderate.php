@@ -228,10 +228,7 @@ if (isset($_GET['tid']))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
-	</div>
-	<div class="main-head">
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -382,7 +379,7 @@ if (isset($_GET['tid']))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -500,7 +497,7 @@ if (isset($_GET['tid']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<form id="mr-post-actions-form" class="newform" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 	<div class="main-content main-topic">
@@ -654,7 +651,7 @@ $forum_page['mod_options'] = array(
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 <?php
 
@@ -866,7 +863,7 @@ if (isset($_REQUEST['move_topics']) || isset($_POST['move_topics_to']))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -1056,7 +1053,7 @@ else if (isset($_POST['merge_topics']) || isset($_POST['merge_topics_comply']))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -1226,7 +1223,7 @@ else if (isset($_REQUEST['delete_topics']) || isset($_POST['delete_topics_comply
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
@@ -1536,7 +1533,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<form id="mr-topic-actions-form" method="post" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">
 	<div class="main-subhead">
@@ -1702,7 +1699,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 
 <?php

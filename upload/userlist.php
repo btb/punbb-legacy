@@ -142,7 +142,7 @@ ob_start();
 		echo "\n\t\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form id="afocus" method="get" accept-charset="utf-8" action="<?php echo $forum_page['form_action'] ?>">

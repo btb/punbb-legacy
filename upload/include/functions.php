@@ -1928,7 +1928,7 @@ function message($message, $link = '', $heading = '')
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $heading ?></h2>
+		<h2 class="hn"><span><?php echo $heading ?></span></h2>
 	</div>
 
 	<div class="main-content main-message">
@@ -2025,7 +2025,7 @@ function csrf_confirm_form()
 	<h1><?php echo end($forum_page['crumbs']) ?></h1>
 
 	<div class="main-head">
-		<h2 class="hn"><?php echo $lang_common['Confirm action head'] ?></h2>
+		<h2 class="hn"><span><?php echo $lang_common['Confirm action head'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
@@ -2548,7 +2548,7 @@ function maintenance_message()
 <div id="brd-main" class="main basic">
 
 	<div class="main-head">
-		<h1 class="hn"><?php echo $lang_common['Maintenance mode'] ?></h1>
+		<h1 class="hn"><span><?php echo $lang_common['Maintenance mode'] ?></span></h1>
 	</div>
 	<div class="main-content main-message">
 		<div class="ct-box user-box">
@@ -2671,7 +2671,7 @@ function redirect($destination_url, $message)
 <div id="brd-main" class="main basic">
 
 	<div class="main-head">
-		<h1 class="hn"><?php echo $message ?></h1>
+		<h1 class="hn"><span><?php echo $message ?></span></h1>
 	</div>
 
 	<div class="main-content main-message">

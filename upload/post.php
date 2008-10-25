@@ -363,7 +363,7 @@ if (isset($_POST['preview']) && empty($errors))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></h2>
+		<h2 class="hn"><span><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></span></h2>
 	</div>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo $tid ? $lang_post['Preview reply'] : $lang_post['Preview new topic']; ?></span></h2>
@@ -390,7 +390,7 @@ if (isset($_POST['preview']) && empty($errors))
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></h2>
+		<h2 class="hn"><span><?php echo $tid ? $lang_post['Post reply'] : $lang_post['Post new topic'] ?></span></h2>
 	</div>
 	<div class="main-subhead">
 		<h2 class="hn"><span><?php echo ($tid) ? $lang_post['Compose your reply'] : $lang_post['Compose your topic'] ?></span></h2>

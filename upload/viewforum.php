@@ -203,7 +203,7 @@ if ($forum_db->num_rows($result))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php echo $forum_page['items_info'] ?></h2>
+		<h2 class="hn"><span><?php echo $forum_page['items_info'] ?></span></h2>
 	</div>
 	<div class="main-subhead">
 		<p class="item-summary<?php echo ($forum_config['o_topic_views'] == '1') ? ' forum-views' : ' forum-noview' ?>"><span><?php printf($lang_forum['Forum subtitle'], implode(' ', $forum_page['item_header']['subject']), implode(', ', $forum_page['item_header']['info'])) ?></span></p>
@@ -362,7 +362,7 @@ else
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $lang_forum['Empty forum'] ?></h2>
+		<h2 class="hn"><span><?php echo $lang_forum['Empty forum'] ?></span></h2>
 	</div>
 	<div id="forum<?php echo $id ?>" class="main-content main-forum">
 		<div class="main-item empty main-first-item">

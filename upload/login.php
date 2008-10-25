@@ -297,7 +297,7 @@ else if ($action == 'forget' || $action == 'forget_2')
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo $lang_login['New password request'] ?></h2>
+		<h2 class="hn"><span><?php echo $lang_login['New password request'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="ct-box info-box">
@@ -395,7 +395,7 @@ ob_start();
 
 ?>
 	<div class="main-head">
-		<h2 class="hn"><?php echo sprintf($lang_login['Login info'], $forum_config['o_board_title']) ?></h2>
+		<h2 class="hn"><span><?php echo sprintf($lang_login['Login info'], $forum_config['o_board_title']) ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<div class="content-head">

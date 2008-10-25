@@ -95,7 +95,7 @@ if (isset($_GET['ip_stats']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></h2>
+		<h2 class="hn"><span><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 	<div class="main-content main-forum">
 		<table cellspacing="0">
@@ -169,7 +169,7 @@ if (isset($_GET['ip_stats']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></h2>
+		<h2 class="hn"><span><?php printf($lang_admin_users['IP addresses found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 <?php
 
@@ -246,7 +246,7 @@ else if (isset($_GET['show_users']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
+		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 	<form id="aus-show-users-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
 	<div class="main-content main-frm">
@@ -386,7 +386,7 @@ else if (isset($_GET['show_users']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
+		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 <?php
 
@@ -942,7 +942,7 @@ else if (isset($_POST['find_user']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_head_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
+		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 	<form id="aus-find-user-results-form" class="frm-form" method="post" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>?action=modify_users">
 	<div class="main-content main-forum">
@@ -1058,7 +1058,7 @@ else if (isset($_POST['find_user']))
 		echo "\n\t\t".'<p class="options">'.implode(' ', $forum_page['main_foot_options']).'</p>';
 
 ?>
-		<h2 class="hn"><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></h2>
+		<h2 class="hn"><span><?php printf($lang_admin_users['Users found'], $forum_page['num_users']) ?></span></h2>
 	</div>
 <?php
 
@@ -1337,7 +1337,7 @@ $forum_page['group_count'] = $forum_page['item_count'] = 0;
 ?>
 
 	<div class="main-subhead">
-		<h2 class="hn"><?php echo $lang_admin_users['IP search head'] ?></h2>
+		<h2 class="hn"><span><?php echo $lang_admin_users['IP search head'] ?></span></h2>
 	</div>
 	<div class="main-content main-frm">
 		<form class="frm-form" method="get" accept-charset="utf-8" action="<?php echo forum_link($forum_url['admin_users']) ?>">
