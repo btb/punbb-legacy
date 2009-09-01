@@ -23,7 +23,7 @@
 ************************************************************************/
 
 
-// This script updates the forum database from version 1.2.* to 1.2.20.
+// This script updates the forum database from version 1.2.* to 1.2.22.
 // Copy this file to the forum root directory and run it. Then remove it from
 // the root directory.
 
