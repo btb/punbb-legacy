@@ -91,13 +91,35 @@ if ($forum_page['page'] > 1)
 
 
 // Fetch list of topics
+
+$query = array(
+		'SELECT'		=> 't.id',
+		'FROM'			=> 'topics AS t',
+		'WHERE'			=> 't.forum_id='.$id,
+		'ORDER BY'		=> 't.sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 't.posted' : 't.last_post').' DESC',
+		'LIMIT'			=> $forum_page['start_from'].','.$forum_user['disp_posts']
+);
+
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$topics_id = array();
+while ($row = $forum_db->fetch_row($result))
+		$topics_id[] = $row[0];
+
 $query = array(
 	'SELECT'	=> 't.id, t.poster, t.subject, t.posted, t.first_post_id, t.last_post, t.last_post_id, t.last_poster, t.num_views, t.num_replies, t.closed, t.sticky, t.moved_to',
 	'FROM'		=> 'topics AS t',
-	'WHERE'		=> 't.forum_id='.$id,
-	'ORDER BY'	=> 't.sticky DESC, '.(($cur_forum['sort_by'] == '1') ? 't.posted' : 't.last_post').' DESC',
-	'LIMIT'		=> $forum_page['start_from'].', '.$forum_user['disp_topics']
+	'WHERE'		=> 't.id IN ('.implode(',', $topics_id).')',
 );
+
+$query_result = $forum_db->query_build($query);
+$topics_info = array();
+while ($cur_topic = $forum_db->fetch_assoc($query_result))
+{
+	$tmp_index = array_search($cur_topic['id'], $topics_id);
+	$topics_info[$tmp_index] = $cur_topic;
+}
+ksort($topics_info);
+unset($topics_id);
 
 // With "has posted" indication
 if (!$forum_user['is_guest'] && $forum_config['o_show_dot'] == '1')
@@ -173,7 +195,7 @@ $forum_page['item_header']['info']['lastpost'] = '<strong class="info-lastpost">
 ($hook = get_hook('vf_main_output_start')) ? eval($hook) : null;
 
 // If there are topics in this forum
-if ($forum_db->num_rows($result))
+if (count($topics_info) > 0)
 {
 
 ?>
@@ -196,7 +218,7 @@ if ($forum_db->num_rows($result))
 
 	$forum_page['item_count'] = 0;
 
-	while ($cur_topic = $forum_db->fetch_assoc($result))
+		foreach ($topics_info as $cur_topic)
 	{
 		($hook = get_hook('vf_topic_loop_start')) ? eval($hook) : null;
 
@@ -220,11 +242,10 @@ if ($forum_db->num_rows($result))
 
 			($hook = get_hook('vf_topic_loop_moved_topic_pre_item_subject_merge')) ? eval($hook) : null;
 
-			$forum_page['item_body']['info']['replies'] = '<li class="info-replies"><span class="label">'.$lang_forum['No replies info'].'</span></li>';
-
 			if ($forum_config['o_topic_views'] == '1')
 				$forum_page['item_body']['info']['views'] = '<li class="info-views"><span class="label">'.$lang_forum['No views info'].'</span></li>';
 
+			$forum_page['item_body']['info']['replies'] = '<li class="info-replies"><span class="label">'.$lang_forum['No replies info'].'</span></li>';
 			$forum_page['item_body']['info']['lastpost'] = '<li class="info-lastpost"><span class="label">'.$lang_forum['No lastpost info'].'</span></li>';
 		}
 		else
