@@ -272,6 +272,19 @@ if (!defined('FORUM_PARSER_LOADED'))
 
 $forum_page['item_count'] = 0;	// Keep track of post numbers
 
+$query = array(
+		'SELECT'		=> 'p.id',
+		'FROM'			=> 'posts AS p',
+		'WHERE'			=> 'p.topic_id='.$id,
+		'ORDER BY'		=> 'p.id',
+		'LIMIT'			=> $forum_page['start_from'].','.$forum_user['disp_posts']
+);
+
+$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+$posts_id = array();
+while ($row = $forum_db->fetch_row($result))
+		$posts_id[] = $row[0];
+
 // Retrieve the posts (and their respective poster/online status)
 $query = array(
 	'SELECT'	=> 'u.email, u.title, u.url, u.location, u.signature, u.email_setting, u.num_posts, u.registered, u.admin_note, p.id, p.poster AS username, p.poster_id, p.poster_ip, p.poster_email, p.message, p.hide_smilies, p.posted, p.edited, p.edited_by, g.g_id, g.g_user_title, o.user_id AS is_online',
@@ -290,16 +303,24 @@ $query = array(
 			'ON'			=> '(o.user_id=u.id AND o.user_id!=1 AND o.idle=0)'
 		),
 	),
-	'WHERE'		=> 'p.topic_id='.$id,
-	'ORDER BY'	=> 'p.id',
-	'LIMIT'		=> $forum_page['start_from'].','.$forum_user['disp_posts']
+	'WHERE'		=> 'p.id IN ('.implode(',', $posts_id).')',
 );
+
+$query_result = $forum_db->query_build($query);
+$posts_info = array();
+while ($cur_topic = $forum_db->fetch_assoc($query_result))
+{
+	$tmp_index = array_search($cur_topic['id'], $posts_id);
+	$posts_info[$tmp_index] = $cur_topic;
+}
+ksort($posts_info);
+unset($posts_id);
 
 ($hook = get_hook('vt_qr_get_posts')) ? eval($hook) : null;
 $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 $user_data_cache = array();
-while ($cur_post = $forum_db->fetch_assoc($result))
+foreach ($posts_info as $cur_post) 
 {
 	($hook = get_hook('vt_post_loop_start')) ? eval($hook) : null;
 
