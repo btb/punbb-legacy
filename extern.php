@@ -343,10 +343,10 @@ if ($action == 'feed')
 			'LIMIT'		=> $show
 		);
 
-                $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-                $posts_id = array();
-                while ($row = $forum_db->fetch_row($result))
-                    $posts_id[] = $row[0];
+		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$posts_id = array();
+		while ($row = $forum_db->fetch_row($result))
+			$posts_id[] = $row[0];
 
 		$query = array(
 			'SELECT'	=> 'p.id, p.poster, p.message, p.hide_smilies, p.posted, p.poster_id, u.email_setting, u.email, p.poster_email',
@@ -359,20 +359,21 @@ if ($action == 'feed')
 			),
 			'WHERE'		=> 'p.id IN ('.implode(',', $posts_id).')',
 		);
-                $query_result = $forum_db->query_build($query);
-                $posts_info = array();
-                while ($cur_topic = $forum_db->fetch_assoc($query_result))
-                {
-                        $tmp_index = array_search($cur_topic['id'], $posts_id);
-                        $posts_info[$tmp_index] = $cur_topic;
-                }
-                
-                ksort($posts_info);
-                unset($posts_id);
+
+		$query_result = $forum_db->query_build($query);
+		$posts_info = array();
+		while ($cur_topic = $forum_db->fetch_assoc($query_result))
+		{
+			$tmp_index = array_search($cur_topic['id'], $posts_id);
+			$posts_info[$tmp_index] = $cur_topic;
+		}
+
+		ksort($posts_info);
+		unset($posts_id);
 
 		($hook = get_hook('ex_qr_get_posts')) ? eval($hook) : null;
-		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-		while ($cur_post = $forum_db->fetch_assoc($result))
+
+		foreach ($posts_info as $cur_post) 
 		{
 			if ($forum_config['o_censoring'] == '1')
 				$cur_post['message'] = censor_words($cur_post['message']);
@@ -467,13 +468,10 @@ if ($action == 'feed')
 		);
 
 		// Fetch $show topics
-
-
-
-                $query = array(
-                        'SELECT'		=> 't.id',
-                        'FROM'			=> 'topics AS t',
-                        'JOINS'		=> array(
+		$query = array(
+			'SELECT'		=> 't.id',
+			'FROM'			=> 'topics AS t',
+			'JOINS'		=> array(
 				array(
 					'INNER JOIN'	=> 'posts AS p',
 					'ON'			=> 'p.id=t.first_post_id'
@@ -487,19 +485,18 @@ if ($action == 'feed')
 					'ON'			=> '(fp.forum_id=t.forum_id AND fp.group_id='.$forum_user['g_id'].')'
 				)
 			),
-                        'WHERE'			=> 't.moved_to IS NULL',
-                        'ORDER BY'		=> 't.last_post',
-                        'LIMIT'		=> $show
-                );
+			'WHERE'			=> 't.moved_to IS NULL',
+			'ORDER BY'		=> 't.last_post',
+			'LIMIT'		=> $show
+		);
 
-                if (isset($forum_sql))
-		$query['WHERE'] .= $forum_sql;
+		if (isset($forum_sql))
+			$query['WHERE'] .= $forum_sql;
 
-                $result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-                $topics_id = array();
-                while ($row = $forum_db->fetch_row($result))
-		$topics_id[] = $row[0];
-
+		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
+		$topics_id = array();
+		while ($row = $forum_db->fetch_row($result))
+			$topics_id[] = $row[0];
 
 		$query = array(
 			'SELECT'	=> 't.id, t.poster, t.subject, t.last_post, t.last_poster, p.message, p.hide_smilies, u.email_setting, u.email, p.poster_id, p.poster_email',
@@ -522,20 +519,18 @@ if ($action == 'feed')
 			'LIMIT'		=> $show
 		);
 
-
-
 		($hook = get_hook('ex_qr_get_topics')) ? eval($hook) : null;
 		$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
-                $topics_info = array();
-                while ($cur_topic = $forum_db->fetch_assoc($result))
-                {
-                        $tmp_index = array_search($cur_topic['id'], $topics_id);
-                        $topics_info[$tmp_index] = $cur_topic;
-                }
-                krsort($topics_info);
-                unset($topics_id);
+		$topics_info = array();
+		while ($cur_topic = $forum_db->fetch_assoc($result))
+		{
+			$tmp_index = array_search($cur_topic['id'], $topics_id);
+			$topics_info[$tmp_index] = $cur_topic;
+		}
+		krsort($topics_info);
+		unset($topics_id);
 
-                foreach ($topics_info as $cur_topic)
+		foreach ($topics_info as $cur_topic)
 		{
 			if ($forum_config['o_censoring'] == '1')
 			{
