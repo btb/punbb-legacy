@@ -360,7 +360,7 @@ if ($action == 'feed')
 			'WHERE'		=> 'p.id IN ('.implode(',', $posts_id).')',
 		);
 
-		$query_result = $forum_db->query_build($query);
+		$query_result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 		$posts_info = array();
 		while ($cur_topic = $forum_db->fetch_assoc($query_result))
 		{
@@ -368,7 +368,7 @@ if ($action == 'feed')
 			$posts_info[$tmp_index] = $cur_topic;
 		}
 
-		ksort($posts_info);
+		krsort($posts_info);
 		unset($posts_id);
 
 		($hook = get_hook('ex_qr_get_posts')) ? eval($hook) : null;
@@ -527,7 +527,7 @@ if ($action == 'feed')
 			$tmp_index = array_search($cur_topic['id'], $topics_id);
 			$topics_info[$tmp_index] = $cur_topic;
 		}
-		krsort($topics_info);
+		ksort($topics_info);
 		unset($topics_id);
 
 		foreach ($topics_info as $cur_topic)
