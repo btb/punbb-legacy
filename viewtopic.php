@@ -275,6 +275,20 @@ $forum_page['item_count'] = 0;	// Keep track of post numbers
 $query = array(
 		'SELECT'		=> 'p.id',
 		'FROM'			=> 'posts AS p',
+                'JOINS'		=> array(
+                        array(
+                                'INNER JOIN'	=> 'users AS u',
+                                'ON'			=> 'u.id=p.poster_id'
+                        ),
+                        array(
+                                'INNER JOIN'	=> 'groups AS g',
+                                'ON'			=> 'g.g_id=u.group_id'
+                        ),
+                        array(
+                                'LEFT JOIN'		=> 'online AS o',
+                                'ON'			=> '(o.user_id=u.id AND o.user_id!=1 AND o.idle=0)'
+                        ),
+                ),
 		'WHERE'			=> 'p.topic_id='.$id,
 		'ORDER BY'		=> 'p.id',
 		'LIMIT'			=> $forum_page['start_from'].','.$forum_user['disp_posts']
@@ -317,7 +331,6 @@ ksort($posts_info);
 unset($posts_id);
 
 ($hook = get_hook('vt_qr_get_posts')) ? eval($hook) : null;
-$result = $forum_db->query_build($query) or error(__FILE__, __LINE__);
 
 $user_data_cache = array();
 foreach ($posts_info as $cur_post) 
