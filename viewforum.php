@@ -113,10 +113,10 @@ $query = array(
 
 $query_result = $forum_db->query_build($query);
 $topics_info = array();
-while ($cur_topic = $forum_db->fetch_assoc($query_result))
+while ($cur_post = $forum_db->fetch_assoc($query_result))
 {
 	$tmp_index = array_search($cur_topic['id'], $topics_id);
-	$topics_info[$tmp_index] = $cur_topic;
+	$topics_info[$tmp_index] = $cur_post;
 }
 ksort($topics_info);
 unset($topics_id);
